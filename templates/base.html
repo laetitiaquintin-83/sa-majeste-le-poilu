@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Sa Majesté le Poilu{% endblock %} — Accessoires royaux pour animaux</title>
+  <meta name="description" content="Accessoires personnalisés Pop-Art pour animaux rois et leurs serviteurs dévoués.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v=7) }}">
+</head>
+<body>
+  <div class="annbar">{{ announcement or settings.announcement }}</div>
+
+  <header class="hdr">
+    <div class="hdr-in container">
+      <a href="/" class="logo">
+        <img src="{{ url_for('static', filename='logo-mascotte.png') }}" alt="" class="logo-mascot">
+        <span>Sa Majesté <em>le Poilu</em></span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a href="/">Accueil</a>
+        <a href="/catalogue">Boutique</a>
+        <a href="/galerie">Galerie</a>
+        <a href="/page/a-propos">Le Royaume</a>
+        <a href="/page/contact">Contact</a>
+      </nav>
+      <button class="cartbtn" id="cart-open" aria-label="Ouvrir le panier">
+        🛒 <span class="cart-counter" data-cart-count>0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="ftr">
+    <div class="container ftr-in">
+      <p class="ftr-logo">👑 Sa Majesté <em>le Poilu</em></p>
+      <p class="ftr-note">Imprimé avec amour en France. Altesse supervise et Barnabé veille au bon déroulement des opérations.</p>
+      <ul class="ftr-links">
+        <li><a href="/page/a-propos">L'histoire d'Altesse et Barnabé</a></li>
+        <li><a href="/page/contact">Nous contacter</a></li>
+        <li><a href="/page/mentions">Mentions légales</a></li>
+      </ul>
+      <p class="ftr-bottom">© 2026 Sa Majesté le Poilu — Tous droits réservés à Sa Majesté. <a class="admin-access" href="/admin" rel="nofollow" title="Espace greffier (administration)">🔐 Admin</a></p>
+    </div>
+  </footer>
+
+  <!-- Fenêtre modale du panier -->
+  <div class="cart-overlay" id="cart-overlay" hidden></div>
+  <aside class="cart-drawer" id="cart-drawer" hidden aria-label="Panier"
+    role="dialog" aria-modal="true" aria-hidden="true">
+    <header class="cart-drawer-head">
+      <h2>🛒 Votre panier royal</h2>
+      <button class="cart-close" id="cart-close" aria-label="Fermer le panier">✕</button>
+    </header>
+    <div class="cart-drawer-body" id="cart-items"></div>
+    <footer class="cart-drawer-foot">
+      <div class="cart-row"><span>Articles</span><span data-cart-subtotal>0,00 €</span></div>
+      <div class="cart-row"><span>Livraison</span><span data-cart-shipping>—</span></div>
+      <div class="cart-row cart-row-total"><span>Total</span><span data-cart-total>0,00 €</span></div>
+      <a href="/checkout" id="checkout-link" class="btn btn-primary btn-block">🏆 Passer la commande</a>
+      <p class="cart-foot-hint">🚚 Livraison offerte dès 49 € — saisissez vos coordonnées à l'étape suivante.</p>
+    </footer>
+  </aside>
+
+  <script src="{{ url_for('static', filename='app.js', v=7) }}" defer></script>
+</body>
+</html>

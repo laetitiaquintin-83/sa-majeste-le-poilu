@@ -1,0 +1,78 @@
+# ============================================================
+# Sa Majesté le Poilu — .gitignore
+# ============================================================
+
+# --- Environnement & secrets (JAMAIS commités) ---
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+
+# --- Python : environnements virtuels ---
+venv/
+.venv/
+env/
+ENV/
+.venv.bak/
+
+# --- Python : caches & builds ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- Fichiers système ---
+.DS_Store
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- Logs & temporaires ---
+*.log
+logs/
+tmp/
+*.tmp
+*.swp
+*.swo
+
+# --- Données runtime de la boutique ---
+# Contient les commandes clients (emails, adresses) : données privées,
+# régénérées automatiquement par app.py si absentes (products + seed).
+data/boutique.json
+data/gallery.json
+data/admin_epoch.txt
+
+# --- Uploads utilisateurs (photos d'animaux, visuels) ---
+# Contenu généré à l'exécution, jamais versionné
+static/uploads/custom_pets/
+static/uploads/gallery/
+static/uploads/products/
+
+# --- Outils / IDE ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.cursor/
+.windsurf/
+
+# --- Node (si ajout plus tard) ---
+node_modules/
+package-lock.json

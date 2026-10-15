@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Inspirations &amp; Lookbook Pop-Art{% endblock %}
+
+{% block content %}
+<section class="sect">
+  <div class="sect-head">
+    <h1 class="sect-title">Inspirations Royale <span class="accent">&amp; Lookbook Pop-Art</span></h1>
+    <p class="sect-sub">L'exposition privée des animaux qui règnent sans partage. Inspirez-vous, volez des idées, et offrez le meilleur portrait à votre Altesse !</p>
+  </div>
+
+  {% if items %}
+  <div class="gallery-grid" id="gallery-grid">
+    {% for it in items %}
+    <figure class="gallery-item{% if loop.index0 is divisibleby 2 %} rot-left{% else %} rot-right{% endif %}"
+            data-gallery-id="{{ it.id }}">
+      <img src="{{ it.image }}" alt="{{ it.title }}" loading="lazy">
+      <figcaption class="gallery-overlay">
+        {% if it.category %}<span class="gallery-cat">{{ it.category }}</span>{% endif %}
+        <span class="gallery-title">{{ it.title }}</span>
+        <a class="gallery-shop" href="{{ it.get('link', '/catalogue') or '/catalogue' }}"
+           title="Voir dans la boutique royale">🛒 Voir dans la boutique →</a>
+      </figcaption>
+    </figure>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty-note">L'exposition est vide pour l'instant — les serviteurs du dashboard téléversent ici les futurs chefs-d'œuvre. 🖼️🐾</p>
+  {% endif %}
+</section>
+{% endblock %}

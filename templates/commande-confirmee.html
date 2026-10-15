@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Commande confirmée — Sa Majesté le Poilu{% endblock %}
+
+{% block content %}
+<section class="sect">
+  <div class="sect-head">
+    <h1 class="sect-title">
+      {% if order %}Paiement royal <span class="accent">accepté !</span>{% else %}Paiement <span class="accent">en attente</span>{% endif %}
+    </h1>
+    <p class="sect-sub">
+      {% if order %}Le trésor royal a encaissé. Barnabé met en route le pigeonnier. 🕊{% else %}Altesse n'a pas retrouvé votre session de paiement — vérifiez dans quelques instants, ou contactez-nous si le souci persiste.{% endif %}
+    </p>
+  </div>
+
+  {% if order %}
+  <div class="page-card" style="max-width:640px;margin-inline:auto;text-align:left">
+    <h2>🐾 Récap de la commande {{ order["ref"] }}</h2>
+    <div class="checkout-items">
+      {% for i in order["items"] %}
+      <div class="cart-item">
+        <div class="cart-item-info">
+          <span class="cart-item-name">{{ i["name"] }}</span>
+          <span class="cart-item-meta">Taille : {{ i["size"] }} · Couleur : {{ i["color"] }} · Quantité : {{ i["qty"] }}{% if i["pet_name"] %} · Animal : {{ i["pet_name"] }}{% endif %}</span>
+        </div>
+        <strong>{{ "%0.2f"|format(i["price"] * i["qty"]) }} €</strong>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="cart-row"><span>Sous-total</span><span>{{ "%0.2f"|format(order["subtotal"]) }} €</span></div>
+    <div class="cart-row"><span>Livraison</span><span>{% if order["shipping"] == 0 %}Offerte{% else %}{{ "%0.2f"|format(order["shipping"]) }} €{% endif %}</span></div>
+    <div class="cart-row cart-row-total"><span>Total payé</span><span>{{ "%0.2f"|format(order["total"]) }} €</span></div>
+    <p class="shipping-hint">✉️ La confirmation royale part vers <strong>{{ order["customer"]["email"] }}</strong> (visible dans Mailtrap).</p>
+    <a class="btn btn-primary btn-block" href="/catalogue" style="margin-top:14px">↩ Retour à la boutique</a>
+  </div>
+  {% else %}
+  <div class="page-card" style="max-width:640px;margin-inline:auto;text-align:center">
+    <p>Le paiement n'est pas encore confirmé — la page se rafraichit automatiquement quelques instants (paiement en cours de validation, ou moyen de paiement différé comme Bancontact).</p>
+    <a class="btn btn-ghost btn-block" href="/catalogue" style="margin-top:14px">↩ Retour à la boutique</a>
+  </div>
+  {% if session_id %}
+  <script>
+    (function () {
+      var essais = 0;
+      var t = setInterval(function () {
+        essais++;
+        if (essais > 10) { clearInterval(t); return; }
+        fetch(window.location.href, { cache: "no-store" })
+          .then(function (r) { return r.text(); })
+          .then(function (html) {
+            if (html.indexOf("paiement royal") !== -1 || html.indexOf("Paiement royal") !== -1
+              // signal “accepté” re-détecté, on recharge pour afficher le récap
+               ) { location.reload(); }
+          });
+      }, 4000);
+    })();
+  </script>
+  {% endif %}
+  {% endif %}
+</section>
+{% endblock %}

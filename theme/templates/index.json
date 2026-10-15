@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "categories": {
+      "type": "category-grid",
+      "settings": {}
+    },
+    "reassurance": {
+      "type": "reassurance",
+      "settings": {}
+    },
+    "best-sellers": {
+      "type": "featured-products",
+      "settings": {}
+    },
+    "wall-of-love": {
+      "type": "wall-of-love",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "categories", "reassurance", "best-sellers", "wall-of-love"]
+}

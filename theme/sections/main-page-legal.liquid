@@ -1,0 +1,54 @@
+{%- comment -%} Section Page légale (CGV / Mentions / RGPD) — claire & lisible {%- endcomment -%}
+{%- liquid
+  assign blocks = page.content | split: '<h3'
+-%}
+<section class="page-section page-legal">
+  <div class="container">
+    <header class="page-header">
+      <h1 class="page-title">{{ page.title }}</h1>
+      <p class="page-date">
+        Dernière mise à jour : {{ page.updated_at | date: '%d/%m/%Y' }}
+        — Version applicable à tous les serviteurs du royaume.
+      </p>
+    </header>
+
+    <div class="legal-layout">
+      {%- comment -%} Sommaire : extrait les titres h3 du contenu pour une nav d'ancres {%- endcomment -%}
+      {%- capture headings -%}
+        {%- for part in blocks -%}
+          {%- unless forloop.first -%}
+            {%- assign title = part | split: '</h3>' | first | split: '>' | last | strip_html | strip -%}
+            {%- if title != blank %}{{ title }}|{% endif -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- assign heading_list = headings | split: '|' -%}
+
+      {%- if heading_list.size > 1 -%}
+        <nav class="legal-toc page-card" aria-label="Sommaire de la page">
+          <p class="legal-toc-title">📋 Dans cette page</p>
+          <ol>
+            {%- for h in heading_list -%}
+              {%- if h != blank -%}
+                <li><a href="#section-{{ forloop.index }}">{{ h }}</a></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ol>
+        </nav>
+      {%- endif -%}
+
+      <div class="page-card legal-content">
+        <div class="page-content rte">
+          {{ page.content }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contenu page légale",
+  "settings": []
+}
+{% endschema %}

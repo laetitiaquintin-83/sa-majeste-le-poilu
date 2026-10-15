@@ -1,0 +1,26 @@
+{%- comment -%} Section Page (template générique) — conteneur Pop-Art {%- endcomment -%}
+<section class="page-section">
+  <div class="container">
+    <header class="page-header">
+      <h1 class="page-title">{{ page.title }}</h1>
+      {%- if section.settings.show_date -%}
+        <p class="page-date">Mise à jour : {{ page.updated_at | date: '%d/%m/%Y' }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="page-card">
+      <div class="page-content rte">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contenu de page",
+  "settings": [
+    { "type": "checkbox", "id": "show_date", "label": "Afficher la date de mise à jour", "default": true }
+  ]
+}
+{% endschema %}

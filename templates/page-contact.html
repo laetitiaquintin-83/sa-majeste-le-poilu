@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+<section class="sect page-section">
+  <header class="page-header">
+    <h1 class="page-title">Contact <span class="accent">&gt; la Cour</span></h1>
+    <p class="page-date">Une question, une plainte, un compliment pour le Poilu ? Écrivez-nous !</p>
+  </header>
+
+  <div class="contact-layout">
+    <div class="page-card contact-card">
+      <form id="contact-form" class="contact-form">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="cf-name">Nom du serviteur *</label>
+            <input type="text" id="cf-name" name="name" required placeholder="Votre nom">
+          </div>
+          <div class="form-field">
+            <label for="cf-email">E-mail *</label>
+            <input type="email" id="cf-email" name="email" required placeholder="votre@email.com">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="cf-subject">Sujet *</label>
+          <input type="text" id="cf-subject" name="subject" required placeholder="Suivi de commande, personnalisation...">
+        </div>
+        <div class="form-field">
+          <label for="cf-body">Votre message *</label>
+          <textarea id="cf-body" name="body" rows="6" required placeholder="Écrivez ici, Sa Majesté lit tout (ou du moins son service client)."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">🕊️ Envoyer le pigeon royal</button>
+        <p class="form-note" id="cf-note">Réponse en 24 h ouvrées — promis, pas de langue de bois.</p>
+      </form>
+    </div>
+
+    <aside class="page-card contact-info">
+      <h2>📍 Le QG du royaume</h2>
+      <p>{{ settings.shipping_address }}</p>
+      <p>✉️ {{ settings.contact_email }}</p>
+      <p>🕐 Service client du lundi au vendredi, 9h – 17h.</p>
+      <p><em>Altesse ne répond pas personnellement mais supervise depuis le radiateur.</em></p>
+    </aside>
+  </div>
+</section>
+{% endblock %}

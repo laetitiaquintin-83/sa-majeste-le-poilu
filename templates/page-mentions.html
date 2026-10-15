@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Mentions légales{% endblock %}
+
+{% block content %}
+<section class="sect page-section page-legal">
+  <header class="page-header">
+    <h1 class="page-title">Mentions légales <span class="accent">informations obligatoires</span></h1>
+    <p class="page-date">Dernière mise à jour : 13 octobre 2026</p>
+  </header>
+
+  <div class="page-card legal-content">
+    <div class="page-content rte">
+      <h3>1. Éditeur du site</h3>
+      <p><strong>Sa Majesté le Poilu</strong>, [forme juridique à compléter], au capital de [montant à compléter] €.</p>
+      <p>SIRET : [numéro SIRET à compléter].<br>
+         Siège social : {{ settings.shipping_address }}.<br>
+         Adresse électronique : <a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a>.<br>
+         Directeur de la publication : [nom et qualité à compléter].</p>
+      <p>Ces champs doivent être complétés avec les informations exactes de l'entreprise avant toute mise en ligne commerciale.</p>
+
+      <h3>2. Hébergeur</h3>
+      <p>Hébergeur : [dénomination sociale de l'hébergeur à compléter].<br>
+         Adresse : [adresse complète à compléter].<br>
+         Téléphone : [numéro à compléter].<br>
+         Site internet : [adresse du site de l'hébergeur à compléter].</p>
+      <p>Les coordonnées exactes de l'hébergeur doivent être renseignées avant la mise en production.</p>
+
+      <h3>3. Données personnelles (RGPD)</h3>
+      <p>Les données strictement nécessaires à l'exécution d'une commande (nom, adresse électronique,
+         adresse de livraison et informations relatives à la commande) sont utilisées uniquement pour
+         traiter, livrer et assurer le suivi de cette commande. Elles ne sont ni vendues ni utilisées à
+         des fins publicitaires.</p>
+      <p>Elles sont conservées pendant la durée nécessaire au traitement de la commande, puis pendant
+         les durées légales applicables à la conservation des pièces comptables et justificatives.
+         Vous pouvez exercer vos droits d'accès, de rectification, d'effacement, de limitation et
+         d'opposition lorsque ceux-ci s'appliquent en écrivant à
+         <a href="mailto:contact@samajestelepoilu.fr">contact@samajestelepoilu.fr</a>.
+         Vous pouvez également introduire une réclamation auprès de la CNIL
+         (<a href="https://www.cnil.fr/" rel="noopener">www.cnil.fr</a>).</p>
+
+      <h3>4. Cookies et stockage local</h3>
+      <p>Le site n'utilise que des traceurs techniques strictement nécessaires à son fonctionnement.
+         Le contenu du panier est enregistré dans le <code>localStorage</code> de votre navigateur
+         sous la clé <code>smp_cart</code>. Aucun cookie publicitaire, de mesure d'audience ou de
+         profilage n'est déposé.</p>
+
+      <h3>5. Propriété intellectuelle</h3>
+      <p>Les textes, visuels, logo et mascottes Altesse et Barnabé sont protégés par le droit de la
+         propriété intellectuelle. Toute reproduction, représentation, adaptation ou exploitation,
+         totale ou partielle, sans autorisation écrite préalable, est interdite.</p>
+
+      <h3>6. Médiation de la consommation</h3>
+      <p>Conformément à l'article L.612-1 du Code de la consommation, après réclamation écrite
+         préalable auprès de notre service client, le consommateur peut saisir gratuitement le
+         médiateur de la consommation dont relève le professionnel : [nom, adresse et site internet
+         du médiateur à compléter].</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

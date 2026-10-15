@@ -1,0 +1,35 @@
+{%- comment -%} Section Newsletter — pied de page {%- endcomment -%}
+<div class="footer-newsletter">
+  <h2>{{ section.settings.heading | escape }}</h2>
+  <p>{{ section.settings.subheading }}</p>
+  {%- form 'customer', class: 'newsletter-form', id: 'newsletter-form' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <label for="newsletter-email" class="sr-only">{{ 'newsletter.label' | t }}</label>
+    <input
+      id="newsletter-email"
+      type="email"
+      name="contact[email]"
+      placeholder="{{ section.settings.placeholder | escape }}"
+      value="{{ form.email }}"
+      required
+      autocomplete="email"
+    >
+    <button type="submit" class="btn btn-primary">{{ section.settings.button_label | escape }}</button>
+    {%- if form.posted_successfully? -%}
+      <p class="newsletter-success" role="status">🎉 Bienvenue dans la Cour ! Ton code -10% arrive dans ta boîte mail.</p>
+    {%- endif -%}
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre", "default": "-10% sur votre 1ère commande royale" },
+    { "type": "text", "id": "subheading", "label": "Texte", "default": "Recevez les nouveautés, promos et blagues de la Cour. Promis, pas de spam (sur l'honneur du Poilu)." },
+    { "type": "text", "id": "placeholder", "label": "Placeholder e-mail", "default": "votre@email.com" },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "Je rejoins la Cour" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

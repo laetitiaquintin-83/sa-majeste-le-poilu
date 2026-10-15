@@ -1,0 +1,45 @@
+{%- comment -%} Section Réassurance / Concept {%- endcomment -%}
+<section class="reassurance" id="concept" aria-labelledby="reassurance-title">
+  <div class="container">
+    <h2 id="reassurance-title" class="sr-only">{{ section.settings.heading | escape }}</h2>
+    <ul class="reassurance-grid" role="list">
+      {%- for block in section.blocks -%}
+        <li class="reassurance-card" {{ block.shopify_attributes }}>
+          <span class="reassurance-icon" aria-hidden="true">{{ block.settings.icon | default: '✨' }}</span>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Réassurance",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre (accessibilité)", "default": "Nos garanties" }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Carte",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji icône", "default": "✨" },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Pièces uniques & sur-mesure" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Photo, prénom, punchline improbable : chaque création est confectionnée rien que pour votre souverain." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Réassurance",
+      "blocks": [
+        { "type": "card", "settings": { "icon": "✨", "title": "Pièces uniques & sur-mesure" } },
+        { "type": "card", "settings": { "icon": "🎁", "title": "Idées cadeaux hilarantes" } },
+        { "type": "card", "settings": { "icon": "🇫🇷", "title": "Impression & expédition locale" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

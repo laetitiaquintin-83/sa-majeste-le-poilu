@@ -1,0 +1,79 @@
+{%- comment -%} Section Header — Sa Majesté le Poilu {%- endcomment -%}
+<div class="header-top">
+  <span>{{ section.settings.topbar_text | escape }}</span>
+</div>
+
+<div class="header-main container">
+  <a href="{{ routes.root_url }}" class="logo" aria-label="{{ shop.name }} — accueil">
+    {%- if section.settings.logo != blank -%}
+      <img
+        src="{{ section.settings.logo | image_url: width: 96 }}"
+        alt="{{ shop.name }}"
+        class="logo-mascot"
+        width="48" height="48"
+        loading="eager"
+      >
+    {%- endif -%}
+    <span class="logo-text">{{ section.settings.logo_text | default: shop.name }}</span>
+  </a>
+
+  <form class="search" role="search" action="{{ routes.search_url }}" method="get">
+    <label for="site-search" class="sr-only">{{ 'general.search.search' | t }}</label>
+    <input id="site-search" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ section.settings.search_placeholder | escape }}" autocomplete="off">
+    <button type="submit" aria-label="Rechercher">🔍</button>
+  </form>
+
+  <a href="{{ routes.cart_url }}" class="cart" aria-label="Panier — {{ cart.item_count }} article(s)">
+    <span class="cart-icon" aria-hidden="true">🛒</span>
+    <span class="cart-counter" id="cart-counter" data-cart-count>{{ cart.item_count }}</span>
+  </a>
+</div>
+
+<nav class="nav" aria-label="Navigation principale">
+  {%- if section.settings.menu != blank -%}
+    {%- assign nav_menu = section.settings.menu -%}
+    <ul class="nav-list container">
+      {%- for link in linklists[nav_menu].links -%}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</nav>
+
+{% schema %}
+{
+  "name": "En-tête",
+  "class": "shopify-section-header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "topbar_text",
+      "label": "Texte bandeau supérieur",
+      "default": "🐾 Livraison offerte dès 49€ — Sa Majesté approuve"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo / Mascotte"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Nom du site",
+      "default": "Sa Majesté le Poilu"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Placeholder recherche",
+      "default": "Rechercher un produit royal…"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu de navigation",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}La Boutique{% endblock %}
+
+{% block content %}
+<section class="sect">
+  <div class="sect-head">
+    <h1 class="sect-title">Le Catalogue <span class="accent">du Royaume</span></h1>
+    <p class="sect-sub">Tout ce qu'Altesse a daigné approuver, y compris ce que Barnabé a fait tomber du canapé.</p>
+  </div>
+
+  <div class="filters" id="catalogue-filters">
+    <button class="filter-btn is-active" data-cat="all">Tout le royaume</button>
+    {% for c in categories %}
+    <button class="filter-btn" data-cat="{{ c }}">{{ c }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="products-grid" id="catalogue-grid">
+    {% for p in products %}
+    {% with p=p %}{% include "product-card.html" %}{% endwith %}
+    {% endfor %}
+  </div>
+  {% if not products %}
+  <p class="empty-note">Aucun produit — la cour est déserte. 🐾</p>
+  {% endif %}
+</section>
+{% endblock %}

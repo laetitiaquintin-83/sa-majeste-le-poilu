@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Checkout — Commande royale{% endblock %}
+{% block content %}
+<section class="sect checkout-page">
+  <div class="sect-head">
+    <h1 class="sect-title">Commande royale <span class="accent">👑</span></h1>
+    <p class="sect-sub">Vérifiez votre panier, renseignez vos coordonnées, et votre commande partira vite. 🕊️</p>
+  </div>
+
+  <div class="checkout-layout">
+    <!-- Recap du panier : lignes et chiffres calculés par le backend (syncQuote) -->
+    <div class="page-card checkout-recap">
+      <h2>🐾 Votre panier</h2>
+      <div id="checkout-items" class="checkout-items"></div>
+      <div class="cart-row"><span>Sous-total</span><span data-cart-subtotal>—</span></div>
+      <div class="cart-row"><span>Livraison</span><span data-cart-shipping>—</span></div>
+      <div class="cart-row cart-row-total"><span>Total à payer</span><span data-cart-total>—</span></div>
+      <p class="shipping-hint">🚚 Livraison offerte dès {{ "%.2f"|format(settings.free_shipping_threshold) }} € — Sa Majesté approuve.</p>
+    </div>
+
+    <!-- Coordonnées -->
+    <form id="order-form" class="page-card checkout-form">
+      <h2>✍️ Vos coordonnées</h2>
+      <div class="form-row">
+        <label class="field-inline">Nom<br><input type="text" name="name" required placeholder="Jean-Serviteur Dévoué"></label>
+        <label class="field-inline">E-mail<br><input type="email" name="email" required placeholder="jean@royaume.fr"></label>
+      </div>
+      <label class="field-inline">Adresse de livraison<br>
+        <input type="text" name="address" required placeholder="12 allée des Croquettes, 75001 Paris"></label>
+      <button type="submit" class="btn btn-primary btn-block" id="checkout-submit">🏆 Valider et envoyer le pigeon</button>
+      <p id="checkout-note" class="checkout-note" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+<script>window.SMP_CHECKOUT = true;</script>
+{% endblock %}

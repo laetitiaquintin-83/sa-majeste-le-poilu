@@ -1,0 +1,138 @@
+{%- comment -%} Section Hero — Pop-Art {%- endcomment -%}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero-inner">
+    <div class="hero-content">
+      {%- if section.settings.badge_text != blank -%}
+        <p class="hero-badge">{{ section.settings.badge_text | escape }}</p>
+      {%- endif -%}
+
+      <h1 id="hero-title">{{ section.settings.heading }}</h1>
+
+      {%- if section.settings.subheading != blank -%}
+        <p class="hero-subtitle">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="hero-actions">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'cta' -%}
+              {%- if block.settings.label != blank -%}
+                <a
+                  href="{{ block.settings.link | default: routes.all_products_collection_url }}"
+                  class="btn {% if forloop.first %}btn-primary{% else %}btn-ghost{% endif %}"
+                  {{ block.shopify_attributes }}
+                >{{ block.settings.label | escape }}</a>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="hero-trust" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'trust' -%}
+              {%- if block.settings.text != blank -%}
+                <li {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    <div class="hero-visual">
+      {%- if section.settings.mascot != blank -%}
+        <div class="hero-blob" aria-hidden="true"></div>
+        <img
+          src="{{ section.settings.mascot | image_url: width: 760 }}"
+          alt="{{ section.settings.mascot.alt | default: 'Mascotte Sa Majesté le Poilu' | escape }}"
+          class="hero-mascot"
+          width="760"
+          height="760"
+          loading="eager"
+        >
+      {%- endif -%}
+      {%- if section.settings.sticker_1_text != blank -%}
+        <span class="visual-sticker">{{ section.settings.sticker_1_text | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.sticker_2_text != blank -%}
+        <span class="visual-sticker visual-sticker-2">{{ section.settings.sticker_2_text | escape }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero royal",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge (au-dessus du titre)",
+      "default": "🐾 Nº1 de l'accessoire royal en France"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Titre",
+      "default": "<p>Articles officiels pour animaux <em>rois</em> &amp; leurs serviteurs dévoués</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Sous-titre",
+      "default": "Mugs, paillassons et plaques personnalisées qui rappellent à votre bombardier du salon qui dirige vraiment la maison. Il juge, nous imprimons."
+    },
+    {
+      "type": "image_picker",
+      "id": "mascot",
+      "label": "Mascotte (grand visuel à droite)"
+    },
+    {
+      "type": "text",
+      "id": "sticker_1_text",
+      "label": "Sticker 1",
+      "default": "-10% 🎉"
+    },
+    {
+      "type": "text",
+      "id": "sticker_2_text",
+      "label": "Sticker 2",
+      "default": "100% Fun ⚡"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "cta",
+      "name": "Bouton CTA",
+      "limit": 2,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Libellé", "default": "Créer mon produit royal" },
+        { "type": "url", "id": "link", "label": "Lien" }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Élément de réassurance",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texte", "default": "⭐ 4,9/5 — 12 400 avis" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero royal",
+      "blocks": [
+        { "type": "cta" },
+        { "type": "cta", "settings": { "label": "Découvrir le concept →" } },
+        { "type": "trust" },
+        { "type": "trust", "settings": { "text": "🇫🇷 Imprimé & expédié localement" } },
+        { "type": "trust", "settings": { "text": "✂️ Pièces uniques sur-mesure" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

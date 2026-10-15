@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Accueil royal{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-in">
+    <div class="hero-copy">
+      <p class="hero-badge">🐾 Nº1 de l'accessoire royal en France</p>
+      <h1 class="hero-title">{{ settings.hero_title }}</h1>
+      <p class="hero-sub">{{ settings.hero_subtitle }}</p>
+      <div class="hero-actions">
+        <a href="/catalogue" class="btn btn-primary">Créer mon produit royal</a>
+        <a href="/page/a-propos" class="btn btn-ghost">L'histoire d'Altesse et Barnabé 📖</a>
+      </div>
+      <ul class="hero-trust">
+        <li>⭐ 4,9/5 — 12 400 avis</li>
+        <li>🇫🇷 Imprimé localement</li>
+        <li>✂️ Pièces uniques</li>
+      </ul>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-blob"></div>
+      <img src="{{ url_for('static', filename='logo-mascotte.png') }}" alt="Altesse, chatte souveraine, et Barnabé, chien bâtard sympathique" class="hero-mascot">
+      <span class="sticker sticker-pink">-10% 🎉</span>
+      <span class="sticker sticker-blue">100% Fun ⚡</span>
+    </div>
+  </div>
+</section>
+
+<section class="sect">
+  <div class="sect-head">
+    <h2 class="sect-title">Le Royaume <span class="accent">en 3 arguments</span></h2>
+    <p class="sect-sub">Altesse exige, Barnabé s'enthousiasme, nous imprimons.</p>
+  </div>
+  <div class="reassurance-grid">
+    <div class="reassure-card">
+      <span class="reassure-icon icon-yellow">✨</span>
+      <h3>Pièces uniques &amp; sur-mesure</h3>
+      <p>Photo, prénom, punchline improbable : chaque création est taillée pour votre souverain.</p>
+    </div>
+    <div class="reassure-card">
+      <span class="reassure-icon icon-pink">🎁</span>
+      <h3>Idées cadeaux hilarantes</h3>
+      <p>Anniversaire, Noël ou simple envie de faire sourire : rires garantis, même si Sa Majesté reste impassible.</p>
+    </div>
+    <div class="reassure-card">
+      <span class="reassure-icon icon-blue">🇫🇷</span>
+      <h3>Impression &amp; expédition locale</h3>
+      <p>Ateliers proches de chez vous : délais courts, qualité vérifiée pièce par pièce.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sect">
+  <div class="sect-head">
+    <h2 class="sect-title">Les Best-Sellers <span class="accent">de la Cour</span></h2>
+    <p class="sect-sub">Les titres de noblesse les plus commandés du royaume.</p>
+  </div>
+  {% if products %}
+  <div class="products-grid">
+    {% for p in products %}
+    {% include "product-card.html" %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty-note">Le catalogue est encore vide. Sa Majesté va bientôt se rhabiller. 👑</p>
+  {% endif %}
+</section>
+
+<section class="sect reviews">
+  <div class="sect-head">
+    <h2 class="sect-title">Wall of Love <span class="accent">💛</span></h2>
+    <p class="sect-sub">Les serviteurs témoignent. Leurs Majestés accordent parfois un clignement approbateur.</p>
+  </div>
+  <div class="reviews-grid">
+    <figure class="review-card">
+      <div class="review-head"><span class="review-avatar">🐕</span>
+        <div><cite>Julie &amp; Hachiko</cite><span class="stars">★★★★★</span></div></div>
+      <blockquote>« Le paillasson est un chef-d'œuvre. Hachiko l'a ignoré avec une élégance royale. »</blockquote>
+    </figure>
+    <figure class="review-card">
+      <div class="review-head"><span class="review-avatar">🐈</span>
+        <div><cite>Karim &amp; Pikachu</cite><span class="stars">★★★★★</span></div></div>
+      <blockquote>« Le mug arrive pile quand Altesse juge mon café du matin, c'est parfait. »</blockquote>
+    </figure>
+    <figure class="review-card">
+      <div class="review-head"><span class="review-avatar">🐩</span>
+        <div><cite>Sophie &amp; Bonbon</cite><span class="stars">★★★★★</span></div></div>
+      <blockquote>« Barnabé a bavé sur le colis d'origine. Le remplacement est arrivé en 2 jours, tout sourire ! »</blockquote>
+    </figure>
+    <figure class="review-card">
+      <div class="review-head"><span class="review-avatar">🐹</span>
+        <div><cite>Thomas &amp; Croquette</cite><span class="stars">★★★★★</span></div></div>
+      <blockquote>« La plaque "Palais de Croquette" sur sa cage c'est de l'art. Expédition en 3 jours ! »</blockquote>
+    </figure>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,98 @@
+{%- comment -%} Section Contact — formulaire natif Shopify Pop-Art {%- endcomment -%}
+<section class="page-section page-contact">
+  <div class="container">
+    <header class="page-header">
+      <h1 class="page-title">{{ page.title }}</h1>
+      <p class="page-date">{{ section.settings.intro_text }}</p>
+    </header>
+
+    <div class="contact-layout">
+      <div class="page-card contact-card">
+        {%- form 'contact', class: 'contact-form', id: 'ContactForm' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="form-banner form-banner--success" role="status">
+              🎉 Plainte bien reçue ! Sa Majesté (ou plutôt son service client) vous répondra sous 24 h ouvrées.
+            </p>
+          {%- elsif form.errors -%}
+            <p class="form-banner form-banner--error" role="alert">
+              ⚠️ Oups, le pigeon royal s'est perdu. Vérifiez vos champs{{ form.errors.messages | join: ', ' }}.
+            </p>
+          {%- endif -%}
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="ContactName">Nom du serviteur *</label>
+              <input
+                type="text"
+                id="ContactName"
+                name="contact[name]"
+                value="{{ form.name }}"
+                required
+                autocomplete="name"
+                placeholder="Votre nom"
+              >
+            </div>
+            <div class="form-field">
+              <label for="ContactEmail">E-mail *</label>
+              <input
+                type="email"
+                id="ContactEmail"
+                name="contact[email]"
+                value="{{ form.email }}"
+                required
+                autocomplete="email"
+                placeholder="votre@email.com"
+              >
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="ContactSubject">Sujet *</label>
+            <input
+              type="text"
+              id="ContactSubject"
+              name="contact[Sujet]"
+              required
+              placeholder="Suivi de commande, personnalisation, blague royale…"
+            >
+          </div>
+
+          <div class="form-field">
+            <label for="ContactBody">Votre message *</label>
+            <textarea
+              id="ContactBody"
+              name="contact[body]"
+              rows="6"
+              required
+              placeholder="Écrivez ici, Sa Majesté lit tout (ou du moins son service client)."
+            >{{ form.body }}</textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary form-submit">
+            {{ section.settings.button_label }}
+          </button>
+          <p class="form-note">⚡ Réponse par pigeon royal en 24 h ouvrées — promis, pas de langue de bois.</p>
+        {%- endform -%}
+      </div>
+
+      {%- if section.settings.show_info -%}
+        <aside class="page-card contact-info">
+          <h2>📍 Le QG du royaume</h2>
+          <p>{{ section.settings.info_text }}</p>
+        </aside>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Formulaire contact",
+  "settings": [
+    { "type": "text", "id": "intro_text", "label": "Phrase d'intro", "default": "Une question, une plainte, un compliment pour le Poilu ? Écrivez-nous !" },
+    { "type": "text", "id": "button_label", "label": "Texte du bouton", "default": "Envoyer au Royaume" },
+    { "type": "checkbox", "id": "show_info", "label": "Afficher l'encadré infos", "default": true },
+    { "type": "richtext", "id": "info_text", "label": "Texte de l'encadré", "default": "<p>Service client : du lundi au vendredi, 9h-17h.<br>Réponse en 24 h ouvrées.<br>contact@samajestelepoilu.fr</p>" }
+  ]
+}
+{% endschema %}

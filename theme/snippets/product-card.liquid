@@ -1,0 +1,80 @@
+{%- comment -%}
+  Carte produit Pop-Art réutilisable.
+  Paramètres :
+    {%- endcomment -%}
+  
+{%- liquid
+  assign card_product = product | default: settings_product
+  assign show_badge = show_badge | default: true
+  assign show_vendor = show_vendor | default: false
+-%}
+
+{%- if card_product != blank -%}
+  <article class="product-card" {% if card_product.metafields.custom.theme_rotation %}style="--card-rotation: {{ card_product.metafields.custom.theme_rotation }}deg"{% endif %}>
+    {%- if show_badge and card_product.compare_at_price > card_product.price -%}
+      {%- comment -%} Badge auto = produit en promo (fallback). Un badge « Best-seller » peut être configuré via metafield custom.badge {%- endcomment -%}
+    {%- endif -%}
+
+    {%- assign custom_badge = card_product.metafields.custom.badge -%}
+    {%- if custom_badge != blank and show_badge -%}
+      <span class="product-badge">{{ custom_badge }}</span>
+    {%- elsif card_product.available == false and show_badge -%}
+      <span class="product-badge product-badge--soldout">Épuisé</span>
+    {%- endif -%}
+
+    <a href="{{ card_product.url }}" class="product-media-link" aria-label="{{ card_product.title | escape }}">
+      <div class="product-visual">
+        {%- if card_product.featured_image -%}
+          <img
+            src="{{ card_product.featured_image | image_url: width: 600 }}"
+            alt="{{ card_product.featured_image.alt | escape }}"
+            width="600" height="{{ 600 | divided_by: card_product.featured_image.aspect_ratio | round }}"
+            loading="lazy"
+            class="product-image"
+          >
+        {%- else -%}
+          <span class="product-emoji" aria-hidden="true">🐾</span>
+        {%- endif -%}
+      </div>
+    </a>
+
+    <h3 class="product-title">
+      <a href="{{ card_product.url }}">{{ card_product.title | escape }}</a>
+    </h3>
+
+    {%- if show_vendor and card_product.vendor != blank -%}
+      <p class="product-vendor">{{ card_product.vendor }}</p>
+    {%- endif -%}
+
+    {%- if card_product.description != blank -%}
+      <p class="product-desc">{{ card_product.description | strip_html | truncate: 90 }}</p>
+    {%- endif -%}
+
+    <p class="product-price">
+      {%- if card_product.compare_at_price > card_product.price -%}
+        <s>{{ card_product.compare_at_price | money }}</s>
+        <span class="price-sale">{{ card_product.price | money }}</span>
+      {%- else -%}
+        {{ card_product.price | money }}
+      {%- endif -%}
+    </p>
+
+    {%- comment -%} Formulajre Shopify Panier (compatible Ajax Cart) {%- endcomment -%}
+    {%- form 'product', card_product, class: 'product-form', id: 'product-form-' | append: card_product.id -%}
+      <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <button
+        type="submit"
+        name="add"
+        class="btn btn-cart"
+        {% unless card_product.available %}disabled{% endunless %}
+      >
+        {%- if card_product.available -%}
+          Ajouter au panier
+        {%- else -%}
+          Épuisé
+        {%- endif -%}
+      </button>
+    {%- endform -%}
+  </article>
+{%- endif -%}

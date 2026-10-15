@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<section class="sect">
+  <div class="product-detail">
+    <div class="product-hero-visual" style="--hue: {{ product.hue }}">
+      {% if product.image %}
+        <img src="{{ product.image }}" alt="{{ product.name }}">
+      {% else %}
+        <span class="product-emoji xl">{{ product.emoji }}</span>
+      {% endif %}
+      {% if product.status == "Sur commande POD" %}
+        <span class="product-badge badge-pod">Sur commande 📦</span>
+      {% elif product.status == "En stock" %}
+        <span class="product-badge">En stock ⚡</span>
+      {% endif %}
+    </div>
+
+    <div class="product-detail-info">
+      <p class="product-cat">{{ product.category }} · Référence SMP-{{ "%04d" | format(product.id) }}</p>
+      <h1 class="product-detail-title">{{ product.name }}</h1>
+      <p class="product-detail-desc">{{ product.description }}</p>
+      <p class="product-price detail">{{ "%.2f" | format(product.price) }} €</p>
+
+      <div class="option-group" id="option-sizes">
+        <p class="option-label">Taille <span class="req">— votre choix change tout</span></p>
+        <div class="option-chips">
+          {% for s in product.sizes %}
+          <button type="button" class="chip {{ 'is-active' if loop.first }}" data-size="{{ s }}">{{ s }}</button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="option-group" id="option-colors">
+        <p class="option-label">Couleur <span class="req">— le goût d'Altesse</span></p>
+        <div class="option-chips">
+          {% for c in product.colors %}
+          <button type="button" class="chip {{ 'is-active' if loop.first }}" data-color="{{ c }}">{{ c }}</button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="option-group">
+        <p class="option-label">Quantité</p>
+        <div class="qty-wrap">
+          <button type="button" class="qty-btn" data-qty-step="-1">−</button>
+          <input type="number" class="qty-input" id="pdp-qty" value="1" min="1" max="99">
+          <button type="button" class="qty-btn" data-qty-step="1">+</button>
+        </div>
+      </div>
+
+      <div class="option-group pet-customization">
+        <p class="option-label">Personnalisez votre article</p>
+        <label for="pet-photo" class="pet-photo-label">📷 Télécharger la photo de votre poilu</label>
+        <input type="file" id="pet-photo" accept="image/*" class="hidden">
+        <div id="pet-photo-preview" class="pet-photo-preview" hidden>
+          <img src="" alt="Aperçu de la photo de votre animal">
+        </div>
+        <label class="field-inline pet-name-field" for="pet-name">
+          Prénom de votre animal
+          <input type="text" id="pet-name" maxlength="80" placeholder="Ex. Barnabé">
+        </label>
+      </div>
+
+      <button class="btn btn-primary btn-block add-to-cart-btn" id="pdp-add"
+        data-id="{{ product.id }}"
+        data-size="{{ product.sizes[0] if product.sizes else 'Unique' }}"
+        data-color="{{ product.colors[0] if product.colors else 'Standard' }}"
+        data-qty="1"
+        {% if product.status == "Indisponible" %}disabled{% endif %}>
+        🛒 Ajouter au panier
+      </button>
+
+      <ul class="reassure-list">
+        <li>🚚 Livraison offerte dès {{ settings.free_shipping_threshold }}€ — sinon {{ "%.2f" | format(settings.shipping_fee) }}€</li>
+        <li>✂️ Imprimé spécialement pour vous (délai 3-5 j ouvrés)</li>
+        <li>🔁 Satisfait ou retiré : notre équipe vous accompagne en cas de problème</li>
+        <li>👑 Validé par Altesse (un clignement = accord)</li>
+      </ul>
+    </div>
+  </div>
+
+  {% if others %}
+  <div class="related">
+    <h2 class="sect-title">Les autres <span class="accent">coqueluches</span></h2>
+    <div class="products-grid">
+      {% for p in others %}
+      {% with p=p %}{% include "product-card.html" %}{% endwith %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</section>
+
+{# Le script inline_panier a été supprimé : global/static/app.js gère TOUT
+   (clics .add-to-cart-btn, chips, quantité, upload photo, localStorage smp_cart
+   et événement "cart-updated"). Un seul format d'article : {id, product_id, size,
+   color, qty, custom_image_url, pet_name}. #}
+{% endblock %}

@@ -1,0 +1,11 @@
+{
+  "type": "footer",
+  "name": "Pied de page du site",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "sections": {}
+    }
+  },
+  "order": ["footer"]
+}

@@ -1,0 +1,71 @@
+{%- comment -%} Section Best-Sellers — cartes produits dynamiques {%- endcomment -%}
+<section class="products" id="best-sellers" aria-labelledby="products-title">
+  <div class="container">
+    <h2 id="products-title" class="section-title">{{ section.settings.heading }} <span class="title-accent">{{ section.settings.heading_accent }}</span></h2>
+    <p class="section-subtitle">{{ section.settings.subheading }}</p>
+
+    <div class="products-grid" data-product-grid>
+      {%- assign col = collections[section.settings.collection] -%}
+      {%- if section.settings.manual_products != blank -%}
+        {%- comment -%} Mode manuel : produits choisis un à un {%- endcomment -%}
+        {%- for handle in section.settings.manual_products -%}
+          {%- assign p = all_products[handle] -%}
+          {%- if p != blank -%}
+            {%- render 'product-card', card_product: p, show_badge: true, show_vendor: section.settings.show_vendor -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif col != blank -%}
+        {%- comment -%} Mode collection : jusqu'à max_products de la collection choisie {%- endcomment -%}
+        {%- assign limit = section.settings.max_products | default: 4 -%}
+        {%- for p in col.products limit: limit -%}
+          {%- render 'product-card', card_product: p, show_badge: true, show_vendor: section.settings.show_vendor -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Fallback : 4 premiers produits du catalogue {%- endcomment -%}
+        {%- for p in collections.all.products limit: 4 -%}
+          {%- render 'product-card', card_product: p, show_badge: true, show_vendor: section.settings.show_vendor -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Best-Sellers",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Les Best-Sellers" },
+    { "type": "text", "id": "heading_accent", "label": "Mot accentué", "default": "de la Cour" },
+    { "type": "text", "id": "subheading", "label": "Sous-titre", "default": "Les titres de noblesse les plus commandés du royaume." },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection source"
+    },
+    {
+      "type": "product_list",
+      "id": "manual_products",
+      "label": "Ou produits choisis à la main (prioritaire)",
+      "limit": 8
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Nombre max de produits (mode collection)",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Afficher le vendeur",
+      "default": false
+    }
+  ],
+  "presets": [
+    { "name": "Best-Sellers" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sa Majesté le Poilu — Accessoires et vêtements personnalisés et humoristiques pour animaux rois et leurs serviteurs dévoués.">
+    <title>Sa Majesté le Poilu — Accessoires royaux pour animaux</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============ HEADER ============ -->
+    <header class="header">
+        <div class="header-top">
+            <span>🐾 Livraison offerte dès 49€ — Sa Majesté approuve</span>
+        </div>
+        <div class="header-main container">
+            <a href="#" class="logo" aria-label="Sa Majesté le Poilu, accueil">
+                <img src="static/logo-mascotte.png" alt="" class="logo-mascot" width="48" height="48">
+                <span class="logo-text">Sa Majesté <em>le Poilu</em></span>
+            </a>
+
+            <form class="search" role="search" action="#" method="get">
+                <label for="site-search" class="sr-only">Rechercher un produit</label>
+                <input id="site-search" type="search" name="q" placeholder="Rechercher un produit royal…" autocomplete="off">
+                <button type="submit" aria-label="Rechercher">🔍</button>
+            </form>
+
+            <a href="#" class="cart" aria-label="Panier, 0 article">
+                <span class="cart-icon" aria-hidden="true">🛒</span>
+                <span class="cart-counter" id="cart-counter">0</span>
+            </a>
+        </div>
+        <nav class="nav" aria-label="Navigation principale">
+            <ul class="nav-list container">
+                <li><a href="#categories">Collection Royale</a></li>
+                <li><a href="#best-sellers">Catégories</a></li>
+                <li><a href="#avis">Avis Clients</a></li>
+                <li><a href="#concept">Le Concept</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ============ HERO ============ -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container hero-inner">
+                <div class="hero-content">
+                    <p class="hero-badge">🐾 Nº1 de l'accessoire royal en France</p>
+                    <h1 id="hero-title">Articles officiels pour animaux <span class="highlight">rois</span> &amp; leurs serviteurs dévoués</h1>
+                    <p class="hero-subtitle">Mugs, paillassons et plaques personnalisées qui rappellent à votre bombardier du salon qui dirige vraiment la maison. Il juge, nous imprimons.</p>
+                    <div class="hero-actions">
+                        <a href="#best-sellers" class="btn btn-primary">Créer mon produit royal</a>
+                        <a href="#concept" class="btn btn-ghost">Découvrir le concept →</a>
+                    </div>
+                    <ul class="hero-trust" role="list">
+                        <li>⭐ 4,9/5 — 12 400 avis</li>
+                        <li>🇫🇷 Imprimé &amp; expédié localement</li>
+                        <li>✂️ Pièces uniques sur-mesure</li>
+                    </ul>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-blob" aria-hidden="true"></div>
+                    <img src="static/logo-mascotte.png" alt="La mascotte officielle : un chat désabusé couronné à côté d'un chien joyeux avec la langue sortie" class="hero-mascot" width="520" height="520">
+                    <span class="visual-sticker" aria-hidden="true">-10% 🎉</span>
+                    <span class="visual-sticker visual-sticker-2" aria-hidden="true">100% Fun ⚡</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CATÉGORIES ============ -->
+        <section class="categories" id="categories" aria-labelledby="categories-title">
+            <div class="container">
+                <h2 id="categories-title" class="section-title">Collection Royale <span class="title-accent">par univers</span></h2>
+                <p class="section-subtitle">Chaque article est personnalisable (photo, nom, blague couronnée d'or).</p>
+                <ul class="categories-grid" role="list">
+                    <li>
+                        <a href="#" class="category-card">
+                            <span class="category-emoji" aria-hidden="true">☕</span>
+                            <span class="category-name">Mugs &amp; Tasses</span>
+                            <span class="category-count">24 modèles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="category-card">
+                            <span class="category-emoji" aria-hidden="true">🚪</span>
+                            <span class="category-name">Paillassons</span>
+                            <span class="category-count">12 modèles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="category-card">
+                            <span class="category-emoji" aria-hidden="true">🦴</span>
+                            <span class="category-name">Bandanas &amp; Vêtements</span>
+                            <span class="category-count">31 modèles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="category-card">
+                            <span class="category-emoji" aria-hidden="true">🛏️</span>
+                            <span class="category-name">Coussins &amp; Plaids</span>
+                            <span class="category-count">18 modèles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="category-card">
+                            <span class="category-emoji" aria-hidden="true">🎖️</span>
+                            <span class="category-name">Plaques &amp; Médailles</span>
+                            <span class="category-count">9 modèles</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ============ RÉASSURANCE ============ -->
+        <section class="reassurance" id="concept" aria-labelledby="reassurance-title">
+            <div class="container">
+                <h2 id="reassurance-title" class="sr-only">Nos garanties</h2>
+                <ul class="reassurance-grid" role="list">
+                    <li class="reassurance-card">
+                        <span class="reassurance-icon" aria-hidden="true">✨</span>
+                        <h3>Pièces uniques &amp; sur-mesure</h3>
+                        <p>Photo, prénom, punchline improbable : chaque création est confectionnée rien que pour votre souverain. Aucun produit en série, jamais.</p>
+                    </li>
+                    <li class="reassurance-card">
+                        <span class="reassurance-icon" aria-hidden="true">🎁</span>
+                        <h3>Idées cadeaux hilarantes</h3>
+                        <p>Anniversaire, Noël ou simple levée de callocapterie : nos modèles font rire toute la famille (sauf peut-être le principal intéressé).</p>
+                    </li>
+                    <li class="reassurance-card">
+                        <span class="reassurance-icon" aria-hidden="true">🇫🇷</span>
+                       <h3>Confection unique &amp; Expédition suivie</h3>
+<p>Fabrication à la demande dans nos ateliers partenaires : contrôle qualité rigoureux et suivi détaillé de votre commande.</p>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ============ BEST-SELLERS ============ -->
+        <section class="products" id="best-sellers" aria-labelledby="products-title">
+            <div class="container">
+                <h2 id="products-title" class="section-title">Les Best-Sellers <span class="title-accent">de la Cour</span></h2>
+                <p class="section-subtitle">Les titres de noblesse les plus commandés du royaume, approuvés par 12 400 serviteurs.</p>
+
+                <div class="products-grid">
+                    <article class="product-card">
+                        <div class="product-visual" aria-hidden="true">☕</div>
+                        <span class="product-badge">Best-seller</span>
+                        <h3 class="product-title">Mug « Le Grand Chef du Canapé »</h3>
+                        <p class="product-desc">Le café du matin servi comme il se doit : par vous, pour Lui.</p>
+                        <p class="product-price">24,90 €</p>
+                        <button class="btn btn-cart" type="button" data-product="Mug Le Grand Chef du Canapé">Ajouter au panier</button>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-visual" aria-hidden="true">🚪</div>
+                        <span class="product-badge">Best-seller</span>
+                        <h3 class="product-title">Paillasson « Avis au Personnel »</h3>
+                        <p class="product-desc">Désormais, on s'essuie les pattes. C'est Lui qui l'a décidé.</p>
+                        <p class="product-price">34,90 €</p>
+                        <button class="btn btn-cart" type="button" data-product="Paillasson Avis au Personnel">Ajouter au panier</button>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-visual" aria-hidden="true">🦴</div>
+                        <span class="product-badge">Best-seller</span>
+                        <h3 class="product-title">Bandana « Gardien du Logis »</h3>
+                        <p class="product-desc">Un drapeau royal que Votre Majesté arborera fièrement (pour un temps).</p>
+                        <p class="product-price">19,90 €</p>
+                        <button class="btn btn-cart" type="button" data-product="Bandana Gardien du Logis">Ajouter au panier</button>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-visual" aria-hidden="true">🎖️</div>
+                        <span class="product-badge">Best-seller</span>
+                        <h3 class="product-title">Médaille « Noble Originaire »</h3>
+                        <p class="product-desc">Identification officielle du nom et du blason de la dynastie poilue.</p>
+                        <p class="product-price">16,90 €</p>
+                        <button class="btn btn-cart" type="button" data-product="Médaille Noble Originaire">Ajouter au panier</button>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ WALL OF LOVE ============ -->
+        <section class="reviews" id="avis" aria-labelledby="reviews-title">
+            <div class="container">
+                <h2 id="reviews-title" class="section-title">Wall of Love <span class="title-accent">💛</span></h2>
+                <p class="section-subtitle">Les serviteurs témoignent. Leurs majestés hébêtent approbatives.</p>
+
+                <div class="reviews-grid">
+                    <figure class="review-card">
+                        <div class="review-head">
+                            <span class="review-avatar" aria-hidden="true">🐕</span>
+                            <div>
+                                <cite>Julie M. &amp; Hachiko</cite>
+                                <span class="stars" aria-label="Note : 5 étoiles sur 5">★★★★★</span>
+                            </div>
+                        </div>
+                        <blockquote>« Le paillasson "Rentrez vos pattes" est un chef-d'œuvre. Hachiko l'a déjà ignoré avec une élégance royale. »</blockquote>
+                    </figure>
+
+                    <figure class="review-card">
+                        <div class="review-head">
+                            <span class="review-avatar" aria-hidden="true">🐈</span>
+                            <div>
+                                <cite>Karim B. &amp; Pikachu</cite>
+                                <span class="stars" aria-label="Note : 5 étoiles sur 5">★★★★★</span>
+                            </div>
+                        </div>
+                        <blockquote>« Le mug "Humble Serviteur" est parfait pour boire mon café pendant que mon chat me regarde davantage ce qu'il faut faire. »</blockquote>
+                    </figure>
+
+                    <figure class="review-card">
+                        <div class="review-head">
+                            <span class="review-avatar" aria-hidden="true">🐩</span>
+                            <div>
+                                <cite>Sophie L. &amp; Bonbon</cite>
+                                <span class="stars" aria-label="Note : 5 étoiles sur 5">★★★★★</span>
+                            </div>
+                        </div>
+                        <blockquote>« Commandé un bandana avec sa tête de diplômé. Résultat : rires de mon beau-frère garantis + Bonbon est visiblement compensé. »</blockquote>
+                    </figure>
+
+                    <figure class="review-card">
+                        <div class="review-head">
+                            <span class="review-avatar" aria-hidden="true">🐹</span>
+                            <div>
+                                <cite>Thomas P. &amp; Croquette</cite>
+                                <span class="stars" aria-label="Note : 5 étoiles sur 5">★★★★★</span>
+                            </div>
+                        </div>
+                        <blockquote>« La plaque "Palais de Croquette" sur sa cage c'est de l'art. Expédition en 3 jours, campagne acclamée haut et fort. »</blockquote>
+                    </figure>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-newsletter">
+                <h2>-10% sur votre 1ère commande royale</h2>
+                <p>Recevez les nouveautés, promos et blagues de la Cour. Promis, pas de spam (sur l'honneur du Poilu).</p>
+                <form action="#" method="post" class="newsletter-form">
+                    <label for="newsletter-email" class="sr-only">Votre adresse e-mail</label>
+                    <input id="newsletter-email" type="email" name="email" placeholder="votre@email.com" required>
+                    <button type="submit" class="btn btn-primary">Je rejoins la Cour</button>
+                </form>
+            </div>
+
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <p class="footer-logo"><img src="static/logo-mascotte.png" alt="" class="footer-mascot" width="40" height="40"> Sa Majesté <em>le Poilu</em></p>
+                    <p>Accessoires et vêtements personnalisés pour animaux rois et serviteurs dévoués. Imprimé en France avec amour.</p>
+                    <ul class="footer-social" role="list">
+                        <li><a href="#" aria-label="Instagram">📸 Instagram</a></li>
+                        <li><a href="#" aria-label="TikTok">🎵 TikTok</a></li>
+                        <li><a href="#" aria-label="Facebook">👍 Facebook</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Boutique</h3>
+                    <ul role="list">
+                        <li><a href="#categories">Mugs &amp; Tasses</a></li>
+                        <li><a href="#categories">Paillassons</a></li>
+                        <li><a href="#categories">Bandanas</a></li>
+                        <li><a href="#categories">Plaques</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Informations</h3>
+                    <ul role="list">
+                        <li><a href="#">Livraison &amp; retours</a></li>
+                        <li><a href="#">Guide des tailles</a></li>
+                        <li><a href="#">Nous contacter</a></li>
+                        <li><a href="#">FAQ du royaume</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Légal</h3>
+                    <ul role="list">
+                        <li><a href="#">CGV</a></li>
+                        <li><a href="#">Confidentialité</a></li>
+                        <li><a href="#">Cookies</a></li>
+                        <li><a href="#">Mentions légales</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Sa Majesté le Poilu — Tous droits réservés à Sa Majesté.</p>
+                <ul class="payment-badges" role="list" aria-label="Paiements sécurisés">
+                    <li><span aria-hidden="true">💳</span> Visa</li>
+                    <li><span aria-hidden="true">💳</span> Mastercard</li>
+                    <li><span aria-hidden="true">🅿️</span> PayPal</li>
+                    <li><span aria-hidden="true">🍎</span> Apple Pay</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Panier : compteur simple (démo front-only)
+        (function () {
+            const counter = document.getElementById("cart-counter");
+            let count = 0;
+            document.querySelectorAll(".btn-cart").forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    count++;
+                    counter.textContent = count;
+                    btn.textContent = "✓ Ajouté !";
+                    setTimeout(function () { btn.textContent = "Ajouter au panier"; }, 1200);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

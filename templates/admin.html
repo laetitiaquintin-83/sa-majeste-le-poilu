@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Espace Greffier — Sa Majesté le Poilu</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v=4) }}">
+</head>
+<body>
+<div class="admin-wrap">
+
+  <header class="admin-top">
+    <span>👑 <strong>Espace Greffier</strong> — Sa Majesté le Poilu</span>
+    <div class="admin-status">
+      <span id="tab-label">Tableau de bord</span>
+      <span class="admin-dot on" title="Session active"></span>
+      <button class="tbl-btn" id="logout-btn">Déconnexion</button>
+    </div>
+  </header>
+
+  <!-- ============ LOGIN ============ -->
+  <div id="admin-login">
+    <div class="login-card">
+      <h1>🔐 Le greffier se présente</h1>
+      <p>Cette antichambre est réservée aux gestionnaires du Royaume.</p>
+      <form id="login-form">
+        <div class="field-inline">
+          <label for="login-password">Mot de passe du greffier</label>
+          <input type="password" id="login-password" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="login-btn">Entrer dans la tour</button>
+        <p class="form-note" id="login-error"></p>
+      </form>
+      <p class="form-note">Indice de démo : <strong>poilu2026</strong> (à changer dans Réglages !)</p>
+    </div>
+  </div>
+
+  <!-- ============ BOARD ============ -->
+  <div id="admin-board" hidden>
+    <nav class="admin-tabs" aria-label="Sections du dashboard">
+      <button class="admin-tab is-active" data-panel="stats">📊 Tableau de bord</button>
+      <button class="admin-tab" data-panel="produits">📦 Catalogue</button>
+      <button class="admin-tab" data-panel="commandes">🧾 Commandes</button>
+      <button class="admin-tab" data-panel="galerie">🖼️ Galerie</button>
+      <button class="admin-tab" data-panel="reglages">⚙️ Réglages</button>
+    </nav>
+
+    <main class="admin-main">
+      <!-- -------- STATS -------- -->
+      <section class="admin-panel is-active" id="panel-stats">
+        <h2>Vue d'ensemble du Royaume <small id="stat-month"></small></h2>
+        <div class="stats-grid">
+          <div class="stat-card c-yellow"><p class="stat-label">Chiffre d'affaires du mois</p><p class="stat-value" id="stat-ca">—</p></div>
+          <div class="stat-card c-pink"><p class="stat-label">Commandes ce mois-ci</p><p class="stat-value" id="stat-orders">—</p><small style="color:var(--text-soft)">Total historique : <span id="stat-orders-total">—</span></small></div>
+          <div class="stat-card c-blue" style="grid-column: span 2;"><p class="stat-label">Produit le plus vendu</p><p class="stat-value" id="stat-best">—</p></div>
+          <div class="stat-card c-mint" style="grid-column: span 4;"><p class="stat-label">Marge nette estimée du mois</p><p class="stat-value" id="stat-margin">—</p></div>
+        </div>
+        <div class="admin-card">
+          <h2>🐾 Comment ça marche ?</h2>
+          <p style="color:var(--text-soft)">Ce tableau se met à jour dès que les serviteurs commandent sur la boutique publique.
+          Les commandes arrivent en statut <strong>Nouvelle</strong> : suivez-les dans l'onglet <strong>Commandes</strong> pour les préparer, expédier et clore.</p>
+        </div>
+      </section>
+
+      <!-- -------- PRODUITS -------- -->
+      <section class="admin-panel" id="panel-produits">
+        <div class="admin-card">
+          <h2 id="pf-title">➕ Nouveau produit royal</h2>
+          <form id="product-form" enctype="multipart/form-data">
+            <input type="hidden" id="pf-id">
+            <div class="admin-grid-2">
+              <div class="field-inline"><label for="pf-name">Nom du produit *</label>
+                <input id="pf-name" name="name" required placeholder="Mug « Altesse méprise ton café »"></div>
+              <div class="field-inline"><label for="pf-category">Catégorie *</label>
+                <select id="pf-category" name="category">
+                  <option>Mugs</option><option>T-shirts</option><option>Vêtements Animaux</option>
+                  <option>Accessoires</option><option>Portraits Sur-Mesure</option>
+                </select></div>
+              <div class="field-inline"><label for="pf-price">Prix de vente (€) *</label>
+                <input id="pf-price" name="price" type="number" step="0.01" min="0.01" required placeholder="24.90"></div>
+              <div class="field-inline"><label for="pf-cost">Prix d'achat / coût (€) *</label>
+                <input id="pf-cost" name="cost" type="number" step="0.01" min="0" required placeholder="7.50"></div>
+              <div class="field-inline"><label for="pf-status">Statut</label>
+                <select id="pf-status" name="status">
+                  <option>En stock</option><option>Sur commande POD</option><option>Indisponible</option>
+                </select></div>
+              <div class="field-inline"><label for="pf-emoji">Émoji visuel (si pas de photo)</label>
+                <input id="pf-emoji" name="emoji" placeholder="🐈" maxlength="8"></div>
+              <div class="field-inline"><label for="pf-hue">Couleur de fond (hex)</label>
+                <input id="pf-hue" name="hue" type="color" value="#FBBF24" style="height:46px;padding:4px"></div>
+              <div class="field-inline"><label for="pf-image">Image (URL ou /static/uploads/…)</label>
+                <input id="pf-image" name="image" placeholder="/static/uploads/mon-mug.png"></div>
+              <div class="field-inline">
+                <label for="pf-image-file">Téléverser une image produit</label>
+                <input id="pf-image-file" name="image_file" type="file" accept="image/*">
+                <div id="pf-image-preview" class="admin-image-preview" hidden>
+                  <img src="" alt="Aperçu de l'image du produit">
+                </div>
+              </div>
+              <div class="field-inline"><label for="pf-sizes">Déclinaisons tailles (séparées par ,)</label>
+                <input id="pf-sizes" name="sizes" placeholder="S, M, L, XL"></div>
+              <div class="field-inline"><label for="pf-colors">Déclinaisons couleurs (séparées par ,)</label>
+                <input id="pf-colors" name="colors" placeholder="Blanc, Noir, Rose"></div>
+              <div class="field-inline" style="grid-column:1/-1"><label for="pf-description">Description narrative</label>
+                <textarea id="pf-description" name="description" rows="3" placeholder="L'histoire drôle qui rend ce produit irrésistible..."></textarea></div>
+            </div>
+            <div class="admin-actions-row">
+              <button type="submit" class="btn btn-primary" id="pf-submit">👑 Créer le produit</button>
+              <button type="button" class="btn btn-ghost" id="pf-reset">Annuler</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="admin-card">
+          <h2>📦 Le catalogue du Royaume</h2>
+          <div class="filters-admin">
+            <select id="prod-filter-cat" class="filter-btn">
+              <option value="all">Toutes catégories</option>
+              <option>Mugs</option><option>T-shirts</option><option>Vêtements Animaux</option>
+              <option>Accessoires</option><option>Portraits Sur-Mesure</option>
+            </select>
+            <select id="prod-filter-status" class="filter-btn">
+              <option value="all">Tous statuts</option>
+              <option>En stock</option><option>Sur commande POD</option><option>Indisponible</option>
+            </select>
+          </div>
+          <div style="overflow-x:auto">
+          <table class="admin-table">
+            <thead><tr>
+              <th>&nbsp;</th><th>Produit</th><th>Catégorie</th><th>Prix &amp; marge</th><th>Déclinaisons</th><th>Statut</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="products-table-body"></tbody>
+          </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------- COMMANDES -------- -->
+      <section class="admin-panel" id="panel-commandes">
+        <div class="admin-card">
+          <h2>🧾 Les commandes reçues</h2>
+          <div class="filters-admin">
+            <select id="order-filter-status" class="filter-btn">
+              <option value="all">Tous les statuts</option>
+              <option>Nouvelle</option><option>En préparation</option><option>Expédiée</option><option>Livrée</option>
+            </select>
+          </div>
+          <div style="overflow-x:auto">
+          <table class="admin-table">
+            <thead><tr>
+              <th>Référence</th><th>Client</th><th>Articles</th><th>Total</th><th>Statut &amp; actions</th>
+            </tr></thead>
+            <tbody id="orders-table-body"></tbody>
+          </table>
+          </div>
+          <p style="color:var(--text-soft);font-size:.85rem;margin-top:10px">
+            💡 Clic sur <strong>« Détails »</strong> pour voir l'adresse complète de livraison.
+            Chaque bouton avance la commande d'une étape (Nouvelle → En préparation → Expédiée → Livrée).
+          </p>
+        </div>
+      </section>
+
+      <!-- -------- GALERIE / LOOKBOOK -------- -->
+      <section class="admin-panel" id="panel-galerie">
+        <div class="admin-card">
+          <h2>🖼️ Poster sur le mur des majestés</h2>
+          <p style="color:var(--text-soft);font-size:.85rem;margin-bottom:12px">
+            Les visuels apparaissent sur la page <a href="/galerie" target="_blank" rel="noopener">/galerie</a>,
+            avec un lien vers la boutique au survol. Formats : jpg, png, gif, webp (8 Mo max).
+          </p>
+          <form id="gallery-form" enctype="multipart/form-data">
+            <div class="admin-grid-2">
+              <div class="field-inline"><label for="gf-image">Image *</label>
+                <input id="gf-image" name="image" type="file" accept="image/*" required></div>
+              <div class="field-inline"><label for="gf-title">Titre du visuel</label>
+                <input id="gf-title" name="title" placeholder="Altesse trône sur le Tapis Royal"></div>
+              <div class="field-inline"><label for="gf-category">Catégorie (optionnelle)</label>
+                <input id="gf-category" name="category" list="gallery-cats" placeholder="Lookbook, Clients &amp; leurs Rois…">
+                <datalist id="gallery-cats">
+                  <option>Lookbook</option><option>Clients &amp; leurs Rois</option>
+                  <option>Atelier</option><option>Portrait du Mois</option>
+                </datalist></div>
+            </div>
+            <div class="admin-actions-row">
+              <button type="submit" class="btn btn-primary" id="gf-submit">✨ Téléverser le visuel</button>
+            </div>
+            <p class="form-note" id="gallery-note"></p>
+          </form>
+        </div>
+
+        <div class="admin-card">
+          <h2>🖼️ Visuels en ligne <small>(<span id="gal-count">0</span>)</small></h2>
+          <div id="gallery-grid-admin" class="gallery-grid-admin">
+            <p class="empty-note">Chargement des visuels… 📡</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- -------- RÉGLAGES -------- -->
+      <section class="admin-panel" id="panel-reglages">
+        <div class="admin-card">
+          <h2>⚙️ Réglages de la boutique</h2>
+          <form id="settings-form">
+            <div class="field-inline"><label for="set-announcement">Bandeau d'annonce (en haut du site)</label>
+              <input id="set-announcement" name="announcement" placeholder="🐾 Livraison offerte dès 49€"></div>
+            <div class="field-inline"><label for="set-herotitle">Titre du Hero (accueil)</label>
+              <input id="set-herotitle" name="hero_title" placeholder="Articles officiels pour animaux ROIS..."></div>
+            <div class="field-inline"><label for="set-herosub">Sous-titre du Hero</label>
+              <input id="set-herosub" name="hero_subtitle" placeholder="Altesse juge. Barnabé bave."></div>
+            <div class="admin-grid-2">
+              <div class="field-inline"><label for="set-fee">Frais de livraison (€)</label>
+                <input id="set-fee" name="shipping_fee" type="number" step="0.01" min="0"></div>
+              <div class="field-inline"><label for="set-threshold">Livraison offerte à partir de (€)</label>
+                <input id="set-threshold" name="free_shipping_threshold" type="number" step="0.01" min="0"></div>
+              <div class="field-inline"><label for="set-new-password">Nouveau mot de passe (optionnel)</label>
+                <input id="set-new-password" name="new_password" type="password" placeholder="Laisser vide pour garder l'actuel"></div>
+            </div>
+            <div class="admin-actions-row">
+              <button type="submit" class="btn btn-primary">💾 Sauvegarder les réglages</button>
+            </div>
+          </form>
+          <p style="color:var(--text-soft);font-size:.85rem;margin-top:12px">
+            📍 Adresse et e-mail de contact sont visibles sur la page Contact (modifiables via <code>data/boutique.json</code>).
+          </p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    window.SMP_ADMIN_SETTINGS = {{ settings | tojson }};
+  </script>
+  <script src="{{ url_for('static', filename='admin.js', v=3) }}" defer></script>
+</div>
+</body>
+</html>
