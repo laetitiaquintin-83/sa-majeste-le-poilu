@@ -917,5 +917,11 @@ def api_admin_settings():
     save_db(db)
     return jsonify(ok=True, settings=db["settings"])
 
+# Handler pour la page 404 (ultra simple, sans dépendance)
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
+
