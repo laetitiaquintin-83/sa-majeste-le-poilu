@@ -9,9 +9,9 @@
   </div>
 
   <div class="filters" id="catalogue-filters">
-    <button class="filter-btn is-active" data-cat="all">Tout le royaume</button>
+    <button class="filter-btn is-active" data-cat="all" data-category="all">Tout le royaume</button>
     {% for c in categories %}
-    <button class="filter-btn" data-cat="{{ c }}">{{ c }}</button>
+    <button class="filter-btn" data-cat="{{ c }}" data-category="{{ c }}">{{ c }}</button>
     {% endfor %}
   </div>
 

@@ -334,8 +334,12 @@
   }
 
   function normalizeSearchValue(value) {
-    return String(value || "").toLocaleLowerCase("fr-FR")
+    var normalized = String(value || "").trim().toLocaleLowerCase("fr-FR")
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    normalized = normalized.replace(/[\s_-]+/g, " ");
+    return normalized.split(" ").map(function (word) {
+      return word.length > 3 && word.endsWith("s") ? word.slice(0, -1) : word;
+    }).join(" ");
   }
 
   function initCatalogueFilters() {
@@ -355,9 +359,11 @@
       var search = normalizeSearchValue(searchInput.value.trim());
       var visibleCount = 0;
       cards.forEach(function (card) {
-        var category = normalizeSearchValue(card.dataset.cat);
+        var category = normalizeSearchValue(
+          card.dataset.category || card.dataset.cat
+        );
         var name = normalizeSearchValue(card.dataset.name);
-        var visible = (selectedCategory === "all" ||
+        var visible = (normalizeSearchValue(selectedCategory) === "all" ||
           category === normalizeSearchValue(selectedCategory)) &&
           (!search || name.indexOf(search) !== -1);
         card.hidden = !visible;
@@ -371,10 +377,10 @@
         (visibleCount > 1 ? "s" : "");
     }
 
-    filters.querySelectorAll("[data-cat]").forEach(function (button) {
+    filters.querySelectorAll("[data-cat], [data-category]").forEach(function (button) {
       button.addEventListener("click", function () {
-        selectedCategory = button.dataset.cat;
-        filters.querySelectorAll("[data-cat]").forEach(function (other) {
+        selectedCategory = button.dataset.category || button.dataset.cat;
+        filters.querySelectorAll("[data-cat], [data-category]").forEach(function (other) {
           other.classList.toggle("is-active", other === button);
         });
         applyFilters();
