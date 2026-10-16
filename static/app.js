@@ -462,6 +462,7 @@
       });
     }
     initCatalogueFilters();
+    initNewsletterForms();
     document.querySelectorAll(".chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
         chip.parentElement.querySelectorAll(".chip").forEach(function (other) {
@@ -471,4 +472,68 @@
     });
     syncQuote();
   });
+
+  /* ---------------------------------------------------------------- newsletter
+     Inscription au Club Privé : fetch POST /newsletter/subscribe, message
+     de confirmation fluide affiché sous le formulaire (succès, doublon ou
+     erreur), jamais de rechargement de page. */
+  function initNewsletterForms() {
+    document.querySelectorAll(".newsletter-form").forEach(function (form) {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var input = form.querySelector("input[type=email]");
+        var note = form.parentElement.querySelector(".newsletter-note");
+        var label = form.querySelector(".newsletter-btn-label");
+        var loading = form.querySelector(".newsletter-btn-loading");
+        var email = (input.value || "").trim();
+
+        form.classList.remove("is-error");
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+          form.classList.add("is-error");
+          note.textContent = "❌ Altesse juge cette adresse peu royale — vérifiez-la.";
+          note.className = "newsletter-note is-error";
+          return;
+        }
+
+        if (loading) loading.hidden = false;
+        if (label) label.hidden = true;
+        var button = form.querySelector("button[type=submit]");
+        if (button) button.disabled = true;
+
+        fetch("/newsletter/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email,
+            source: String(input.id || "").replace("newsletter-email-", "") || "home"
+          })
+        })
+          .then(function (response) { return response.json().then(
+            function (data) { return { status: response.status, data: data }; });
+          })
+          .then(function (result) {
+            var ok = result.status < 400 && result.data.ok !== false;
+            form.classList.toggle("is-error", !ok);
+            note.textContent = ok
+              ? "✅ " + result.data.message
+              : "⚠️ " + (result.data.error || "L'inscription a échoué — réessayez.");
+            note.className = "newsletter-note" + (ok ? " is-ok" : " is-error");
+            if (ok && !result.data.duplicate) {
+              form.classList.add("is-success");
+              input.value = "";
+            }
+          })
+          .catch(function () {
+            form.classList.add("is-error");
+            note.textContent = "⚠️ Le pigeonnier royal est momentanément saturé — réessayez.";
+            note.className = "newsletter-note is-error";
+          })
+          .then(function () {
+            if (loading) loading.hidden = true;
+            if (label) label.hidden = false;
+            if (button) button.disabled = false;
+          });
+      });
+    });
+  }
 })();

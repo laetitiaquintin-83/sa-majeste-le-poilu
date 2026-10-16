@@ -1,0 +1,17 @@
+<section class="newsletter" aria-labelledby="newsletter-title">
+  <div class="newsletter-card">
+    <p class="newsletter-crown" aria-hidden="true">👑</p>
+    <h2 id="newsletter-title" class="newsletter-title">Le Club Privé <span class="accent">d'Altesse &amp; Barnabé</span></h2>
+    <p class="newsletter-sub">Rejoignez le Club Privé d'Altesse &amp; Barnabé pour recevoir leurs histoires et leurs offres exclusives.</p>
+    <form class="newsletter-form" novalidate>
+      <label class="visually-hidden" for="newsletter-email-{{ src }}">Adresse email</label>
+      <input type="email" id="newsletter-email-{{ src }}" name="email" required
+        autocomplete="email" placeholder="votre@royaume.fr">
+      <button type="submit" class="btn btn-primary">
+        <span class="newsletter-btn-label">Rejoindre le Club ✨</span>
+        <span class="newsletter-btn-loading" hidden>Envoi… 🕊️</span>
+      </button>
+    </form>
+    <p class="newsletter-note" role="status" aria-live="polite"></p>
+  </div>
+</section>

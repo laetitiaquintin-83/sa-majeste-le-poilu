@@ -19,10 +19,11 @@
       <h1 class="h3 mb-0">Recherche de produits CJ</h1>
       <a class="btn btn-outline-dark" href="/admin">← Administration</a>
     </div>
+    <p class="text-muted small mb-2">Astuce : collez directement l'ID CJ d'un produit (ex. <code>B901800C-2B7B-487C-97FE-CC4714CDA630</code>) ou l'URL d'un produit CJ — l'import se fera depuis cet identifiant exact.</p>
     <form id="cj-search-form" class="row g-2 mb-4">
       <div class="col-sm-9">
         <label class="visually-hidden" for="cj-keyword">Mot-clé</label>
-        <input id="cj-keyword" class="form-control" required placeholder="Ex. chat, mug, collier">
+        <input id="cj-keyword" class="form-control" required placeholder="Mot-clé (ex. collier), ID CJ (GUID ou pid) ou URL produit CJ">
       </div>
       <div class="col-sm-3 d-grid">
         <button class="btn btn-primary" type="submit">Rechercher</button>
@@ -73,12 +74,27 @@
       showMessage(`${products.length} produit(s) trouvé(s).`, "success");
     }
 
+    function cjPidOf(product) {
+      // L'identifiant CJ arrive sous plusieurs noms selon le chemin de
+      // recherche : "id" (listV2), "pid" (/product/query), "productId".
+      // On balaie tout — sinon la modale part avec un cj_pid vide et
+      // /admin/cj-import répond "cj_pid est obligatoire".
+      return String(product.id || product.pid || product.productId || "").trim();
+    }
+
     function openImportModal(product, name) {
-      document.querySelector("#cj-pid").value = product.id || "";
+      document.querySelector("#cj-pid").value = cjPidOf(product);
       document.querySelector("#cj-name").value = name;
       document.querySelector("#cj-price").value = "19.90";
+      document.querySelector("#cj-cost").value = product.sellPrice || product.nowPrice || product.discountPrice || "";
+      document.querySelector("#cj-sizes").value = product.sizes || product.size || "";
+      document.querySelector("#cj-colors").value = product.colors || product.color || "";
       document.querySelector("#cj-description").value = product.description || "Produit importé depuis CJ Dropshipping.";
       document.querySelector("#cj-category").value = "Accessoires";
+      if (!document.querySelector("#cj-pid").value) {
+        showMessage("Identifiant CJ introuvable pour ce produit — import impossible.", "danger");
+        return;
+      }
       bootstrap.Modal.getOrCreateInstance(document.querySelector("#cj-import-modal")).show();
     }
 
@@ -95,6 +111,9 @@
             cj_pid: document.querySelector("#cj-pid").value,
             name: document.querySelector("#cj-name").value,
             sale_price: document.querySelector("#cj-price").value,
+            cost: document.querySelector("#cj-cost").value,
+            sizes: document.querySelector("#cj-sizes").value,
+            colors: document.querySelector("#cj-colors").value,
             description: document.querySelector("#cj-description").value,
             category: document.querySelector("#cj-category").value
           })
@@ -141,6 +160,23 @@
             <div class="mb-3">
               <label class="form-label" for="cj-price">Prix de vente (€)</label>
               <input class="form-control" id="cj-price" type="number" min="0.01" step="0.01" required>
+            </div>
+            <div class="row g-3 mb-3">
+              <div class="col-md-4">
+                <label class="form-label" for="cj-cost">Prix d’achat (€)</label>
+                <input class="form-control" id="cj-cost" type="number" min="0" step="0.01" required>
+                <div class="form-text">Utilisé pour calculer la marge.</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="cj-sizes">Tailles</label>
+                <input class="form-control" id="cj-sizes" maxlength="500" placeholder="Unique ou S, M, L">
+                <div class="form-text">Séparées par des virgules.</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="cj-colors">Couleurs</label>
+                <input class="form-control" id="cj-colors" maxlength="500" placeholder="Standard ou Noir, Rouge">
+                <div class="form-text">Séparées par des virgules.</div>
+              </div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="cj-description">Description</label>

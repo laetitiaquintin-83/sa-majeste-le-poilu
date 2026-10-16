@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<article class="sect gazette-article">
+  <p class="gazette-crumbs"><a href="/gazette">← La Gazette du Royaume</a></p>
+  <div class="gazette-head">
+    <h1 class="sect-title">{{ post.title }}</h1>
+    <p class="gazette-date">📰 Publié le {{ date_affichage(post.date) }} — enquête menée par le greffier royal</p>
+  </div>
+
+  <div class="page-card gazette-body">
+    {% for paragraphe in post.content %}
+    <p>{{ paragraphe }}</p>
+    {% endfor %}
+  </div>
+
+  {% if produits %}
+  <aside class="page-card gazette-promo">
+    <p class="gazette-promo-crown" aria-hidden="true">🎃</p>
+    <h2 class="gazette-promo-title">Le Tribut <span class="accent">négocié par les Majestés</span></h2>
+    <p class="gazette-promo-sub">Approuvé d'un miaulement exigeant par Altesse et d'un bavage enthousiaste par Barnabé. S'acquitter du tribut :</p>
+    <div class="gazette-products">
+      {% for p in produits %}
+      {% with p=p %}{% include "product-card.html" %}{% endwith %}
+      {% endfor %}
+    </div>
+  </aside>
+  {% endif %}
+
+  {% if autres %}
+  <section class="sect gazette-others">
+    <div class="sect-head">
+      <h2 class="sect-title">Autres chroniques <span class="accent">de la cour</span></h2>
+    </div>
+    <div class="gazette-grid">
+      {% for post in autres %}
+      <a class="gazette-card page-card" href="/gazette/{{ post.slug }}">
+        <p class="gazette-date">📰 {{ date_affichage(post.date) }}</p>
+        <h3 class="gazette-card-title">{{ post.title }}</h3>
+        <p class="gazette-sum">{{ post.summary }}</p>
+        <span class="btn btn-ghost gazette-read">Lire la chronique →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

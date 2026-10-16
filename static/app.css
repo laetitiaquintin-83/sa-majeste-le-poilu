@@ -763,3 +763,89 @@ p { margin: 0; }
 }
 .gallery-admin-item strong { font-size: 0.9rem; line-height: 1.3; }
 .gallery-admin-cat { color: var(--text-soft); font-size: 0.78rem; }
+
+/* ---------------- Newsletter — Club Privé ---------------- */
+.visually-hidden {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+}
+.newsletter { padding-block: 40px 54px; }
+.newsletter-card {
+    position: relative; overflow: hidden;
+    max-width: 760px; margin-inline: auto; text-align: center;
+    background: linear-gradient(135deg, #FFF7E6 0%, #FFE9F2 100%);
+    border: 3px solid var(--ink); border-radius: var(--radius);
+    box-shadow: var(--shadow-lg); padding: 34px 24px 30px;
+}
+.newsletter-crown { font-size: 2.2rem; line-height: 1; margin-bottom: 6px; }
+.newsletter-title { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+.newsletter-sub {
+    color: var(--text-soft); font-size: 0.95rem;
+    max-width: 46ch; margin: 8px auto 18px;
+}
+.newsletter-form {
+    display: flex; gap: 10px; max-width: 480px; margin-inline: auto;
+}
+.newsletter-form input[type=email] {
+    flex: 1; min-width: 0;
+    font-family: var(--font-fun); font-size: 0.95rem; font-weight: 500;
+    padding: 12px 16px; border: 3px solid var(--ink);
+    border-radius: var(--radius-pill); background: #fff; color: var(--ink);
+    outline: none; transition: box-shadow var(--transition);
+}
+.newsletter-form input[type=email]:focus { box-shadow: var(--shadow-sm); }
+.newsletter-form.is-error input[type=email] { border-color: #DC2626; box-shadow: 3px 3px 0 #DC2626; }
+.newsletter-form.is-success input[type=email] { border-color: var(--mint); box-shadow: 3px 3px 0 var(--mint); }
+.newsletter-form .btn { white-space: nowrap; padding: 12px 20px; font-size: 0.9rem; }
+.newsletter-form .btn:disabled { opacity: 0.65; cursor: wait; transform: none; }
+.newsletter-note {
+    min-height: 1.4em; margin-top: 12px; font-size: 0.9rem; font-weight: 600;
+}
+.newsletter-note.is-ok { color: #059669; animation: newsletter-pop 0.35s var(--transition); }
+.newsletter-note.is-error { color: #DC2626; animation: newsletter-pop 0.35s var(--transition); }
+@keyframes newsletter-pop {
+    from { opacity: 0; transform: translateY(6px) scale(0.97); }
+    to { opacity: 1; transform: none; }
+}
+@media (max-width: 560px) {
+    .newsletter-form { flex-direction: column; }
+    .newsletter-form .btn { width: 100%; }
+}
+
+/* ---------------- Gazette du Royaume ---------------- */
+.gazette-crumbs { margin-bottom: 10px; font-weight: 600; font-size: 0.85rem; color: var(--text-soft); }
+.gazette-crumbs a:hover { color: var(--pink); }
+.gazette-head { text-align: center; margin-bottom: 22px; }
+.gazette-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px; align-items: stretch;
+}
+.gazette-card {
+    display: flex; flex-direction: column; gap: 8px; text-align: left;
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+.gazette-card:hover { transform: translateY(-4px) rotate(-0.5deg); box-shadow: var(--shadow-lg); }
+.gazette-date {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.03em;
+    text-transform: uppercase; color: var(--text-soft);
+}
+.gazette-card-title { font-size: 1.18rem; line-height: 1.3; }
+.gazette-sum { color: var(--text-soft); font-size: 0.92rem; flex: 1; }
+.gazette-read { align-self: flex-start; font-size: 0.82rem; padding: 8px 16px; }
+.gazette-body {
+    text-align: left; max-width: 760px; margin-inline: auto;
+    font-size: 1rem; line-height: 1.75;
+}
+.gazette-body p + p { margin-top: 14px; }
+.gazette-promo {
+    text-align: center; max-width: 900px; margin: 30px auto 0;
+    background: linear-gradient(135deg, #FFF3E4 0%, #FFE4EF 100%);
+}
+.gazette-promo-crown { font-size: 2rem; line-height: 1; }
+.gazette-promo-title { font-size: clamp(1.3rem, 3vw, 1.7rem); margin-top: 6px; }
+.gazette-promo-sub { color: var(--text-soft); font-size: 0.92rem; max-width: 52ch; margin: 8px auto 18px; }
+.gazette-products {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px; text-align: left;
+}
+.gazette-others { padding-top: 10px; }

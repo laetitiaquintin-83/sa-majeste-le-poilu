@@ -327,6 +327,10 @@ def api_cj_import():
         return jsonify(ok=False, error="Prix de vente invalide"), 400
     if sale_price <= 0:
         return jsonify(ok=False, error="Le prix de vente doit être positif"), 400
+    sizes = [item.strip() for item in str(submitted.get("sizes") or "").split(",")
+             if item.strip()]
+    colors = [item.strip() for item in str(submitted.get("colors") or "").split(",")
+              if item.strip()]
 
     db = load_db()
     if cj_id and any(str(item.get("cj_product_id")) == cj_id
@@ -367,11 +371,21 @@ def api_cj_import():
     if category not in CATEGORIES:
         return jsonify(ok=False, error="Catégorie invalide"), 400
     try:
-        cost_price = float(product.get("sellPrice") or
-                           product.get("nowPrice") or
-                           product.get("discountPrice") or 0)
+        cj_cost_price = float(product.get("sellPrice") or
+                              product.get("nowPrice") or
+                              product.get("discountPrice") or 0)
     except (TypeError, ValueError):
-        cost_price = 0.0
+        cj_cost_price = 0.0
+    submitted_cost = str(submitted.get("cost") or "").strip()
+    if submitted_cost:
+        try:
+            cost_price = float(submitted_cost)
+        except (TypeError, ValueError):
+            return jsonify(ok=False, error="Prix d'achat invalide"), 400
+    else:
+        cost_price = cj_cost_price
+    if cost_price < 0:
+        return jsonify(ok=False, error="Le prix d'achat ne peut pas être négatif"), 400
 
     image = product.get("bigImage") or product.get("image") or product.get("productImage")
     if isinstance(image, list):
@@ -383,8 +397,8 @@ def api_cj_import():
         "cost": cost_price,
         "category": category,
         "description": description[:5000],
-        "sizes": ["Unique"],
-        "colors": ["Standard"],
+        "sizes": sizes or ["Unique"],
+        "colors": colors or ["Standard"],
         "status": "En stock",
         "image": str(image or "").strip() or None,
         "emoji": "🐾",
@@ -431,6 +445,83 @@ def galerie():
     g = load_gallery()
     items = sorted(g["items"], key=lambda x: x.get("id", 0), reverse=True)
     return render_template("galerie.html", items=items, settings=db["settings"])
+
+# ---------------------------------------------------------------- Gazette (blog)
+BLOG_PATH = os.path.join(DATA_DIR, "blog.json")
+
+
+def load_blog():
+    """Charge la Gazette ; fichier de secours auto-créé si absent."""
+    if not os.path.exists(BLOG_PATH):
+        default = {"posts": [], "next_id": 1}
+        with open(BLOG_PATH, "w", encoding="utf-8") as f:
+            json.dump(default, f, ensure_ascii=False, indent=2)
+        return default
+    with open(BLOG_PATH, encoding="utf-8") as f:
+        b = json.load(f)
+    b.setdefault("posts", [])
+    b.setdefault("next_id", 1)
+    return b
+
+
+def _date_affichage(iso):
+    """2026-10-16 -> 16 octobre 2026, pour l'affichage de cour."""
+    mois = ["", "janvier", "février", "mars", "avril", "mai", "juin", "juillet",
+            "août", "septembre", "octobre", "novembre", "décembre"]
+    try:
+        y, m, d = str(iso)[:10].split("-")
+        return f"{int(d)} {mois[int(m)]} {y}"
+    except (ValueError, IndexError):
+        return str(iso)
+
+
+def _produits_mis_en_avant(db, refs):
+    """Résout featured_products : ids locaux (int) ou cj_product_id (str)."""
+    produits = []
+    for ref in (refs or []):
+        if isinstance(ref, int):
+            p = next((x for x in db["products"] if x["id"] == ref), None)
+        else:
+            ref = str(ref).strip()
+            p = next((x for x in db["products"]
+                      if str(x.get("cj_product_id") or "") == ref or x["id"] == ref), None)
+        if p and p["status"] != "Indisponible" and all(x["id"] != p["id"] for x in produits):
+            produits.append(p)
+    return produits
+
+
+@app.route("/gazette")
+def gazette():
+    db = load_db()
+    posts = sorted(load_blog()["posts"], key=lambda x: str(x.get("date") or "")[:10], reverse=True)
+    return render_template(
+        "gazette.html",
+        posts=posts,
+        date_affichage=_date_affichage,
+        settings=db["settings"],
+        announcement=db["settings"]["announcement"],
+    )
+
+
+@app.route("/gazette/<slug>")
+def gazette_article(slug):
+    db = load_db()
+    post = next((p for p in load_blog()["posts"] if p.get("slug") == slug), None)
+    if not post:
+        abort(404)
+    produits = _produits_mis_en_avant(db, post.get("featured_products"))
+    autres = [p for p in sorted(
+        load_blog()["posts"], key=lambda x: str(x.get("date") or "")[:10], reverse=True
+    ) if p.get("slug") != slug][:3]
+    return render_template(
+        "gazette_article.html",
+        post=post,
+        produits=produits,
+        autres=autres,
+        date_affichage=_date_affichage,
+        settings=db["settings"],
+        announcement=db["settings"]["announcement"],
+    )
 
 @app.route("/page/<nom>")
 def page_contenu(nom):
@@ -573,6 +664,61 @@ def api_gallery_delete(gid):
     g["items"] = [x for x in g["items"] if x["id"] != gid]
     save_gallery(g)
     return jsonify(ok=True)
+
+# ---------------------------------------------------------------- API newsletter
+SUBSCRIBERS_PATH = os.path.join(DATA_DIR, "subscribers.json")
+
+_EMAIL_RE = re.compile(r"^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9]"
+                       r"(?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?"
+                       r"(?:\.[A-Za-z]{2,})+$")
+
+
+def load_subscribers():
+    if not os.path.exists(SUBSCRIBERS_PATH):
+        return {"subscribers": [], "next_id": 1}
+    with open(SUBSCRIBERS_PATH, encoding="utf-8") as f:
+        s = json.load(f)
+    s.setdefault("subscribers", [])
+    s.setdefault("next_id", 1)
+    return s
+
+
+def save_subscribers(s):
+    with open(SUBSCRIBERS_PATH, "w", encoding="utf-8") as f:
+        json.dump(s, f, ensure_ascii=False, indent=2)
+
+
+@app.post("/newsletter/subscribe")
+def newsletter_subscribe():
+    """Inscription Club Privé : email validé, dédoublonné, persisté."""
+    data = request.get_json(silent=True) or {}
+    email = str(data.get("email") or "").strip().lower()
+
+    if not email or len(email) > 254 or not _EMAIL_RE.match(email):
+        return jsonify(ok=False, error="Adresse email invalide — Altesse exige mieux."), 400
+
+    subscribers = load_subscribers()
+    if any(x.get("email") == email for x in subscribers["subscribers"]):
+        return jsonify(
+            ok=True, duplicate=True,
+            message="Ce serviteur est déjà membre du Club Privé. 🐾",
+        )
+
+    entry = {
+        "id": subscribers["next_id"],
+        "email": email,
+        "date": datetime.now().isoformat(),
+        "source": str(data.get("source") or "footer")[:32],
+    }
+    subscribers["subscribers"].append(entry)
+    subscribers["next_id"] += 1
+    save_subscribers(subscribers)
+    print(f"Newsletter : nouveau membre du Club Privé — {email}")
+    return jsonify(
+        ok=True,
+        message="Bienvenue dans le Club Privé ! Altesse vous accorde sa bienveillance. 👑",
+    ), 201
+
 
 # ---------------------------------------------------------------- API produits
 @app.get("/api/products")

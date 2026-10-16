@@ -79,6 +79,54 @@ _TITLE_NOISE_RE = re.compile(
     r"livraison\s+directe)\b",
     re.IGNORECASE,
 )
+
+# Identifiant CJ : GUID (B901800C-…), pid numérique, ou URL de produit CJ
+# qui le contient (…/product/B901800C-2B7B-…-, ou ?pid=B901800C-…).
+_GUID_RE = re.compile(
+    r"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}"
+)
+_PRODUCT_URL_RE = re.compile(
+    r"[?&](?:pid|productId|product_id)=([0-9A-Fa-f-]{6,})",
+    re.IGNORECASE,
+)
+_CJ_HOST_RE = re.compile(r"cjdropshipping(?:\.com|\.[a-z]{2,3})", re.IGNORECASE)
+_ROUTED_ID_RE = re.compile(r"^[0-9A-C-]{6,64}$", re.IGNORECASE)  # GUID ou pid numérique long
+
+
+def extract_cj_id(input_text) -> str:
+    """Extrait un identifiant produit CJ d'une saisie libre.
+
+    Accepte un GUID (B901800C-2B7B-487C-97FE-CC4714CDA630), un pid numérique,
+    une URL de produit CJ (le paramètre pid est prioritaire, sinon le premier
+    segment admissible du chemin). Renvoie "" si rien ne ressemble à un ID.
+    """
+    text = str(input_text or "").strip()
+    if not text:
+        return ""
+
+    # 1) URL : pid=… explicite en query-string
+    if text.lower().startswith(("http://", "https://")) or _CJ_HOST_RE.search(text):
+        found = _PRODUCT_URL_RE.search(text)
+        if found:
+            return found.group(1).strip("-")
+        # 2) URL sans query : segment de chemin admissible (GUID en général,
+        #    éventuellement suffixé .html) ou pid numérique court
+        for segment in text.split("?")[0].split("/"):
+            segment = re.sub(r"\.(html?|aspx?|php)$", "", segment, flags=re.IGNORECASE)
+            segment = segment.strip("-")
+            if _GUID_RE.fullmatch(segment):
+                return segment
+            if segment.isdigit() and 6 <= len(segment) <= 20:
+                return segment
+        return ""
+
+    # 3) Saisie directe : GUID exact, pid numérique long, ou ID inclus dans du texte
+    if _GUID_RE.fullmatch(text) or (text.isdigit() and 6 <= len(text) <= 20):
+        return text
+    guid = _GUID_RE.search(text)
+    if guid:
+        return guid.group(0)
+    return ""
 _TITLE_TRANSLATIONS = {
     "cute": "Joli",
     "beautiful": "Magnifique",
@@ -282,10 +330,37 @@ def get_access_token(*, force_refresh: bool = False) -> str:
 
 
 def search_products(keyword: str, *, page_num: int = 1, page_size: int = 20) -> Any:
-    """Recherche des produits CJ par mot-clé."""
+    """Recherche des produits CJ par mot-clé.
+
+    Si la saisie ressemble à un identifiant produit CJ (GUID, pid numérique
+    ou URL de produit CJ), un appel direct à l'endpoint /product/query est
+    effectué — permet d'importer n'importe quel produit depuis son URL CJ —
+    et le résultat est mis en forme comme une page de recherche (pas de
+    filtrage « produit animal » dans ce chemin direct : l'import est explicite).
+    """
     keyword = keyword.strip()
     if not keyword:
         raise ValueError("Le mot-clé de recherche ne peut pas être vide.")
+
+    direct_id = extract_cj_id(keyword)
+    if direct_id:
+        product = get_product_details(direct_id)
+        display_name = translate_product_title(_product_name(product))
+        # L'endpoint /product/query renvoie l'identifiant dans "pid" (pas
+        # "id") : on harmonise pour que la modale d'import admin trouve
+        # toujours le cj_pid, quel que soit le chemin de recherche.
+        product.setdefault("id", direct_id)
+        if not product.get("pid"):
+            product["pid"] = direct_id
+        return {
+            "content": [{
+                "productList": [{**product, "displayName": display_name}],
+            }],
+            "totalRecords": 1,
+            "totalPages": 1,
+            "directLookup": True,
+        }
+
     if page_num < 1 or page_size < 1 or page_size > 100:
         raise ValueError("page_num doit être positif et page_size compris entre 1 et 100.")
 

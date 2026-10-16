@@ -58,6 +58,7 @@ tmp/
 data/boutique.json
 data/gallery.json
 data/admin_epoch.txt
+data/subscribers.json
 
 # --- Uploads utilisateurs (photos d'animaux, visuels) ---
 # Contenu généré à l'exécution, jamais versionné

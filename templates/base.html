@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v=9) }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v=11) }}">
 </head>
 <body>
   <div class="annbar">{{ announcement or settings.announcement }}</div>
@@ -23,6 +23,7 @@
       <nav class="nav" aria-label="Navigation principale">
         <a href="/">Accueil</a>
         <a href="/catalogue">Boutique</a>
+        <a href="/gazette">La Gazette</a>
         <a href="/galerie">Galerie</a>
         <a href="/page/a-propos">Le Royaume</a>
         <a href="/page/contact">Contact</a>
@@ -58,6 +59,8 @@
       </div>
     </div>
   </section>
+
+  {% with src="footer" %}{% include "newsletter.html" %}{% endwith %}
 
   <footer class="ftr">
     <div class="container ftr-in">
@@ -105,6 +108,6 @@
     </footer>
   </aside>
 
-  <script src="{{ url_for('static', filename='app.js', v=8) }}" defer></script>
+  <script src="{{ url_for('static', filename='app.js', v=10) }}" defer></script>
 </body>
 </html>

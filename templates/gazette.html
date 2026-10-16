@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}La Gazette du Royaume{% endblock %}
+
+{% block content %}
+<section class="sect gazette-page">
+  <div class="sect-head">
+    <h1 class="sect-title">La Gazette <span class="accent">du Royaume</span></h1>
+    <p class="sect-sub">Chroniques, intrigues de cour et tributs divers — relatés par les serviteurs, approuvés (parfois) par les Majestés.</p>
+  </div>
+
+  {% if posts %}
+  <div class="gazette-grid">
+    {% for post in posts %}
+    <a class="gazette-card page-card" href="/gazette/{{ post.slug }}">
+      <p class="gazette-date">📰 {{ date_affichage(post.date) }}</p>
+      <h2 class="gazette-card-title">{{ post.title }}</h2>
+      <p class="gazette-sum">{{ post.summary }}</p>
+      <span class="btn btn-ghost gazette-read">Lire la chronique →</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty-note">Aucune chronique pour l'instant — les Majestés gardent le silence. 🐾</p>
+  {% endif %}
+</section>
+{% endblock %}
