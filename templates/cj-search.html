@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recherche CJ — Sa Majesté le Poilu</title>
+  <meta name="robots" content="noindex">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f8f9fa; }
+    .cj-card { height: 100%; }
+    .cj-image { height: 210px; object-fit: contain; background: #fff; }
+    .cj-description { max-height: 7rem; overflow: auto; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <main class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h3 mb-0">Recherche de produits CJ</h1>
+      <a class="btn btn-outline-dark" href="/admin">← Administration</a>
+    </div>
+    <form id="cj-search-form" class="row g-2 mb-4">
+      <div class="col-sm-9">
+        <label class="visually-hidden" for="cj-keyword">Mot-clé</label>
+        <input id="cj-keyword" class="form-control" required placeholder="Ex. chat, mug, collier">
+      </div>
+      <div class="col-sm-3 d-grid">
+        <button class="btn btn-primary" type="submit">Rechercher</button>
+      </div>
+    </form>
+    <div id="cj-message" class="alert d-none" role="status"></div>
+    <div id="cj-results" class="row g-4"></div>
+  </main>
+  <script>
+    const form = document.querySelector("#cj-search-form");
+    const keyword = document.querySelector("#cj-keyword");
+    const message = document.querySelector("#cj-message");
+    const results = document.querySelector("#cj-results");
+
+    function showMessage(text, type = "info") {
+      message.className = `alert alert-${type}`;
+      message.textContent = text;
+    }
+
+    function productCards(data) {
+      const content = data?.content || [];
+      return content.flatMap((group) => group.productList || [group])
+        .filter((product) => product && (product.bigImage || product.productName || product.nameEn));
+    }
+
+    function renderProducts(products) {
+      results.replaceChildren();
+      if (!products.length) {
+        showMessage("Aucun produit trouvé.", "warning");
+        return;
+      }
+      products.forEach((product) => {
+        const name = product.displayName || product.productName || product.productNameEn || product.nameEn || product.name || "Produit sans nom";
+        const col = document.createElement("div");
+        col.className = "col-md-6 col-xl-4";
+        col.innerHTML = `
+          <article class="card cj-card shadow-sm">
+            <img class="card-img-top cj-image" src="${product.bigImage || product.productImage || ""}" alt="">
+            <div class="card-body d-flex flex-column">
+              <h2 class="h5 card-title"></h2>
+              <button class="btn btn-success mt-auto" type="button">Importer dans la boutique</button>
+            </div>
+          </article>`;
+        col.querySelector("h2").textContent = name;
+        col.querySelector("button").addEventListener("click", () => openImportModal(product, name));
+        results.appendChild(col);
+      });
+      showMessage(`${products.length} produit(s) trouvé(s).`, "success");
+    }
+
+    function openImportModal(product, name) {
+      document.querySelector("#cj-pid").value = product.id || "";
+      document.querySelector("#cj-name").value = name;
+      document.querySelector("#cj-price").value = "19.90";
+      document.querySelector("#cj-description").value = product.description || "Produit importé depuis CJ Dropshipping.";
+      document.querySelector("#cj-category").value = "Accessoires";
+      bootstrap.Modal.getOrCreateInstance(document.querySelector("#cj-import-modal")).show();
+    }
+
+    document.addEventListener("submit", async (event) => {
+      if (event.target.id !== "cj-import-form") return;
+      event.preventDefault();
+      const button = document.querySelector("#cj-submit");
+      button.disabled = true;
+      try {
+        const response = await fetch("/admin/cj-import", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            cj_pid: document.querySelector("#cj-pid").value,
+            name: document.querySelector("#cj-name").value,
+            sale_price: document.querySelector("#cj-price").value,
+            description: document.querySelector("#cj-description").value,
+            category: document.querySelector("#cj-category").value
+          })
+        });
+        const imported = await response.json();
+        if (!response.ok || imported.ok === false) throw new Error(imported.error || "Import impossible");
+        bootstrap.Modal.getInstance(document.querySelector("#cj-import-modal")).hide();
+        showMessage("Produit importé dans la boutique.", "success");
+      } catch (error) {
+        showMessage(error.message, "danger");
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      results.replaceChildren();
+      showMessage("Recherche en cours…", "info");
+      try {
+        const response = await fetch(`/api/cj/products?keyword=${encodeURIComponent(keyword.value.trim())}`);
+        const data = await response.json();
+        if (!response.ok || data.ok === false) throw new Error(data.error || "Recherche impossible");
+        renderProducts(productCards(data.data));
+      } catch (error) {
+        showMessage(error.message, "danger");
+      }
+    });
+  </script>
+  <div class="modal fade" id="cj-import-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <form id="cj-import-form">
+          <div class="modal-header">
+            <h2 class="modal-title fs-5">Valider l’import du produit</h2>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="cj-pid">
+            <div class="mb-3">
+              <label class="form-label" for="cj-name">Titre du produit</label>
+              <input class="form-control" id="cj-name" maxlength="200" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="cj-price">Prix de vente (€)</label>
+              <input class="form-control" id="cj-price" type="number" min="0.01" step="0.01" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="cj-description">Description</label>
+              <textarea class="form-control" id="cj-description" rows="5" maxlength="5000"></textarea>
+            </div>
+            <div>
+              <label class="form-label" for="cj-category">Catégorie</label>
+              <select class="form-select" id="cj-category">
+                <option>Chats</option><option>Chiens</option><option>Accessoires</option>
+                <option>Vêtements Animaux</option><option>Mugs</option><option>T-shirts</option>
+                <option>Portraits Sur-Mesure</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button class="btn btn-primary" id="cj-submit" type="submit">Confirmer l’import</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

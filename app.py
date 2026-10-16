@@ -7,6 +7,7 @@ import json
 import os
 import secrets
 import smtplib
+import re
 from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -15,7 +16,7 @@ from io import BytesIO
 
 from flask import (
     Flask, render_template, request, jsonify, session as flask_session,
-    send_file, abort,
+    send_file, abort, redirect,
 )
 from werkzeug.utils import secure_filename
 
@@ -37,7 +38,9 @@ def _load_dotenv(path):
                 key, _, value = line.partition("=")
                 key = key.strip()
                 value = value.strip().strip('"').strip("'")
-                if key and key not in os.environ:
+                # Une variable vide déjà présente ne doit pas empêcher une
+                # valeur configurée plus loin dans le fichier d'être chargée.
+                if key and not os.environ.get(key):
                     os.environ[key] = value
     except FileNotFoundError:
         pass
@@ -67,6 +70,8 @@ CATEGORIES = [
     "Mugs",
     "T-shirts",
     "Vêtements Animaux",
+    "Chats",
+    "Chiens",
     "Accessoires",
     "Portraits Sur-Mesure",
 ]
@@ -279,6 +284,121 @@ def catalogue():
         categories=CATEGORIES,
         settings=db["settings"],
     )
+
+@app.get("/api/cj/products")
+def api_cj_products():
+    """Route de test interne : recherche de produits CJ en JSON."""
+    from cj_service import CJAPIError, search_products
+
+    keyword = request.args.get("keyword", "").strip()
+    if not keyword:
+        return jsonify(ok=False, error="Le paramètre keyword est obligatoire."), 400
+    try:
+        data = search_products(
+            keyword,
+            page_num=request.args.get("page_num", default=1, type=int),
+            page_size=request.args.get("page_size", default=20, type=int),
+        )
+    except ValueError as exc:
+        return jsonify(ok=False, error=str(exc)), 400
+    except CJAPIError as exc:
+        return jsonify(ok=False, error=str(exc)), 502
+    return jsonify(ok=True, data=data)
+
+@app.get("/admin/cj-search")
+def admin_cj_search():
+    if not flask_session.get("is_admin") or flask_session.get("epoch") != _session_epoch():
+        return redirect("/admin")
+    return render_template("cj-search.html")
+
+@app.post("/admin/cj-import")
+@app.post("/api/admin/cj/import")
+@login_required
+def api_cj_import():
+    from cj_service import CJAPIError, get_product_details, translate_product_title
+
+    submitted = request.get_json(silent=True) or request.form
+    cj_id = str(submitted.get("cj_pid") or "").strip()
+    if not cj_id:
+        return jsonify(ok=False, error="cj_pid est obligatoire"), 400
+    try:
+        sale_price = float(submitted.get("sale_price") or submitted.get("price") or 0)
+    except (TypeError, ValueError):
+        return jsonify(ok=False, error="Prix de vente invalide"), 400
+    if sale_price <= 0:
+        return jsonify(ok=False, error="Le prix de vente doit être positif"), 400
+
+    db = load_db()
+    if cj_id and any(str(item.get("cj_product_id")) == cj_id
+                     for item in db["products"]):
+        return jsonify(ok=False, error="Ce produit CJ est déjà importé"), 409
+
+    try:
+        product = get_product_details(cj_id)
+    except ValueError as exc:
+        return jsonify(ok=False, error=str(exc)), 400
+    except CJAPIError as exc:
+        return jsonify(ok=False, error=str(exc)), 502
+
+    name = (product.get("productName") or product.get("productNameEn") or
+            product.get("nameEn") or
+            product.get("name") or "").strip()
+    if not name:
+        return jsonify(ok=False, error="Nom du produit CJ manquant"), 502
+    edited_name = str(submitted.get("name") or "").strip()
+    if edited_name:
+        name = edited_name
+    else:
+        name = translate_product_title(name)
+    if not name:
+        return jsonify(ok=False, error="Le titre du produit est obligatoire"), 400
+    description = re.sub(
+        r"<[^>]+>", " ",
+        str(submitted.get("description") or "").strip(),
+    )
+    if not description:
+        description = re.sub(
+            r"<[^>]+>", " ",
+            str(product.get("description") or
+                "Produit importé depuis CJ Dropshipping.").strip(),
+        )
+    description = re.sub(r"\s{2,}", " ", description).strip()
+    category = str(submitted.get("category") or "Accessoires").strip()
+    if category not in CATEGORIES:
+        return jsonify(ok=False, error="Catégorie invalide"), 400
+    try:
+        cost_price = float(product.get("sellPrice") or
+                           product.get("nowPrice") or
+                           product.get("discountPrice") or 0)
+    except (TypeError, ValueError):
+        cost_price = 0.0
+
+    image = product.get("bigImage") or product.get("image") or product.get("productImage")
+    if isinstance(image, list):
+        image = image[0] if image else None
+    imported = {
+        "id": db["next_product_id"],
+        "name": name[:200],
+        "price": sale_price,
+        "cost": cost_price,
+        "category": category,
+        "description": description[:5000],
+        "sizes": ["Unique"],
+        "colors": ["Standard"],
+        "status": "En stock",
+        "image": str(image or "").strip() or None,
+        "emoji": "🐾",
+        "hue": "#FBBF24",
+        "created_at": datetime.now().isoformat(),
+        "cj_product_id": cj_id,
+        "cj_variant_id": str(
+            submitted.get("cj_vid") or submitted.get("cj_variant_id") or ""
+        ).strip() or None,
+    }
+    db["products"].append(imported)
+    db["next_product_id"] += 1
+    save_db(db)
+    return jsonify(ok=True, product=imported), 201
 
 @app.route("/produit/<int:pid>")
 def produit(pid):
@@ -586,6 +706,8 @@ def construire_lignes(db, d):
             qty = 1
         lines.append({
             "product_id": p["id"], "name": p["name"],
+            "cj_pid": str(p.get("cj_product_id") or ""),
+            "cj_vid": str(p.get("cj_variant_id") or p.get("cj_vid") or ""),
             "size": str(it.get("size", "Unique"))[:32],
             "color": str(it.get("color", "Standard"))[:32],
             "qty": qty, "price": p["price"],
@@ -638,6 +760,74 @@ def confirmer_et_notifier(db, order):
         numero_commande=order["ref"],
         total=order["total"]
     )
+
+def envoyer_commande_cj(db, order):
+    """Transmet à CJ les lignes payées qui proviennent de CJ.
+
+    Une erreur CJ est conservée sur la commande locale afin de permettre un
+    nouvel essai sans perdre la commande déjà payée.
+    """
+    if order.get("cj_order_id") or order.get("cj_dispatch_status") == "sent":
+        return
+    cj_items = [
+        item for item in order.get("items", [])
+        if item.get("cj_pid") or item.get("cj_vid")
+    ]
+    if not cj_items:
+        return
+
+    from cj_service import CJAPIError, create_order
+
+    customer = order.get("customer") or {}
+    address = str(customer.get("address") or "").strip()
+    payload = {
+        "orderNumber": order["ref"],
+        "shippingCustomerName": str(customer.get("name") or "Client").strip()[:50],
+        "shippingPhone": str(customer.get("phone") or "").strip()[:20],
+        "shippingAddress": address[:500],
+        "email": str(customer.get("email") or "").strip()[:120],
+        "shippingCountryCode": "FR",
+        "shippingCountry": "France",
+        "logisticName": os.getenv("CJ_LOGISTIC_NAME", "CJPacket"),
+        "fromCountryCode": os.getenv("CJ_FROM_COUNTRY_CODE", "CN"),
+        "platform": "custom",
+        "products": [],
+    }
+    for item in cj_items:
+        cj_id = item.get("cj_vid") or item.get("cj_pid")
+        product = {"quantity": int(item.get("qty", 1))}
+        if item.get("cj_vid"):
+            product["vid"] = cj_id
+        else:
+            product["pid"] = cj_id
+        payload["products"].append(product)
+
+    try:
+        result = create_order(payload) or {}
+    except (CJAPIError, ValueError) as exc:
+        order["cj_dispatch_status"] = "error"
+        order["cj_error"] = str(exc)
+        save_db(db)
+        print(f"Commande {order['ref']} payée, envoi CJ échoué : {exc}")
+        return
+
+    if isinstance(result, dict):
+        cj_order_id = (
+            result.get("orderId") or result.get("orderNum") or
+            result.get("orderNumber") or result.get("cjOrderId") or
+            result.get("id")
+        )
+    else:
+        cj_order_id = result
+    if not cj_order_id:
+        order["cj_dispatch_status"] = "error"
+        order["cj_error"] = "CJ n'a pas renvoyé de numéro de commande."
+        save_db(db)
+        return
+    order["cj_order_id"] = str(cj_order_id)
+    order["cj_dispatch_status"] = "sent"
+    order.pop("cj_error", None)
+    save_db(db)
 
 @app.post("/api/orders")
 def api_create_order():
@@ -784,6 +974,7 @@ def _confirmer_via_stripe(session_id):
     order["dedupe"] = dedupe_key
     order["stripe_session_id"] = cs_id
     save_db(db)
+    envoyer_commande_cj(db, order)
     confirmer_et_notifier(db, order)
     return order
 
@@ -924,4 +1115,3 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
-

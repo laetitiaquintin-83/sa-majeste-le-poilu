@@ -333,6 +333,57 @@
     }
   }
 
+  function normalizeSearchValue(value) {
+    return String(value || "").toLocaleLowerCase("fr-FR")
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function initCatalogueFilters() {
+    var filters = document.getElementById("catalogue-filters");
+    var searchInput = document.getElementById("catalogue-search-input");
+    var grid = document.getElementById("catalogue-grid");
+    var empty = document.getElementById("catalogue-empty");
+    var results = document.getElementById("catalogue-results");
+    if (!filters || !searchInput || !grid || !empty || !results) {
+      return;
+    }
+
+    var cards = Array.from(grid.querySelectorAll("[data-product-card]"));
+    var selectedCategory = "all";
+
+    function applyFilters() {
+      var search = normalizeSearchValue(searchInput.value.trim());
+      var visibleCount = 0;
+      cards.forEach(function (card) {
+        var category = normalizeSearchValue(card.dataset.cat);
+        var name = normalizeSearchValue(card.dataset.name);
+        var visible = (selectedCategory === "all" ||
+          category === normalizeSearchValue(selectedCategory)) &&
+          (!search || name.indexOf(search) !== -1);
+        card.hidden = !visible;
+        if (visible) {
+          visibleCount += 1;
+        }
+      });
+      empty.hidden = visibleCount !== 0;
+      results.textContent = visibleCount + " produit" +
+        (visibleCount > 1 ? "s" : "") + " trouvé" +
+        (visibleCount > 1 ? "s" : "");
+    }
+
+    filters.querySelectorAll("[data-cat]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        selectedCategory = button.dataset.cat;
+        filters.querySelectorAll("[data-cat]").forEach(function (other) {
+          other.classList.toggle("is-active", other === button);
+        });
+        applyFilters();
+      });
+    });
+    searchInput.addEventListener("input", applyFilters);
+    applyFilters();
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     // Tout ajout dans le panier (grille, fiche produit, scripts externes)
     // notifie via "cart-updated" : un seul point de resynchronisation.
@@ -404,6 +455,7 @@
         petPreview.hidden = false;
       });
     }
+    initCatalogueFilters();
     document.querySelectorAll(".chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
         chip.parentElement.querySelectorAll(".chip").forEach(function (other) {

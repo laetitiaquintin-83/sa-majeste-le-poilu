@@ -2,28 +2,18 @@
 {% block title %}Accueil royal{% endblock %}
 
 {% block content %}
-<section class="hero">
-  <div class="hero-in">
-    <div class="hero-copy">
-      <p class="hero-badge">🐾 Nº1 de l'accessoire royal en France</p>
-      <h1 class="hero-title">{{ settings.hero_title }}</h1>
-      <p class="hero-sub">{{ settings.hero_subtitle }}</p>
-      <div class="hero-actions">
-        <a href="/catalogue" class="btn btn-primary">Créer mon produit royal</a>
-        <a href="/page/a-propos" class="btn btn-ghost">L'histoire d'Altesse et Barnabé 📖</a>
-      </div>
-      <ul class="hero-trust">
-        <li>⭐ 4,9/5 — 12 400 avis</li>
-        <li>🇫🇷 Imprimé localement</li>
-        <li>✂️ Pièces uniques</li>
-      </ul>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-blob"></div>
-      <img src="{{ url_for('static', filename='logo-mascotte.png') }}" alt="Altesse, chatte souveraine, et Barnabé, chien bâtard sympathique" class="hero-mascot">
-      <span class="sticker sticker-pink">-10% 🎉</span>
-      <span class="sticker sticker-blue">100% Fun ⚡</span>
-    </div>
+<section class="hero-section" aria-labelledby="hero-title">
+  <video class="hero-video" autoplay loop muted playsinline
+    poster="{{ url_for('static', filename='logo-mascotte.png') }}"
+    aria-hidden="true">
+    <source src="{{ url_for('static', filename='videos/hero-banner.mp4') }}" type="video/mp4">
+  </video>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-content">
+    <p class="hero-badge">🐾 Nº1 de l'accessoire royal en France</p>
+    <h1 id="hero-title" class="hero-title">Sa Majesté le Poilu</h1>
+    <p class="hero-sub">{{ settings.hero_subtitle }}</p>
+    <a href="/catalogue" class="btn btn-primary hero-cta">Découvrir la boutique</a>
   </div>
 </section>
 

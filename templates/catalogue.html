@@ -15,13 +15,18 @@
     {% endfor %}
   </div>
 
+  <div class="catalogue-search">
+    <label for="catalogue-search-input" class="sr-only">Rechercher un produit par nom</label>
+    <span class="catalogue-search-icon" aria-hidden="true">🔎</span>
+    <input id="catalogue-search-input" type="search" placeholder="Rechercher un produit..." autocomplete="off">
+  </div>
+  <p class="catalogue-results" id="catalogue-results" aria-live="polite"></p>
+
   <div class="products-grid" id="catalogue-grid">
     {% for p in products %}
     {% with p=p %}{% include "product-card.html" %}{% endwith %}
     {% endfor %}
   </div>
-  {% if not products %}
-  <p class="empty-note">Aucun produit — la cour est déserte. 🐾</p>
-  {% endif %}
+  <p class="empty-note" id="catalogue-empty" {% if products %}hidden{% endif %}>Aucun produit ne correspond à votre recherche. 🐾</p>
 </section>
 {% endblock %}
