@@ -4,9 +4,11 @@ Flask + stockage JSON local (data/boutique.json).
 Lancement : python app.py  →  http://127.0.0.1:5000
 """
 import json
+import threading
 import os
 import secrets
 import smtplib
+import unicodedata
 import re
 from datetime import datetime
 from email.mime.multipart import MIMEMultipart
@@ -139,7 +141,13 @@ DEFAULT_DATA = {
     "next_order_id": 1001,
 }
 
+_DB_LOCK = threading.Lock()  # sérialise l'accès au JSON (tâche de fond CJ incluse)
+
 def load_db():
+    with _DB_LOCK:
+        return _load_db_unlocked()
+
+def _load_db_unlocked():
     if not os.path.exists(DB_PATH):
         with open(DB_PATH, "w", encoding="utf-8") as f:
             json.dump(DEFAULT_DATA, f, ensure_ascii=False, indent=2)
@@ -156,8 +164,9 @@ def load_db():
     return db
 
 def save_db(db):
-    with open(DB_PATH, "w", encoding="utf-8") as f:
-        json.dump(db, f, ensure_ascii=False, indent=2)
+    with _DB_LOCK:
+        with open(DB_PATH, "w", encoding="utf-8") as f:
+            json.dump(db, f, ensure_ascii=False, indent=2)
 
 def load_gallery():
     if not os.path.exists(GALLERY_DB_PATH):
@@ -311,11 +320,164 @@ def admin_cj_search():
         return redirect("/admin")
     return render_template("cj-search.html")
 
+@app.post("/admin/cj-sync/run")
+@app.post("/api/admin/cj/sync")
+@login_required
+def api_cj_sync_run():
+    """Lance manuellement une passe de synchronisation stocks/prix CJ."""
+    from cj_sync import sync_products
+    try:
+        report = sync_products()
+    except CJAPIError as exc:
+        return jsonify(ok=False, error=str(exc)), 502
+    except Exception as exc:  # noqa: BLE001
+        return jsonify(ok=False, error=f"Échec de la synchro : {exc}"), 500
+    return jsonify(ok=True, report=report)
+
+
+@app.get("/admin/cj-sync/status")
+@app.get("/api/admin/cj/status")
+@login_required
+def api_cj_sync_status():
+    """Rapport de la dernière passe de synchronisation CJ."""
+    from cj_sync import load_state
+    return jsonify(ok=True, state=load_state())
+
+
+@app.get("/api/cj/import-preview")
+@login_required
+def api_cj_import_preview():
+    """Pré-remplissage de la modale d'import : tout ce que l'import enrichi
+    saurait calculer (titre FR, coût CJ, tailles/couleurs des variantes,
+    description FR), sans rien écrire dans la boutique.
+
+    La modale d'import (templates/cj-search.html) appelle cet endpoint au
+    clic sur « Importer » — les champs CJ de la liste de recherche sont
+    souvent vides, c'est ici qu'on obtient les vraies données.
+    """
+    from cj_service import (
+        CJAPIError, extract_image_urls, extract_size_guide_url,
+        extract_specs, get_product_details, get_variant_list,
+        translate_product_title, translate_to_french,
+    )
+
+    cj_id = str(request.args.get("cj_pid") or "").strip()
+    if not cj_id:
+        return jsonify(ok=False, error="cj_pid est obligatoire"), 400
+    try:
+        product = get_product_details(cj_id)
+    except ValueError as exc:
+        return jsonify(ok=False, error=str(exc)), 400
+    except CJAPIError as exc:
+        return jsonify(ok=False, error=str(exc)), 502
+
+    name_en = (product.get("productNameEn") or product.get("nameEn") or
+               product.get("productName") or product.get("name") or "").strip()
+    name = (translate_to_french(name_en) or translate_product_title(name_en) or name_en)
+
+    html_desc = str(product.get("description") or "")
+    text_desc = re.sub(r"<br\s*/?>", "\n", html_desc, flags=re.IGNORECASE)
+    text_desc = re.sub(r"<[^>]+>", " ", text_desc)
+    text_desc = re.sub(r"https?://\S+", " ", text_desc)
+    description = re.sub(r"[\n ]{2,}", " ", text_desc).strip()
+    if description:
+        description = (translate_to_french(description[:4000]) or description)
+        description = description.split("Image du produit")[0].strip(" :-\n")
+        description = re.sub(r"\s{2,}", " ", description).strip()
+
+    def _norm(value):
+        text = unicodedata.normalize("NFD", str(value or "").lower())
+        return "".join(c for c in text if unicodedata.category(c) != "Mn").strip()
+
+    _UNIQUE_SIZE_HINTS = (
+        "comme", "figure", "photo", "unique", "one size", "standard",
+        "taille libre", "as shown",
+    )
+
+    def _fr_option(en_text, kind):
+        """Traduit une option CJ EN→FR (MyMemory, secours dictionnaire)."""
+        text = re.sub(r"\s+", " ", str(en_text or "")).strip()
+        if not text:
+            return None
+        translated = translate_to_french(text)
+        if not translated:
+            translated = translate_product_title(text) or None
+        if translated:
+            translated = _norm(translated).capitalize()
+            low = _norm(translated)
+            if kind == "size" and any(h in low for h in _UNIQUE_SIZE_HINTS):
+                return "Unique"
+        return translated
+
+    variant_entries = []
+    try:
+        variants_cj = get_variant_list(cj_id)
+    except (CJAPIError, ValueError) as exc:
+        print(f"Variantes CJ indisponibles pour {cj_id} : {exc}")
+        variants_cj = []
+    for v in variants_cj:
+        vid = str(v.get("vid") or "").strip()
+        if not vid:
+            continue
+        key = str(v.get("variantKey") or v.get("variantNameEn") or
+                  v.get("variantName") or "").strip()
+        parts = [p.strip() for p in key.split("-") if p.strip()]
+        color_en = parts[0] if parts else ""
+        size_en = parts[-1] if len(parts) > 1 else ""
+        try:
+            v_price = float(v.get("variantSellPrice") or 0) or None
+        except (TypeError, ValueError):
+            v_price = None
+        variant_entries.append({
+            "vid": vid,
+            "sku": str(v.get("variantSku") or "").strip(),
+            "color": _fr_option(color_en, "color") or "Standard",
+            "size": _fr_option(size_en, "size") or "Unique",
+            "price": v_price,
+            "image": str(v.get("variantImage") or "").strip() or None,
+        })
+    sizes = sorted({e["size"] for e in variant_entries if e["size"]})
+    colors = sorted({e["color"] for e in variant_entries if e["color"]})
+
+    # Prix d'achat CJ : sellPrice du produit, sinon le plus bas des variantes.
+    try:
+        cj_cost_price = float(product.get("sellPrice") or
+                              product.get("nowPrice") or
+                              product.get("discountPrice") or 0)
+    except (TypeError, ValueError):
+        cj_cost_price = 0.0
+    if cj_cost_price <= 0 and variant_entries:
+        cj_cost_price = min((e["price"] or 0) for e in variant_entries) or 0
+
+    specs = extract_specs(product)
+    for spec in specs:
+        spec["value"] = (translate_to_french(spec["value"]) or spec["value"])[:120]
+    image_urls = extract_image_urls(product)
+
+    return jsonify(ok=True, preview={
+        "cj_pid": cj_id,
+        "name": name[:200],
+        "cost": round(cj_cost_price, 2) or None,
+        "sizes": sizes or ["Unique"],
+        "colors": colors or ["Standard"],
+        "description": description[:5000],
+        "image": image_urls[0] if image_urls else None,
+        "images": image_urls,
+        "variants": variant_entries,
+        "specs": specs,
+        "size_guide_url": extract_size_guide_url(product),
+    })
+
+
 @app.post("/admin/cj-import")
 @app.post("/api/admin/cj/import")
 @login_required
 def api_cj_import():
-    from cj_service import CJAPIError, get_product_details, translate_product_title
+    from cj_service import (
+        CJAPIError, extract_image_urls, extract_size_guide_url,
+        extract_specs, get_product_details, get_variant_list,
+        translate_product_title, translate_to_french,
+    )
 
     submitted = request.get_json(silent=True) or request.form
     cj_id = str(submitted.get("cj_pid") or "").strip()
@@ -344,29 +506,96 @@ def api_cj_import():
     except CJAPIError as exc:
         return jsonify(ok=False, error=str(exc)), 502
 
-    name = (product.get("productName") or product.get("productNameEn") or
-            product.get("nameEn") or
-            product.get("name") or "").strip()
-    if not name:
+    # CJ renvoie souvent le titre d'origine en chinois dans "productName" :
+    # on part de la version anglaise puis on traduit réellement EN→FR.
+    name_en = (product.get("productNameEn") or product.get("nameEn") or
+               product.get("productName") or product.get("name") or "").strip()
+    if not name_en:
         return jsonify(ok=False, error="Nom du produit CJ manquant"), 502
     edited_name = str(submitted.get("name") or "").strip()
     if edited_name:
         name = edited_name
     else:
-        name = translate_product_title(name)
+        # Traduction réelle EN→FR (MyMemory) ; dictionnaire local en secours.
+        name = translate_to_french(name_en) or translate_product_title(name_en)
     if not name:
         return jsonify(ok=False, error="Le titre du produit est obligatoire"), 400
+
     description = re.sub(
         r"<[^>]+>", " ",
         str(submitted.get("description") or "").strip(),
     )
     if not description:
-        description = re.sub(
-            r"<[^>]+>", " ",
-            str(product.get("description") or
-                "Produit importé depuis CJ Dropshipping.").strip(),
-        )
+        html_desc = str(product.get("description") or "")
+        text_desc = re.sub(r"<br\s*/?>", "\n", html_desc, flags=re.IGNORECASE)
+        text_desc = re.sub(r"<[^>]+>", " ", text_desc)
+        # Les blocs <img> de la description CJ sont remplacés par la galerie
+        # dédiée (extract_image_urls) : on retire leurs URLs du texte.
+        text_desc = re.sub(r"https?://\S+", " ", text_desc)
+        description = re.sub(r"[\n ]{2,}", " ", text_desc).strip()
+    if description:
+        # Traduction réelle EN→FR ; texte source conservé si indisponible.
+        description = (translate_to_french(description[:4000]) or description)
+    else:
+        description = "Produit importé depuis CJ Dropshipping."
+    # En-tête résiduel du bloc « Product Image » de CJ (les images vont dans
+    # la galerie dédiée) : on le retire de la description.
+    description = description.split("Image du produit")[0].strip(" :-\n")
     description = re.sub(r"\s{2,}", " ", description).strip()
+
+    # ---- Variantes CJ : couleurs/motifs + tailles, traduits en français ----
+    try:
+        variants_cj = get_variant_list(cj_id)
+    except (CJAPIError, ValueError) as exc:
+        print(f"Variantes CJ indisponibles pour {cj_id} : {exc}")
+        variants_cj = []
+
+    _UNIQUE_SIZE_HINTS = (
+        "comme", "figure", "photo", "unique", "one size", "standard",
+        "taille libre", "as shown",
+    )
+
+    def _fr_option(en_text, kind):
+        """Traduit une option CJ EN→FR (MyMemory, secours dictionnaire)."""
+        text = re.sub(r"\s+", " ", str(en_text or "")).strip()
+        if not text:
+            return None
+        translated = translate_to_french(text)
+        if not translated:
+            translated = translate_product_title(text) or None
+        if translated:
+            translated = re.sub(r"\s+", " ", translated).strip().capitalize()
+            low = translated.lower()
+            if kind == "size" and any(h in low for h in _UNIQUE_SIZE_HINTS):
+                return "Unique"
+        return translated
+
+    variant_entries = []
+    for v in variants_cj:
+        vid = str(v.get("vid") or "").strip()
+        if not vid:
+            continue
+        key = str(v.get("variantKey") or v.get("variantNameEn") or
+                  v.get("variantName") or "").strip()
+        parts = [p.strip() for p in key.split("-") if p.strip()]
+        color_en = parts[0] if parts else ""
+        size_en = parts[-1] if len(parts) > 1 else ""
+        try:
+            v_price = float(v.get("variantSellPrice") or 0) or None
+        except (TypeError, ValueError):
+            v_price = None
+        variant_entries.append({
+            "vid": vid,
+            "sku": str(v.get("variantSku") or "").strip(),
+            "color": _fr_option(color_en, "color") or "Standard",
+            "size": _fr_option(size_en, "size") or "Unique",
+            "price": v_price,
+            "image": str(v.get("variantImage") or "").strip() or None,
+        })
+    if not sizes:
+        sizes = sorted({e["size"] for e in variant_entries if e["size"]})
+    if not colors:
+        colors = sorted({e["color"] for e in variant_entries if e["color"]})
     category = str(submitted.get("category") or "Accessoires").strip()
     if category not in CATEGORIES:
         return jsonify(ok=False, error="Catégorie invalide"), 400
@@ -376,6 +605,10 @@ def api_cj_import():
                               product.get("discountPrice") or 0)
     except (TypeError, ValueError):
         cj_cost_price = 0.0
+    # Le "sellPrice" produit est souvent absent : le plus bas des prix de
+    # variantes est le vrai plancher d'achat CJ.
+    if cj_cost_price <= 0 and variant_entries:
+        cj_cost_price = min((e["price"] or 0) for e in variant_entries) or 0
     submitted_cost = str(submitted.get("cost") or "").strip()
     if submitted_cost:
         try:
@@ -387,9 +620,15 @@ def api_cj_import():
     if cost_price < 0:
         return jsonify(ok=False, error="Le prix d'achat ne peut pas être négatif"), 400
 
-    image = product.get("bigImage") or product.get("image") or product.get("productImage")
-    if isinstance(image, list):
-        image = image[0] if image else None
+    # Galerie complète CJ (productImageSet / productImage), guide des
+    # tailles et spécifications structurées.
+    image_urls = extract_image_urls(product)
+    image = image_urls[0] if image_urls else None
+    size_guide_url = extract_size_guide_url(product)
+    specs = extract_specs(product)
+    for spec in specs:
+        spec["value"] = (translate_to_french(spec["value"]) or spec["value"])[:120]
+
     imported = {
         "id": db["next_product_id"],
         "name": name[:200],
@@ -400,14 +639,21 @@ def api_cj_import():
         "sizes": sizes or ["Unique"],
         "colors": colors or ["Standard"],
         "status": "En stock",
-        "image": str(image or "").strip() or None,
+        "image": image,
+        "images": image_urls,
         "emoji": "🐾",
         "hue": "#FBBF24",
         "created_at": datetime.now().isoformat(),
         "cj_product_id": cj_id,
-        "cj_variant_id": str(
-            submitted.get("cj_vid") or submitted.get("cj_variant_id") or ""
-        ).strip() or None,
+        "cj_variants": variant_entries,
+        "cj_specs": specs,
+        "size_guide_url": size_guide_url,
+        "cj_synced_at": datetime.now().isoformat(timespec="seconds"),
+        "cj_variant_id": (
+            # produit monovariante : vid direct ; sinon résolu à la commande
+            (variant_entries[0]["vid"] if len(variant_entries) == 1 else "")
+            or str(submitted.get("cj_vid") or submitted.get("cj_variant_id") or "").strip()
+        ) or None,
     }
     db["products"].append(imported)
     db["next_product_id"] += 1
@@ -769,12 +1015,18 @@ def api_create_product():
 
     category = d.get("category") if d.get("category") in CATEGORIES else "Accessoires"
     status = d.get("status") if d.get("status") in PRODUCT_STATUSES else "En stock"
+    supplier_url = (d.get("url_fournisseur") or "").strip()
+    if supplier_url and not supplier_url.startswith(("http://", "https://")):
+        return jsonify(ok=False, error="L'URL fournisseur doit commencer par http:// ou https://"), 400
 
     prod = {
         "id": db["next_product_id"],
         "name": name,
         "price": price,
         "cost": cost,
+        "fournisseur_id": (d.get("fournisseur_id") or "").strip()[:120],
+        "fournisseur": (d.get("fournisseur") or "").strip()[:120],
+        "url_fournisseur": supplier_url[:1000] or None,
         "category": category,
         "description": (d.get("description") or "").strip(),
         "sizes": sizes or ["Unique"],
@@ -812,6 +1064,14 @@ def api_update_product(pid):
             prod[key] = d[key].strip()
     if "category" in d and d["category"] in CATEGORIES:
         prod["category"] = d["category"]
+    for key, limit in (("fournisseur_id", 120), ("fournisseur", 120)):
+        if key in d:
+            prod[key] = str(d.get(key) or "").strip()[:limit]
+    if "url_fournisseur" in d:
+        supplier_url = str(d.get("url_fournisseur") or "").strip()
+        if supplier_url and not supplier_url.startswith(("http://", "https://")):
+            return jsonify(ok=False, error="L'URL fournisseur doit commencer par http:// ou https://"), 400
+        prod["url_fournisseur"] = supplier_url[:1000] or None
     if "status" in d and d["status"] in PRODUCT_STATUSES:
         prod["status"] = d["status"]
     for key in ("price", "cost"):
@@ -907,6 +1167,46 @@ def confirmer_et_notifier(db, order):
         total=order["total"]
     )
 
+def _resolve_variant(db, item):
+    """Trouve un vid CJ correspondant au pid + couleur/taille de la ligne.
+
+    CJ exige vid ou sku sur chaque article d'une commande. Interroge la liste
+    de variantes CJ et matche la couleur/taille choisie si possible ;
+    renvoie la première variante sinon, None si le produit n'en a pas.
+    """
+    from cj_service import CJAPIError, get_variant_list
+
+    pid = str(item.get("cj_pid") or "").strip()
+    if not pid:
+        return None
+    try:
+        variants = get_variant_list(pid)
+    except (CJAPIError, ValueError) as exc:
+        print(f"Variantes CJ indisponibles pour {pid} : {exc}")
+        return None
+    if not variants:
+        return None
+
+    def _norm(value):
+        import unicodedata
+        text = unicodedata.normalize("NFD", str(value or "").lower())
+        return "".join(c for c in text if unicodedata.category(c) != "Mn").strip()
+
+    color, size = _norm(item.get("color")), _norm(item.get("size"))
+    if color and color not in ("standard", "unique"):
+        matched = [v for v in variants
+                   if color in _norm(v.get("variantNameEn") or v.get("variantName"))
+                   or color in _norm(v.get("variantSku"))]
+        if matched:
+            variants = matched
+    if size and size not in ("standard", "unique") and len(variants) > 1:
+        matched = [v for v in variants
+                   if size in _norm(v.get("variantNameEn") or v.get("variantName"))
+                   or size in _norm(v.get("variantSku"))]
+        if matched:
+            variants = matched
+    return str(variants[0].get("vid") or "") or None
+
 def envoyer_commande_cj(db, order):
     """Transmet à CJ les lignes payées qui proviennent de CJ.
 
@@ -926,26 +1226,49 @@ def envoyer_commande_cj(db, order):
 
     customer = order.get("customer") or {}
     address = str(customer.get("address") or "").strip()
+    # CJ exige city/ZIP séparés ; une adresse sans ville suceptible de
+    # produire le blocage "shippingCity must be not empty" du dashboard CJ.
+    def _split_address(addr):
+        # Dernier bloc qui ressemble à un code postal + nom de ville, e.g.
+        # "… 83000 Toulon", "… 75001 Paris" ; sinon (vide, "Ville").
+        match = re.search(r"\b(\d{5})\s+([^,]+)$", addr)
+        if match:
+            return addr[:match.start()].strip().strip(","), match.group(1), match.group(2).strip()
+        return addr, "", ""
+    _street, shipping_zip, shipping_city = _split_address(address)
     payload = {
         "orderNumber": order["ref"],
         "shippingCustomerName": str(customer.get("name") or "Client").strip()[:50],
         "shippingPhone": str(customer.get("phone") or "").strip()[:20],
-        "shippingAddress": address[:500],
+        "shippingAddress": _street[:500] if _street else address[:500],
         "email": str(customer.get("email") or "").strip()[:120],
         "shippingCountryCode": "FR",
         "shippingCountry": "France",
         "logisticName": os.getenv("CJ_LOGISTIC_NAME", "CJPacket"),
         "fromCountryCode": os.getenv("CJ_FROM_COUNTRY_CODE", "CN"),
-        "platform": "custom",
+        # CJ n'accepte plus "custom" (erreur 5027) : "api" = commande API
+        # classique, visible dans Orders > Imported Orders du dashboard CJ.
+        "platform": os.getenv("CJ_PLATFORM", "api"),
         "products": [],
     }
+    if shipping_city:
+        payload["shippingCity"] = shipping_city[:100]
+    if shipping_zip:
+        payload["shippingZip"] = shipping_zip[:20]
     for item in cj_items:
-        cj_id = item.get("cj_vid") or item.get("cj_pid")
         product = {"quantity": int(item.get("qty", 1))}
         if item.get("cj_vid"):
-            product["vid"] = cj_id
+            product["vid"] = item["cj_vid"]
         else:
-            product["pid"] = cj_id
+            # CJ refuse une ligne sans vid ni sku ("vid and sku cannot both
+            # be empty") : on résout la variante côté CJ à partir du pid,
+            # en matchant la couleur/taille choisie par le client si possible.
+            vid = _resolve_variant(db, item)
+            if vid:
+                product["vid"] = vid
+                item["cj_vid"] = vid  # mémo pour les commandes suivantes
+            else:
+                product["pid"] = item["cj_pid"]
         payload["products"].append(product)
 
     try:
@@ -1260,4 +1583,14 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == "__main__":
+    # Synchronisation quotidienne des stocks/prix CJ en tâche de fond
+    # (daemon ; intervalle configurable via CJ_SYNC_INTERVAL_HOURS).
+    # Le reloader debug de Flask duplique le processus : on n'ordonnance que
+    # dans le processus qui sert réellement les requêtes.
+    if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not app.debug:
+        try:
+            import cj_sync
+            cj_sync.start_scheduler()
+        except Exception as _sync_exc:  # noqa: BLE001 — l'app doit démarrer quoi qu'il arrive
+            print(f"Scheduler CJ non démarré : {_sync_exc}")
     app.run(debug=True, port=5000)

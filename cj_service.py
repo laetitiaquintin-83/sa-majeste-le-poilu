@@ -8,6 +8,7 @@ Le module ne journalise jamais la clé API ni les tokens.
 """
 from __future__ import annotations
 
+import json
 import os
 import re
 import threading
@@ -18,8 +19,32 @@ from typing import Any
 import requests
 
 
+# Session partagée : réutilisation des connexions TLS (important pour les
+# appels en série de la synchronisation, -2/3 du temps par requête).
+_session = requests.Session()
+
 CJ_API_BASE_URL = "https://developers.cjdropshipping.com/api2.0/v1"
 REQUEST_TIMEOUT = (5, 30)
+
+# CJ limite l'API à 1 requête/seconde : cadence UNIQUE globale, appliquée
+# à chaque appel (_get/_post). Synchro de fond, imports et commandes
+# partagent ce même garde-fou — plus de « Too Many Requests ».
+_QPS_LOCK = threading.Lock()
+_QPS_LAST = 0.0
+_QPS_INTERVAL = float(os.getenv("CJ_QPS_INTERVAL", "1.05"))
+
+
+def _respect_qps() -> None:
+    """Espace les appels CJ d'au moins CJ_QPS_INTERVAL secondes."""
+    global _QPS_LAST
+    with _QPS_LOCK:
+        wait = _QPS_LAST + _QPS_INTERVAL - time.monotonic()
+        if wait > 0:
+            time.sleep(wait)
+        _QPS_LAST = time.monotonic()
+
+
+TR_TIMEOUT = (5, 15)
 
 
 class CJAPIError(RuntimeError):
@@ -190,6 +215,75 @@ def translate_product_title(title: Any) -> str:
     return re.sub(r"\s{2,}", " ", cleaned).strip()
 
 
+# ------------------------------------------------------------------
+# Traduction automatique EN -> FR (MyMemory : API publique gratuite,
+# sans clé ni inscription). Chaque traduction est mise en mémoire et les
+# appels sont espacés (quota anonyme ~5 000 mots/jour). En cas d'erreur
+# réseau ou de quota épuisé, on renvoie None : l'appelant garde alors le
+# texte nettoyé par le dictionnaire ci-dessus (translate_product_title).
+_TR_URL = "https://api.mymemory.translated.net/get"
+_TR_SESSION = requests.Session()
+_TR_MIN_DELAY = 0.3  # politesse : espace entre deux requêtes
+_TR_LOCK = threading.Lock()
+_TR_CACHE: dict[str, str] = {}  # clé normalisée -> trad. ("" indisponible)
+_TR_LAST = 0.0
+
+
+def _chunk_text(text: str, *, max_len: int = 480) -> list[str]:
+    """Découpe un long texte en morceaux < max_len, aux frontières de phrase."""
+    words = text.split()
+    chunks, current = [], ""
+    for word in words:
+        candidate = f"{current} {word}".strip()
+        while len(candidate) > max_len:
+            cut = max(1, max_len)
+            chunks.append(candidate[:cut].rsplit(" ", 1)[0])
+            candidate = candidate[len(chunks[-1]):].strip()
+        current = candidate
+    if current:
+        chunks.append(current)
+    return chunks or ([text] if text else [])
+
+
+def translate_to_french(text: Any) -> str | None:
+    """Traduit un texte anglais en français. None si indisponible."""
+    global _TR_LAST
+    source = re.sub(r"\s+", " ", str(text or "")).strip()
+    if len(source) < 2:
+        return None
+    key = source.lower()
+    with _TR_LOCK:
+        cached = _TR_CACHE.get(key)
+        if cached is not None:
+            return cached or None
+        translated_parts: list[str] = []
+        try:
+            for chunk in _chunk_text(source)[:40]:
+                wait = _TR_MIN_DELAY - (time.monotonic() - _TR_LAST)
+                if wait > 0:
+                    time.sleep(wait)
+                _TR_LAST = time.monotonic()
+                response = _TR_SESSION.get(
+                    _TR_URL, params={"q": chunk, "langpair": "en|fr"},
+                    timeout=TR_TIMEOUT,
+                )
+                response.raise_for_status()
+                payload = response.json()
+                piece = str(((payload.get("responseData") or {}).get("translatedText") or "")).strip()
+                if not piece:
+                    break
+                translated_parts.append(piece)
+        except (requests.RequestException, ValueError):
+            _TR_CACHE[key] = ""  # indisponible pour le moment : pas de re-call immédiat
+            return None
+        translated = " ".join(translated_parts).strip()
+        if not translated:
+            _TR_CACHE[key] = ""
+            return None
+        _TR_CACHE[key] = translated
+        return translated
+
+
 def _product_name(product: dict[str, Any]) -> str:
     return str(
         product.get("productName")
@@ -276,8 +370,9 @@ def _post(path: str, payload: dict[str, Any], token: str | None = None) -> dict[
     headers = {"Accept": "application/json", "Content-Type": "application/json"}
     if token:
         headers["CJ-Access-Token"] = token
+    _respect_qps()
     try:
-        response = requests.post(
+        response = _session.post(
             f"{CJ_API_BASE_URL}{path}",
             json=payload,
             headers=headers,
@@ -290,8 +385,9 @@ def _post(path: str, payload: dict[str, Any], token: str | None = None) -> dict[
 
 def _get(path: str, params: dict[str, Any], token: str) -> dict[str, Any]:
     headers = {"Accept": "application/json", "CJ-Access-Token": token}
+    _respect_qps()
     try:
-        response = requests.get(
+        response = _session.get(
             f"{CJ_API_BASE_URL}{path}",
             params=params,
             headers=headers,
@@ -390,6 +486,36 @@ def get_product_details(cj_pid: str) -> dict[str, Any]:
     raise CJAPIError("Produit CJ introuvable.", 404)
 
 
+def get_variant_list(cj_pid: str) -> list[dict[str, Any]]:
+    """Liste des variantes (vid, sku, nom…) d'un produit CJ."""
+    cj_pid = str(cj_pid or "").strip()
+    if not cj_pid:
+        raise ValueError("L'identifiant CJ est obligatoire.")
+    payload = _get(
+        "/product/variant/query",
+        {"pid": cj_pid},
+        get_access_token(),
+    )
+    data = payload.get("data", payload)
+    if isinstance(data, dict):
+        data = data.get("list") or data.get("data") or data.get("variantList")
+    return data if isinstance(data, list) else []
+
+
+def get_variant_stock(vid: str) -> list[dict[str, Any]]:
+    """Stock réel d'une variante CJ (rows par entrepôt, totalInventoryNum)."""
+    vid = str(vid or "").strip()
+    if not vid:
+        raise ValueError("Le vid de la variante est obligatoire.")
+    payload = _get(
+        "/product/stock/queryByVid",
+        {"vid": vid},
+        get_access_token(),
+    )
+    data = payload.get("data", payload)
+    return data if isinstance(data, list) else []
+
+
 def create_order(order_details: dict[str, Any]) -> Any:
     """Crée une commande CJ avec le payload v2 ``createOrderV2``."""
     if not isinstance(order_details, dict) or not order_details:
@@ -399,3 +525,144 @@ def create_order(order_details: dict[str, Any]) -> Any:
         order_details,
         get_access_token(),
     ).get("data")
+
+
+# ------------------------------------------------------------------
+# Enrichissement « import » : galerie, guide des tailles, spécifications.
+
+
+def _collect_urls(value: Any, out: list[str]) -> None:
+    """Ajoute de façon récursive les URLs http(s) trouvées dans `value`.
+
+    CJ sérialise parfois `productImage` en chaîne JSON d'une liste, d'où le
+    décodage JSON défensif en plus de la découpe par virgules.
+    """
+    if isinstance(value, (list, tuple)):
+        for item in value:
+            _collect_urls(item, out)
+        return
+    if isinstance(value, dict):
+        for key in ("url", "imageUrl", "image", "imageSet"):
+            if key in value:
+                _collect_urls(value.get(key), out)
+        return
+    text = str(value or "").strip()
+    if not text:
+        return
+    if text.startswith("["):
+        try:
+            parsed = json.loads(text)
+        except ValueError:
+            parsed = None
+        if parsed is not None:
+            _collect_urls(parsed, out)
+            return
+    for part in text.split(","):
+        part = part.strip().strip('"')
+        if part.startswith(("http://", "https://")):
+            out.append(part)
+
+
+def extract_image_urls(product: dict[str, Any]) -> list[str]:
+    """Galerie complète d'un produit CJ (productImageSet + productImage).
+
+    Dérape en mettant en premier la principale `bigImage`, sans doublons.
+    """
+    ordered: list[str] = []
+    _collect_urls(product.get("bigImage"), ordered)
+    for field in ("productImageSet", "productImage"):
+        _collect_urls(product.get(field), ordered)
+    seen: set[str] = set()
+    urls = []
+    for url in ordered:
+        norm = url.split("?")[0]
+        if norm not in seen:
+            seen.add(norm)
+            urls.append(url)
+    return urls
+
+
+def extract_size_guide_url(product: dict[str, Any]) -> str | None:
+    """URL éventuelle du guide des tailles / charte de mesure CJ."""
+    for key, value in product.items():
+        if "sizechart" not in key.lower().replace("_", ""):
+            continue
+        urls: list[str] = []
+        _collect_urls(value, urls)
+        if urls:
+            return urls[0]
+    return None
+
+
+_SPECS_FR = {
+    "material": "Matière",
+    "packing": "Emballage",
+    "weight": "Poids",
+    "category": "Catégorie CJ",
+    "variant_dimensions": "Dimensions type (L×l×H)",
+    "video": "Présentation vidéo",
+}
+
+
+def _spec_text(value: Any) -> str:
+    """Aplatit un champ CJ qui arrive en liste ou en chaîne JSON ("[\"Metal\"]")."""
+    if isinstance(value, (list, tuple)):
+        return ", ".join(str(x) for x in value if str(x).strip())
+    text = str(value or "").strip()
+    if text.startswith("["):
+        try:
+            return _spec_text(json.loads(text))
+        except (ValueError, TypeError):
+            return text.strip('"[] ')
+    return text
+
+
+def extract_specs(product: dict[str, Any]) -> list[dict[str, str]]:
+    """Spécifications techniques structurées que CJ fournit sur le produit."""
+    specs: list[dict[str, str]] = []
+
+    def _add(spec_key: str, label_en: str, value: str) -> None:
+        value = re.sub(r"\s+", " ", str(value or "")).strip()
+        if not value:
+            return
+        specs.append({
+            "label": _SPECS_FR.get(label_en, str(label_en)),
+            "value": value,
+        })
+
+    material = _spec_text(product.get("materialNameEn") or
+                          product.get("materialName"))
+    if material.lower() not in ("", "other", "autre", "none"):
+        _add("material", "material", material)
+    packing = _spec_text(product.get("packingNameEn") or
+                         product.get("packingName"))
+    if packing.lower() not in ("", "no", "other", "none"):
+        _add("packing", "packing", packing)
+    try:
+        weight = float(product.get("productWeight") or 0)
+    except (TypeError, ValueError):
+        weight = 0.0
+    if weight > 0:
+        _add("weight", "weight", f"{weight:g} g")
+    category = str(product.get("categoryName") or "").strip()
+    if category and category.lower() not in ("other", "no category"):
+        _add("category", "category", category)
+    if str(product.get("productVideo") or "").strip().startswith("http"):
+        _add("video", "video", str(product["productVideo"]).strip())
+
+    standard = (product.get("variants") or [])
+    if standard and isinstance(standard, list):
+        raw = str(standard[0].get("variantStandard") or "").strip()
+        # variantStandard : "long=125,width=75,height=30" (mm d'emballage)
+        dims = dict(re.findall(r"(long|width|height)\s*=\s*([\d.]+)", raw))
+        if dims:
+            def _mm(name: str, factor: float) -> str:
+                try:
+                    return f"{float(dims[name]) / factor:g}"
+                except (KeyError, ZeroDivisionError, ValueError):
+                    return "?"
+            _add(
+                "variant_dimensions", "variant_dimensions",
+                " × ".join((_mm("long", 10), _mm("width", 10), _mm("height", 10))) + " cm",
+            )
+    return specs

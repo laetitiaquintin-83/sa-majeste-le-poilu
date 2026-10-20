@@ -1,0 +1,290 @@
+{
+  "last_run": "2026-10-20T10:14:23",
+  "last_report": {
+    "ran_at": "2026-10-20T10:14:23",
+    "checked": 14,
+    "cost_updated": 0,
+    "stock_updated": 11,
+    "marked_unavailable": 0,
+    "restored": 0,
+    "errors": [
+      {
+        "product_id": 8,
+        "pid": "B901800C-2B7B-487C-97FE-CC4714CDA630",
+        "vid": "7961C28E-ECC7-4025-9923-5192D66D3CE7",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 8,
+        "pid": "B901800C-2B7B-487C-97FE-CC4714CDA630",
+        "vid": "7D162FD0-E1B2-462D-9C0B-18DC56ED3A91",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 8,
+        "pid": "B901800C-2B7B-487C-97FE-CC4714CDA630",
+        "vid": "7D4A2FE9-4DA5-47D9-BBFB-6B7EC121B437",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 8,
+        "pid": "B901800C-2B7B-487C-97FE-CC4714CDA630",
+        "vid": "A76B763C-93F6-45CF-9FF9-3F92C64F2C30",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 9,
+        "pid": "1709193321471549440",
+        "vid": "1709193321551241216",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 9,
+        "pid": "1709193321471549440",
+        "vid": "2409010241431623200",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 9,
+        "pid": "1709193321471549440",
+        "vid": "2409010241431623400",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 9,
+        "pid": "1709193321471549440",
+        "vid": "2409010241431623600",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 9,
+        "pid": "1709193321471549440",
+        "vid": "2409010241431624100",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 9,
+        "pid": "1709193321471549440",
+        "vid": "2508300516471627700",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 10,
+        "pid": "1527210716162437120",
+        "vid": "1527210716292460544",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 11,
+        "pid": "1364571804076740608",
+        "vid": "1364571805540552704",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 11,
+        "pid": "1364571804076740608",
+        "vid": "1364571805569912832",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 11,
+        "pid": "1364571804076740608",
+        "vid": "1364571805595078656",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 12,
+        "pid": "0C02A02B-38B5-47B5-834D-3B75A69A14CB",
+        "vid": "2C96D4C1-FC86-4F4B-8BEC-40AB9614ECC6",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 14,
+        "pid": "1431152894350069760",
+        "vid": "1431152894421372928",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 14,
+        "pid": "1431152894350069760",
+        "vid": "1431152894429761536",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 15,
+        "pid": "7B6CB1FF-4A90-4ACB-88BA-615A8CE73DCC",
+        "vid": "0218A1FC-F1B2-4DCF-981C-6FBBFCF6CC6A",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 15,
+        "pid": "7B6CB1FF-4A90-4ACB-88BA-615A8CE73DCC",
+        "vid": "038DFBDC-1EA0-41A9-AA38-F041689EFED9",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 15,
+        "pid": "7B6CB1FF-4A90-4ACB-88BA-615A8CE73DCC",
+        "vid": "0D11A7EF-A4B2-42F9-8DB4-C4E4FF93E8D3",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 15,
+        "pid": "7B6CB1FF-4A90-4ACB-88BA-615A8CE73DCC",
+        "vid": "4A5BFDE0-38F2-428E-930D-AA0287A96033",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 15,
+        "pid": "7B6CB1FF-4A90-4ACB-88BA-615A8CE73DCC",
+        "vid": "54C74DC2-95DD-4B96-BC63-CED5CDF8CF52",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 15,
+        "pid": "7B6CB1FF-4A90-4ACB-88BA-615A8CE73DCC",
+        "vid": "74109430-BE06-4220-88EF-C5A3428CA011",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 16,
+        "pid": "2412240904181608700",
+        "vid": "2412240904181608900",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 16,
+        "pid": "2412240904181608700",
+        "vid": "2412240904181609100",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 16,
+        "pid": "2412240904181608700",
+        "vid": "2412240904181609300",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 17,
+        "pid": "AC7C7D02-C773-4B7A-B4BF-E5A637363E3D",
+        "vid": "9CA4FDF7-6F9F-4127-8A07-939AC8054BF8",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 17,
+        "pid": "AC7C7D02-C773-4B7A-B4BF-E5A637363E3D",
+        "vid": "A4270951-CD16-4DBF-AC27-EDC59461CE36",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 18,
+        "pid": "1444937883965329408",
+        "vid": "1444937884074381312",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 19,
+        "pid": "1580131625164353536",
+        "vid": "1580131625244045312",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 19,
+        "pid": "1580131625164353536",
+        "vid": "1580131625248239616",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638171626901",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638171627700",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638171627900",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638171628100",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638171628300",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638171628600",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638171628800",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638181621900",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638181623700",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638181623900",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638181624100",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638181624400",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638181624600",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638181624800",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      },
+      {
+        "product_id": 20,
+        "pid": "2503010638171626700",
+        "vid": "2503010638181624900",
+        "error": "Too Many Requests, QPS limit is 1 time/1second"
+      }
+    ]
+  },
+  "next_run_hint": "2026-10-21T10:18:44"
+}

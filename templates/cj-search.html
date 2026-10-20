@@ -82,20 +82,57 @@
       return String(product.id || product.pid || product.productId || "").trim();
     }
 
-    function openImportModal(product, name) {
-      document.querySelector("#cj-pid").value = cjPidOf(product);
-      document.querySelector("#cj-name").value = name;
-      document.querySelector("#cj-price").value = "19.90";
-      document.querySelector("#cj-cost").value = product.sellPrice || product.nowPrice || product.discountPrice || "";
-      document.querySelector("#cj-sizes").value = product.sizes || product.size || "";
-      document.querySelector("#cj-colors").value = product.colors || product.color || "";
-      document.querySelector("#cj-description").value = product.description || "Produit importé depuis CJ Dropshipping.";
-      document.querySelector("#cj-category").value = "Accessoires";
-      if (!document.querySelector("#cj-pid").value) {
+    async function openImportModal(product, name) {
+      const cjPid = cjPidOf(product);
+      if (!cjPid) {
         showMessage("Identifiant CJ introuvable pour ce produit — import impossible.", "danger");
         return;
       }
       bootstrap.Modal.getOrCreateInstance(document.querySelector("#cj-import-modal")).show();
+
+      // Valeurs par défaut immédiates (panier antidépannage) : la route
+      // d'import sait recouvrer tout ce qui reste vide avec les vraies
+      // données CJ. Le pré-remplissage arrive juste après.
+      setCjFormDefaults(name);
+      preloadImportFields(cjPid, name);
+    }
+
+    function setCjFormDefaults(name) {
+      document.querySelector("#cj-pid").value = "";
+      document.querySelector("#cj-name").value = name;
+      document.querySelector("#cj-price").value = "19.90";
+      document.querySelector("#cj-cost").value = "";
+      document.querySelector("#cj-sizes").value = "";
+      document.querySelector("#cj-colors").value = "";
+      document.querySelector("#cj-description").value = "";
+      document.querySelector("#cj-category").value = "Accessoires";
+    }
+
+    async function preloadImportFields(cjPid, fallbackName) {
+      // Recueille le titre FR, le prix d'achat, les tailles/couleurs des
+      // variantes CJ et la description FR — exactement ce que l'import
+      // fera si on ne modifie rien. ~2-4 s (traductions EN→FR + CJ).
+      const fillables = ["#cj-name", "#cj-cost", "#cj-sizes", "#cj-colors", "#cj-description"];
+      fillables.forEach((sel) => document.querySelector(sel).classList.add("opacity-50"));
+      showMessage("Récupération des détails CJ et traduction en cours…", "info");
+      try {
+        const response = await fetch(`/api/cj/import-preview?cj_pid=${encodeURIComponent(cjPid)}`);
+        const data = await response.json();
+        if (!response.ok || data.ok === false) throw new Error(data.error || "Aperçu impossible");
+        const preview = data.preview;
+        setCjFormDefaults(fallbackName);
+        document.querySelector("#cj-pid").value = preview.cj_pid || cjPid;
+        document.querySelector("#cj-name").value = preview.name || fallbackName;
+        document.querySelector("#cj-cost").value = preview.cost ?? "";
+        document.querySelector("#cj-sizes").value = (preview.sizes || []).join(", ");
+        document.querySelector("#cj-colors").value = (preview.colors || []).join(", ");
+        document.querySelector("#cj-description").value = preview.description || "";
+        showMessage("Champs pré-remplis depuis CJ — vérifiez et ajustez si besoin.", "success");
+      } catch (error) {
+        showMessage(`Pré-remplissage indisponible (${error.message}) — import possible quand même, données CJ recouvrées à l'import.`, "warning");
+      } finally {
+        fillables.forEach((sel) => document.querySelector(sel).classList.remove("opacity-50"));
+      }
     }
 
     document.addEventListener("submit", async (event) => {

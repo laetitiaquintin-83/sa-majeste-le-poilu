@@ -237,6 +237,7 @@ p { margin: 0; }
     padding: 16px; transform: rotate(-1.2deg);
     transition: transform var(--transition), box-shadow var(--transition);
 }
+.product-card[hidden] { display: none !important; }
 .product-card:nth-child(even) { transform: rotate(1.2deg); }
 .product-card:hover { transform: translate(-3px, -3px) rotate(0); box-shadow: 10px 10px 0 var(--ink); z-index: 2; }
 .product-visual {

@@ -86,6 +86,12 @@
                 <input id="pf-price" name="price" type="number" step="0.01" min="0.01" required placeholder="24.90"></div>
               <div class="field-inline"><label for="pf-cost">Prix d'achat / coût (€) *</label>
                 <input id="pf-cost" name="cost" type="number" step="0.01" min="0" required placeholder="7.50"></div>
+              <div class="field-inline"><label for="pf-supplier-id">Référence fournisseur</label>
+                <input id="pf-supplier-id" name="fournisseur_id" maxlength="120" placeholder="collier-perles"></div>
+              <div class="field-inline"><label for="pf-supplier">Fournisseur</label>
+                <input id="pf-supplier" name="fournisseur" maxlength="120" placeholder="CJ Dropshipping"></div>
+              <div class="field-inline" style="grid-column:1/-1"><label for="pf-supplier-url">URL fournisseur</label>
+                <input id="pf-supplier-url" name="url_fournisseur" type="url" maxlength="1000" placeholder="https://cjdropshipping.com/product/..."></div>
               <div class="field-inline"><label for="pf-status">Statut</label>
                 <select id="pf-status" name="status">
                   <option>En stock</option><option>Sur commande POD</option><option>Indisponible</option>

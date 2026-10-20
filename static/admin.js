@@ -114,6 +114,9 @@
     $("#pf-name").value = p ? p.name : "";
     $("#pf-price").value = p ? p.price : "";
     $("#pf-cost").value = p ? p.cost : "";
+    $("#pf-supplier-id").value = p ? (p.fournisseur_id || "") : "";
+    $("#pf-supplier").value = p ? (p.fournisseur || "") : "";
+    $("#pf-supplier-url").value = p ? (p.url_fournisseur || "") : "";
     $("#pf-category").value = p ? p.category : CATEGORIES[0];
     $("#pf-description").value = p ? p.description : "";
     $("#pf-sizes").value = p ? (p.sizes || []).join(", ") : "S, M, L, XL";
