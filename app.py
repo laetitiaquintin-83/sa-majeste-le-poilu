@@ -1,7 +1,10 @@
 """
 Sa Majesté le Poilu — Boutique + Dashboard d'administration
 Flask + stockage JSON local (data/boutique.json).
-Lancement : python app.py  →  http://127.0.0.1:5000
+
+Lancement local : python app.py  →  http://127.0.0.1:5000
+Production (Render) : gunicorn app:app (voir gunicorn.conf.py) — le port
+provient de la variable d'environnement PORT, définie par la plateforme.
 """
 import json
 import threading
@@ -18,7 +21,7 @@ from io import BytesIO
 
 from flask import (
     Flask, render_template, request, jsonify, session as flask_session,
-    send_file, abort, redirect,
+    send_file, send_from_directory, abort, redirect,
 )
 from werkzeug.utils import secure_filename
 
@@ -49,8 +52,10 @@ def _load_dotenv(path):
 
 _load_dotenv(os.path.join(APP_DIR, ".env"))
 
-DATA_DIR = os.path.join(APP_DIR, "data")
-UPLOAD_DIR = os.path.join(APP_DIR, "static", "uploads")
+# Sur Render (production), DATA_DIR pointe vers un disque persistant pour que
+# commandes/abonnés survivent aux redéploiements. En local, chemins par défaut.
+DATA_DIR = os.environ.get("DATA_DIR", "").strip() or os.path.join(APP_DIR, "data")
+UPLOAD_DIR = os.environ.get("UPLOAD_DIR", "").strip() or os.path.join(APP_DIR, "static", "uploads")
 CUSTOM_PETS_DIR = os.path.join(UPLOAD_DIR, "custom_pets")
 PRODUCTS_DIR = os.path.join(UPLOAD_DIR, "products")
 GALLERY_DIR = os.path.join(UPLOAD_DIR, "gallery")
@@ -68,6 +73,16 @@ app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024  # 8 Mo max par upload
 app.secret_key = os.getenv("FLASK_SECRET_KEY", secrets.token_hex(32))
 
+
+# Les uploads sont référencés par des URL /static/uploads/... Dans le
+# déploiement Render, UPLOAD_DIR peut pointer vers un disque persistant hors
+# de static/ : cette règle (plus spécifique que /static/<path:filename>) sert
+# alors les fichiers depuis le bon répertoire. En local, elle sert le même
+# dossier que Flask, sans changement de comportement.
+@app.get("/static/uploads/<path:filename>")
+def _servir_upload(filename):
+    return send_from_directory(UPLOAD_DIR, filename)
+
 CATEGORIES = [
     "Mugs",
     "T-shirts",
@@ -82,46 +97,101 @@ PRODUCT_STATUSES = ["En stock", "Sur commande POD", "Indisponible"]
 ORDER_STATUSES = ["Nouvelle", "En préparation", "Expédiée", "Livrée", "Payée"]
 
 # ---------------------------------------------------------------- email
-def envoyer_email_confirmation(email_client, nom_client, numero_commande, total):
-    """Envoie l'email de confirmation de commande intercepté par Mailtrap."""
+# SMTP transactionnel générique : variables MAIL_* du .env (Gmail par défaut),
+# avec repli sur l'ancienne config Mailtrap pour compatibilité.
+EMAIL_EXPEDITEUR = "Sa Majesté le Poilu <contact@samajestelepoilu.fr>"
+
+
+def _smtp_params():
+    """(serveur, port, tls, user, mot_de_passe) — Mailtrap en secours."""
+    server = os.getenv("MAIL_SERVER", "").strip() or os.getenv(
+        "MAILTRAP_SMTP_SERVER", "sandbox.smtp.mailtrap.io").strip()
+    port = int(os.getenv("MAIL_PORT") or os.getenv("MAILTRAP_SMTP_PORT") or 587)
+    tls_raw = os.getenv("MAIL_USE_TLS", "").strip().lower()
+    use_tls = (tls_raw != "false") if tls_raw else True
+    user = os.getenv("MAIL_USERNAME", "").strip() or os.environ.get("MAILTRAP_USER", "")
+    password = os.getenv("MAIL_PASSWORD", "").strip() or os.environ.get("MAILTRAP_PASSWORD", "")
+    return server, port, use_tls, user, password
+
+
+def envoyer_email(email_client, sujet, html_corps):
+    """Envoie un email transactionnel via le SMTP configuré (MAIL_*).
+
+    Un email destinataire vide est ignoré (pas d'erreur bloquante pour le
+    tunnel de commande).
+    """
     if not email_client:
         print("Aucun email client fourni, envoi ignoré.")
         return False
+    smtp_server, smtp_port, use_tls, smtp_user, smtp_password = _smtp_params()
 
-    smtp_server = os.getenv("MAILTRAP_SMTP_SERVER", "sandbox.smtp.mailtrap.io")
-    smtp_port = int(os.getenv("MAILTRAP_SMTP_PORT", 2525))
-    # Credentials Mailtrap : passent obligatoirement par l'environnement
-    # (.env local), aucun secret en dur dans le dépôt.
-    smtp_user = os.environ.get("MAILTRAP_USER", "")
-    smtp_password = os.environ.get("MAILTRAP_PASSWORD", "")
-    
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = f"👑 Commande #{numero_commande} confirmée !"
-    msg['From'] = "Sa Majesté le Poilu <contact@samajestelepoilu.fr>"
+    msg['Subject'] = sujet
+    msg['From'] = EMAIL_EXPEDITEUR
     msg['To'] = email_client
+    msg.attach(MIMEText(html_corps, 'html'))
 
+    try:
+        server = smtplib.SMTP(smtp_server, smtp_port, timeout=20)
+        if use_tls:
+            server.starttls()
+        if smtp_user and smtp_password:
+            server.login(smtp_user, smtp_password)
+        server.sendmail(smtp_user or msg['From'], email_client, msg.as_string())
+        server.quit()
+        print(f"Email envoyé ({smtp_server}) : {sujet} -> {email_client}")
+        return True
+    except Exception as e:
+        print(f"Erreur d'envoi SMTP ({smtp_server}) : {e}")
+        return False
+
+
+def envoyer_email_confirmation(email_client, nom_client, numero_commande, total):
+    """Email de confirmation de commande (premier contact post-paiement)."""
     html = f"""
         <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
             <h2 style="color: #b45309;">Merci pour votre commande, {nom_client} !</h2>
             <p>Sa Majesté le Poilu a bien reçu votre commande <strong>#{numero_commande}</strong> d'un montant total de <strong>{total:.2f} €</strong>.</p>
             <p>Nos serviteurs préparent votre colis avec le plus grand soin.</p>
+            <p>Vous recevrez un second message dès que le colis sera expédié, avec son numéro de suivi.</p>
+            <p>Vous pouvez suivre votre commande à tout moment sur <a href="/suivi">la page « Où est ma commande ? »</a>.</p>
             <br>
             <p style="font-style: italic; color: #666;">À très vite sur la cour royale ! 🐾</p>
         </div>
     """
-    msg.attach(MIMEText(html, 'html'))
+    return envoyer_email(
+        email_client,
+        f"👑 Commande #{numero_commande} confirmée !",
+        html,
+    )
 
-    try:
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls()
-        server.login(smtp_user, smtp_password)
-        server.sendmail(msg['From'], email_client, msg.as_string())
-        server.quit()
-        print(f"Email envoyé avec succès dans Mailtrap pour la commande #{numero_commande} !")
-        return True
-    except Exception as e:
-        print(f"Erreur d'envoi Mailtrap : {e}")
-        return False
+
+def envoyer_email_suivi(email_client, nom_client, numero_commande,
+                        transporteur, numero_suivi, url_suivi):
+    """Email « votre colis est expédié » envoyé dès qu'un n° de suivi apparaît."""
+    lien_suivi = url_suivi or (
+        f"https://www.17track.net/fr/track?nums={numero_suivi}"
+        if numero_suivi else "/suivi"
+    )
+    bouton = f"""
+        <p style="text-align: center; margin: 24px 0;">
+          <a href="{lien_suivi}" style="background: #b45309; color: #fff; padding: 12px 24px;
+             border-radius: 999px; text-decoration: none; font-weight: bold;">📦 Suivre mon colis</a>
+        </p>""" if numero_suivi else ""
+    html = f"""
+        <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+            <h2 style="color: #b45309;">Votre colis est en route, {nom_client} ! 🚚</h2>
+            <p>La commande <strong>#{numero_commande}</strong> a quitté le royaume et est entre de bonnes mains.</p>
+            {f'<p>Transporteur : <strong>{transporteur or "CJ Packet"}</strong><br>Numéro de suivi : <strong>{numero_suivi}</strong></p>' if numero_suivi else '<p>Le numéro de suivi sera disponible très prochainement.</p>'}
+            {bouton}
+            <p style="font-style: italic; color: #666;">Livraison estimée sous 7 à 10 jours ouvrés. Altesse guette le facteur. 🐾</p>
+        </div>
+    """
+    return envoyer_email(
+        email_client,
+        f"🚚 Votre commande #{numero_commande} est expédiée !",
+        html,
+    )
 
 # ---------------------------------------------------------------- données
 DEFAULT_DATA = {
@@ -143,6 +213,32 @@ DEFAULT_DATA = {
 
 _DB_LOCK = threading.Lock()  # sérialise l'accès au JSON (tâche de fond CJ incluse)
 
+def _canonical_supplier(product):
+    raw_supplier = str(
+        product.get("supplier") or product.get("fournisseur") or ""
+    ).strip()
+    normalized = raw_supplier.casefold()
+    if product.get("cj_product_id") or normalized in {
+        "cj", "cj dropshipping", "cjdropshipping",
+    }:
+        return "CJ"
+    if normalized == "gelato":
+        return "Gelato"
+    if normalized == "printify":
+        return "Printify"
+    return raw_supplier
+
+def _apply_customization_policy(product):
+    supplier = _canonical_supplier(product)
+    changed = bool(supplier) and product.get("supplier") != supplier
+    if supplier:
+        product["supplier"] = supplier
+    customizable = supplier in {"Gelato", "Printify"}
+    if product.get("is_customizable") is not customizable:
+        product["is_customizable"] = customizable
+        changed = True
+    return changed
+
 def load_db():
     with _DB_LOCK:
         return _load_db_unlocked()
@@ -159,8 +255,11 @@ def _load_db_unlocked():
         if category:
             product["category"] = category
             changed = True
+        if _apply_customization_policy(product):
+            changed = True
     if changed:
-        save_db(db)
+        with open(DB_PATH, "w", encoding="utf-8") as f:
+            json.dump(db, f, ensure_ascii=False, indent=2)
     return db
 
 def save_db(db):
@@ -182,7 +281,7 @@ def save_gallery(g):
         json.dump(g, f, ensure_ascii=False, indent=2)
 
 def _new_product(db, name, price, cost, category, description,
-                 sizes, colors, status, emoji, hue):
+                 sizes, colors, status, emoji, hue, supplier=None):
     db["products"].append({
         "id": db["next_product_id"],
         "name": name, "price": price, "cost": cost,
@@ -190,6 +289,8 @@ def _new_product(db, name, price, cost, category, description,
         "sizes": sizes, "colors": colors, "status": status,
         "image": None, "emoji": emoji, "hue": hue,
         "created_at": datetime.now().isoformat(),
+        "supplier": supplier,
+        "is_customizable": supplier in {"Gelato", "Printify"},
     })
     db["next_product_id"] += 1
 
@@ -202,12 +303,14 @@ def seed_if_empty():
         "Mug « Altesse méprise ton café »", 24.90, 7.50, "Mugs",
         "Le mug officiel du mépris matinal. Altesse l'a validé d'un regard distrait.",
         ["Conique", "Classic"], ["Blanc", "Noir"], "En stock", "👑", "#FBBF24",
+        "Gelato",
     )
     _new_product(
         db,
         "T-shirt « Serviteur certifié »", 29.90, 9.80, "T-shirts",
         "Pour afficher fièrement votre rang de personnel de maison.",
         ["S", "M", "L", "XL"], ["Blanc", "Noir", "Rose"], "En stock", "🐕", "#EC4899",
+        "Gelato",
     )
     _new_product(
         db,
@@ -456,6 +559,7 @@ def api_cj_import_preview():
 
     return jsonify(ok=True, preview={
         "cj_pid": cj_id,
+        "title": name[:200],
         "name": name[:200],
         "cost": round(cj_cost_price, 2) or None,
         "sizes": sizes or ["Unique"],
@@ -645,6 +749,8 @@ def api_cj_import():
         "hue": "#FBBF24",
         "created_at": datetime.now().isoformat(),
         "cj_product_id": cj_id,
+        "supplier": "CJ",
+        "is_customizable": False,
         "cj_variants": variant_entries,
         "cj_specs": specs,
         "size_guide_url": size_guide_url,
@@ -775,6 +881,8 @@ def page_contenu(nom):
         "a-propos": ("À propos — L'histoire d'Altesse & Barnabé", "a-propos"),
         "contact": ("Contact", "contact"),
         "mentions": ("Mentions légales", "mentions"),
+        "cgv": ("Conditions générales de vente", "cgv"),
+        "retractation": ("Droit de rétractation", "retractation"),
     }
     if nom not in pages:
         abort(404)
@@ -810,8 +918,14 @@ def api_quote():
             "qty": qty, "size": str(it.get("size", "Unique"))[:32],
             "color": str(it.get("color", "Standard"))[:32],
             "image": p.get("image"), "emoji": p.get("emoji"), "hue": p.get("hue"),
-            "custom_image_url": str(it.get("custom_image_url") or "")[:240],
-            "pet_name": str(it.get("pet_name") or "")[:80],
+            "custom_image_url": (
+                str(it.get("custom_image_url") or "")[:240]
+                if p.get("is_customizable") else ""
+            ),
+            "pet_name": (
+                str(it.get("pet_name") or "")[:80]
+                if p.get("is_customizable") else ""
+            ),
             "status": p["status"],
         })
     try:
@@ -1019,6 +1133,10 @@ def api_create_product():
     if supplier_url and not supplier_url.startswith(("http://", "https://")):
         return jsonify(ok=False, error="L'URL fournisseur doit commencer par http:// ou https://"), 400
 
+    supplier = _canonical_supplier({
+        "supplier": d.get("supplier"),
+        "fournisseur": d.get("fournisseur"),
+    })
     prod = {
         "id": db["next_product_id"],
         "name": name,
@@ -1026,6 +1144,8 @@ def api_create_product():
         "cost": cost,
         "fournisseur_id": (d.get("fournisseur_id") or "").strip()[:120],
         "fournisseur": (d.get("fournisseur") or "").strip()[:120],
+        "supplier": supplier,
+        "is_customizable": supplier in {"Gelato", "Printify"},
         "url_fournisseur": supplier_url[:1000] or None,
         "category": category,
         "description": (d.get("description") or "").strip(),
@@ -1067,6 +1187,11 @@ def api_update_product(pid):
     for key, limit in (("fournisseur_id", 120), ("fournisseur", 120)):
         if key in d:
             prod[key] = str(d.get(key) or "").strip()[:limit]
+    if "supplier" in d:
+        prod["supplier"] = str(d.get("supplier") or "").strip()[:120]
+    elif "fournisseur" in d:
+        prod["supplier"] = str(d.get("fournisseur") or "").strip()[:120]
+    _apply_customization_policy(prod)
     if "url_fournisseur" in d:
         supplier_url = str(d.get("url_fournisseur") or "").strip()
         if supplier_url and not supplier_url.startswith(("http://", "https://")):
@@ -1117,8 +1242,14 @@ def construire_lignes(db, d):
             "size": str(it.get("size", "Unique"))[:32],
             "color": str(it.get("color", "Standard"))[:32],
             "qty": qty, "price": p["price"],
-            "custom_image_url": str(it.get("custom_image_url") or "")[:240],
-            "pet_name": str(it.get("pet_name") or "")[:80],
+            "custom_image_url": (
+                str(it.get("custom_image_url") or "")[:240]
+                if p.get("is_customizable") else ""
+            ),
+            "pet_name": (
+                str(it.get("pet_name") or "")[:80]
+                if p.get("is_customizable") else ""
+            ),
         })
     if not lines:
         return None, "Panier vide ou produits indisponibles"
@@ -1144,6 +1275,7 @@ def creer_commande(db, lines, cust):
         "customer": {
             "name": (str(cust.get("name") or "Serviteur anonyme").strip())[:80],
             "email": (str(cust.get("email") or "").strip())[:120],
+            "phone": (str(cust.get("phone") or "").strip())[:20],
             "address": (str(cust.get("address") or "").strip())[:240],
         },
         "items": lines,
@@ -1298,11 +1430,147 @@ def envoyer_commande_cj(db, order):
     order.pop("cj_error", None)
     save_db(db)
 
+
+# ---------------------------------------------------------------- suivi de commande
+# Statuts CJ (orderStatus texte) → libellé client.
+CJ_STATUS_FR = {
+    "CREATED": "Commande enregistrée chez CJ",
+    "IN_CART": "En attente de validation",
+    "UNPAID": "En attente de règlement fournisseur",
+    "PENDING": "En préparation",
+    "PROCESSING": "En préparation",
+    "UNSHIPPED": "En préparation — pas encore expédiée",
+    "SHIPPED": "Expédiée 🚚",
+    "DELIVERED": "Livrée 📦",
+    "CANCELLED": "Annulée",
+}
+
+
+def synchroniser_suivi_cj(db, order):
+    """Met à jour le suivi d'une commande depuis l'API CJ (best-effort).
+
+    Mémorise transporteur / n° de suivi / URL, passe la commande en
+    « Expédiée » dès qu'un numéro de suivi apparaît, et envoie l'email
+    « colis expédié » une seule fois. Renvoie la commande.
+    """
+    cj_order_id = str(order.get("cj_order_id") or "").strip()
+    if not cj_order_id:
+        return order
+
+    from cj_service import CJAPIError, get_order_detail
+
+    try:
+        detail = get_order_detail(cj_order_id)
+    except (CJAPIError, ValueError) as exc:
+        print(f"Suivi CJ indisponible pour {order['ref']} : {exc}")
+        return order
+
+    statut = str(detail.get("orderStatus") or "").strip()
+    transporteur = str(
+        detail.get("logisticName") or detail.get("trackingProvider") or ""
+    ).strip()
+    numero_suivi = str(
+        detail.get("trackNumber") or detail.get("trackingNumber") or ""
+    ).strip()
+    url_suivi = str(detail.get("trackingUrl") or "").strip()
+
+    if statut:
+        order["cj_status"] = statut
+    if transporteur:
+        order["tracking_provider"] = transporteur
+    if url_suivi:
+        order["tracking_url"] = url_suivi
+
+    nouveau_suivi = bool(numero_suivi) and order.get("tracking_number") != numero_suivi
+    if numero_suivi:
+        order["tracking_number"] = numero_suivi
+
+    passe_expedia = (
+        (statut in ("SHIPPED", "DELIVERED") or nouveau_suivi)
+        and order.get("status") not in ("Expédiée", "Livrée")
+    )
+    if passe_expedia:
+        order["status"] = "Expédiée"
+    if statut == "DELIVERED":
+        order["status"] = "Livrée"
+
+    save_db(db)
+
+    # Email « expédié » : une seule fois, dès qu'un numéro de suivi existe.
+    if nouveau_suivi and not order.get("suivi_email_sent"):
+        customer = order.get("customer") or {}
+        ok_mail = envoyer_email_suivi(
+            customer.get("email"),
+            customer.get("name"),
+            order["ref"],
+            transporteur,
+            numero_suivi,
+            url_suivi,
+        )
+        if ok_mail:
+            order["suivi_email_sent"] = True
+            save_db(db)
+    return order
+
+
+def _commande_par_ref_email(db, ref, email):
+    """Trouve une commande par référence + email client (comparaison souple)."""
+    ref = str(ref or "").strip().upper()
+    email = str(email or "").strip().lower()
+    if not ref or not email:
+        return None
+    for o in db.get("orders", []):
+        if str(o.get("ref") or "").upper() != ref:
+            continue
+        if str((o.get("customer") or {}).get("email") or "").strip().lower() != email:
+            continue
+        return o
+    return None
+
+
+@app.route("/suivi")
+@app.get("/suivi")
+def suivi_commande():
+    """Page client « Où est ma commande ? » : référence + email → suivi CJ."""
+    db = load_db()
+    ref = (request.args.get("ref") or "").strip()
+    email = (request.args.get("email") or "").strip()
+    commande = erreur = None
+
+    if ref or email:
+        if not ref or not email:
+            erreur = "Indiquez votre référence de commande ET l'email utilisé."
+        else:
+            commande = _commande_par_ref_email(db, ref, email)
+            if not commande:
+                erreur = (
+                    "Aucune commande ne correspond à cette référence et cet email. "
+                    "Vérifiez votre boîte mail : la référence ressemble à SMP-1042."
+                )
+            else:
+                # Interrogation CJ à la volée (limitée à 1 req/s côté CJ,
+                # un seul appel par visite suffit).
+                commande = synchroniser_suivi_cj(db, commande)
+
+    return render_template(
+        "suivi.html",
+        commande=commande,
+        erreur=erreur,
+        ref_saisie=ref,
+        email_saisi=email,
+        statut_fr=CJ_STATUS_FR,
+        settings=db["settings"],
+        announcement=db["settings"]["announcement"],
+    )
+
 @app.post("/api/orders")
 def api_create_order():
     """Commande directe sans Stripe."""
     db = load_db()
     d = request.get_json(silent=True) or {}
+    if not d.get("cgv_accepted"):
+        return jsonify(ok=False,
+                       error="L'acceptation des CGV est requise pour commander."), 400
     lines, err = construire_lignes(db, d)
     if err:
         return jsonify(ok=False, error=err), 400
@@ -1330,6 +1598,9 @@ def create_checkout_session():
         return jsonify(ok=False, error="Stripe non configuré"), 503
 
     d = request.get_json(silent=True) or {}
+    if not d.get("cgv_accepted"):
+        return jsonify(ok=False,
+                       error="L'acceptation des CGV est requise pour commander."), 400
     lines, err = construire_lignes(db, d)
     if err:
         return jsonify(ok=False, error=err), 400
@@ -1382,6 +1653,7 @@ def create_checkout_session():
                     "customer": {
                         "name": str(cust.get("name") or "").strip(),
                         "email": str(cust.get("email") or "").strip(),
+                        "phone": str(cust.get("phone") or "").strip(),
                         "address": str(cust.get("address") or "").strip(),
                     },
                 }, ensure_ascii=False),
@@ -1582,15 +1854,33 @@ def api_admin_settings():
 def page_not_found(e):
     return render_template('404.html'), 404
 
+def _demarrer_scheduler_cj():
+    """Synchronisation quotidienne des stocks/prix CJ (daemon, idempotent).
+
+    Intervalles configurables via CJ_SYNC_INTERVAL_HOURS ; toute erreur est
+    absorbée pour que l'application démarre quoi qu'il arrive.
+    """
+    try:
+        import cj_sync
+        cj_sync.start_scheduler()
+    except Exception as _sync_exc:  # noqa: BLE001 — l'app doit démarrer quoi qu'il arrive
+        print(f"Scheduler CJ non démarré : {_sync_exc}")
+
+
+# Sous gunicorn (Render), `__main__` n'est jamais exécuté : on démarre le
+# scheduler à l'importation du module. Pour un lancement direct
+# (`python app.py`), c'est le bloc `__main__` ci-dessous qui s'en charge,
+# afin de ne pas lancer deux threads dans le parent du reloader Flask.
+if __name__ != "__main__":
+    _demarrer_scheduler_cj()
+
+
 if __name__ == "__main__":
-    # Synchronisation quotidienne des stocks/prix CJ en tâche de fond
-    # (daemon ; intervalle configurable via CJ_SYNC_INTERVAL_HOURS).
-    # Le reloader debug de Flask duplique le processus : on n'ordonnance que
-    # dans le processus qui sert réellement les requêtes.
+    # Synchronisation CJ : le reloader debug de Flask duplique le processus,
+    # on n'ordonnance que dans le processus qui sert réellement les requêtes.
     if os.environ.get("WERKZEUG_RUN_MAIN") == "true" or not app.debug:
-        try:
-            import cj_sync
-            cj_sync.start_scheduler()
-        except Exception as _sync_exc:  # noqa: BLE001 — l'app doit démarrer quoi qu'il arrive
-            print(f"Scheduler CJ non démarré : {_sync_exc}")
-    app.run(debug=True, port=5000)
+        _demarrer_scheduler_cj()
+    # Port : PORT si fourni (Render), sinon 5000 en local.
+    _port = int(os.environ.get("PORT") or 5000)
+    _debug = os.getenv("FLASK_DEBUG", "true").strip().lower() not in ("0", "false", "no", "off")
+    app.run(host="0.0.0.0", debug=_debug, port=_port)

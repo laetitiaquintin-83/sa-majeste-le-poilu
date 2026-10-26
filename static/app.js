@@ -294,9 +294,11 @@
     });
     return {
       items: items,
+      cgv_accepted: !!(form.elements.cgv && form.elements.cgv.checked),
       customer: {
         name: form.elements.name.value.trim(),
         email: form.elements.email.value.trim(),
+        phone: (form.elements.phone ? form.elements.phone.value.trim() : ""),
         address: form.elements.address.value.trim()
       }
     };
@@ -307,6 +309,15 @@
     if (payload.items.length === 0) {
       note.textContent = "Votre panier est vide.";
       note.className = "checkout-note err";
+      return;
+    }
+    // Case CGV obligatoire (le `required` HTML ne suffit pas si la
+    // soumission est déclenchée hors constraint validation).
+    var cgvBox = form.elements.cgv;
+    if (cgvBox && !cgvBox.checked) {
+      note.textContent = "Acceptez les CGV pour poursuivre votre commande.";
+      note.className = "checkout-note err";
+      cgvBox.focus();
       return;
     }
     var button = form.querySelector("#checkout-submit");

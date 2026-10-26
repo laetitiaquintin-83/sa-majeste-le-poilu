@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Droit de rétractation{% endblock %}
+
+{% block content %}
+<section class="sect page-section page-legal">
+  <header class="page-header">
+    <h1 class="page-title">Droit de <span class="accent">rétractation</span></h1>
+    <p class="page-date">Délai de 14 jours après réception — articles L221-18 et suivants du Code de la consommation.</p>
+  </header>
+
+  <div class="page-card legal-content">
+    <div class="page-content rte">
+      <h3>Votre délai</h3>
+      <p>Vous disposez d'un délai de <strong>14 jours à compter de la réception</strong> de votre commande
+        pour nous notifier votre décision de rétractation, sans avoir à motiver votre décision.</p>
+      <p>Vous disposez ensuite de <strong>14 jours supplémentaires</strong> pour nous retourner le ou les
+        articles concernés. Le remboursement intervient au plus tard 14 jours après que nous avons été
+        informés de votre décision (y compris les frais de livraison standard ; seuls les frais de retour
+        restent à votre charge).</p>
+
+      <h3>Exceptions (articles L221-28)</h3>
+      <p>Le droit de rétractation ne peut s'exercer pour :</p>
+      <ul>
+        <li>les articles <strong> personnalisés</strong> (photo de votre animal, prénom, portrait sur-mesure)
+          — ces articles sont fabriqués selon vos spécifications ;</li>
+        <li>les articles descellés qui ne peuvent être retournés pour des raisons d'hygiène (ex. couverts
+          bocaux utilisés), s'ils ont été descellés après livraison.</li>
+      </ul>
+      <p>Pour tout autre article du catalogue (accessoires non personnalisés, vêtements, mugs standards…),
+        le droit de rétractation s'applique pleinement : l'article doit être retourné complet, dans son
+        état d'origine, non abîmé et dans son emballage d'origine.</p>
+
+      <h3>Comment notifier votre rétractation</h3>
+      <p>Adressez-nous votre décision de manière non équivoque, avant l'expiration du délai de 14 jours :</p>
+      <ul>
+        <li>via <a href="/page/contact">notre formulaire de contact</a> en précisant votre référence de
+          commande (SMP-XXXX), votre nom, votre e-mail et l'article concerné ;</li>
+        <li>ou par e-mail à <a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a>.</li>
+      </ul>
+      <p>Vous pouvez utiliser le formulaire type ci-dessous, librement.</p>
+
+      <div class="retractation-formulaire">
+        <h4>Formulaire type de rétractation (modèle — art. R221-1)</h4>
+        <p>À adresser à Sa Majesté le Poilu — {{ settings.shipping_address }},
+          <a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a> :</p>
+        <p style="border: 2px dashed var(--ink); border-radius: 10px; padding: 16px; background: #fff;">
+          Je, soussigné(e) ________________________, notifie par la présente ma décision de me rétracter
+          du contrat portant sur les biens ci-dessous : commande n° ____________, reçue le ____________.
+          <br>Date : ____________ &nbsp;&nbsp; Signature : ________________________
+        </p>
+      </div>
+
+      <h3>Remboursement</h3>
+      <p>Le remboursement est effectué sur le moyen de paiement utilisé lors de l'achat, au plus tard
+        14 jours après réception de votre notification (ou 14 jours après réception du produit retourné,
+        si le retour précède la notification). Conservez le numéro de suivi du retour : il vaut preuve
+        d'envoi.</p>
+
+      <h3>Article défectueux ou non conforme</h3>
+      <p>Si votre article arrive abîmé, défectueux ou non conforme, contactez-nous avec des photos :
+        une réexpédition ou un remboursement complet (frais de port inclus) vous sera proposé, sans
+        préjudice de votre droit de rétractation ni des garanties légales de conformité et des vices
+        cachés.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

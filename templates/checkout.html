@@ -25,8 +25,17 @@
         <label class="field-inline">Nom<br><input type="text" name="name" required placeholder="Jean-Serviteur Dévoué"></label>
         <label class="field-inline">E-mail<br><input type="email" name="email" required placeholder="jean@royaume.fr"></label>
       </div>
+      <label class="field-inline">Téléphone <span class="field-required">(obligatoire pour la livraison)</span><br>
+        <input type="tel" name="phone" required inputmode="tel" pattern="[0-9+ .()\-]{6,20}"
+          placeholder="06 12 34 56 78" autocomplete="tel"></label>
       <label class="field-inline">Adresse de livraison<br>
         <input type="text" name="address" required placeholder="12 allée des Croquettes, 75001 Paris"></label>
+      <p class="checkout-shipping-delay">🚚 Livraison estimée sous <strong>7 à 10 jours ouvrés</strong> (3 à 5 jours supplémentaires pour les articles imprimés sur demande).</p>
+      <label class="cgv-check">
+        <input type="checkbox" name="cgv" required>
+        <span>J'accepte les <a href="/page/cgv" target="_blank" rel="noopener">conditions générales de vente</a>
+          et la <a href="/page/retractation" target="_blank" rel="noopener">politique de rétractation</a> (14 jours).</span>
+      </label>
       <button type="submit" class="btn btn-primary btn-block" id="checkout-submit">🏆 Valider et envoyer le pigeon</button>
       <p id="checkout-note" class="checkout-note" role="status" aria-live="polite"></p>
     </form>

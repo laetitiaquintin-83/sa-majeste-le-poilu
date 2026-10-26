@@ -527,6 +527,27 @@ def create_order(order_details: dict[str, Any]) -> Any:
     ).get("data")
 
 
+def get_order_detail(order_id: str) -> dict[str, Any]:
+    """Détail d'une commande CJ (statut, transporteur, numéro de suivi).
+
+    ``orderId`` accepte l'identifiant CJ renvoyé à la création (orderId /
+    orderNum) — CJ le résout des deux côtés. Les champs de suivi sont
+    ``logisticName``, ``trackNumber``, ``trackingProvider`` et
+    ``trackingUrl`` ; ``orderStatus`` est un statut texte (UNSHIPPED,
+    SHIPPED, DELIVERED…).
+    """
+    order_id = str(order_id or "").strip()
+    if not order_id:
+        raise ValueError("L'identifiant de commande CJ est obligatoire.")
+    payload = _get(
+        "/shopping/order/getOrderDetail",
+        {"orderId": order_id},
+        get_access_token(),
+    )
+    data = payload.get("data", payload)
+    return data if isinstance(data, dict) else {}
+
+
 # ------------------------------------------------------------------
 # Enrichissement « import » : galerie, guide des tailles, spécifications.
 

@@ -808,6 +808,29 @@ p { margin: 0; }
     from { opacity: 0; transform: translateY(6px) scale(0.97); }
     to { opacity: 1; transform: none; }
 }
+/* Variante accueil : mascottes (carton-royaume.jpg) à côté du formulaire */
+.newsletter-card--with-image {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: stretch; text-align: left; padding: 0; max-width: 900px;
+}
+.newsletter-media { position: relative; min-height: 100%; overflow: hidden; }
+.newsletter-media img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.newsletter-body {
+    display: flex; flex-direction: column; justify-content: center;
+}
+.newsletter-card--with-image .newsletter-body { padding: 34px 30px 30px; }
+.newsletter-card--with-image .newsletter-sub { margin-inline: 0; }
+.newsletter-card--with-image .newsletter-form { margin-inline: 0; }
+@media (max-width: 720px) {
+    .newsletter-card--with-image { grid-template-columns: 1fr; }
+    .newsletter-media { min-height: 200px; }
+    .newsletter-media img { position: relative; height: 220px; }
+    .newsletter-card--with-image .newsletter-sub,
+    .newsletter-card--with-image .newsletter-form { margin-inline: auto; text-align: center; }
+}
 @media (max-width: 560px) {
     .newsletter-form { flex-direction: column; }
     .newsletter-form .btn { width: 100%; }
@@ -850,3 +873,59 @@ p { margin: 0; }
     gap: 16px; text-align: left;
 }
 .gazette-others { padding-top: 10px; }
+
+/* ---------------- Checkout : téléphone, CGV, délai ---------------- */
+.field-required { font-size: 0.78rem; color: var(--text-soft); font-weight: 500; }
+.checkout-shipping-delay {
+    font-size: 0.88rem; color: var(--text-soft);
+    background: #FFF7E6; border: 2px dashed var(--ink); border-radius: var(--radius);
+    padding: 10px 14px; margin: 4px 0 12px;
+}
+.cgv-check {
+    display: flex; gap: 10px; align-items: flex-start;
+    font-size: 0.88rem; color: var(--text-soft); margin: 4px 0 14px; cursor: pointer;
+}
+.cgv-check input[type="checkbox"] {
+    margin-top: 3px; width: 18px; height: 18px; accent-color: var(--ink); flex: none;
+}
+.cgv-check a { text-decoration: underline; }
+
+/* ---------------- Suivi de commande (/suivi) ---------------- */
+.suivi-search { max-width: 640px; margin-inline: auto; }
+.suivi-form { display: grid; gap: 14px; text-align: left; }
+.suivi-form .btn { justify-self: center; }
+.suivi-hint { margin-top: 12px; font-size: 0.82rem; color: var(--text-soft); text-align: center; }
+.suivi-error {
+    max-width: 640px; margin: 18px auto 0; text-align: center;
+    border-color: #EF4444; color: #B91C1C;
+}
+.suivi-result { max-width: 640px; margin: 18px auto 0; text-align: left; }
+.suivi-head {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; flex-wrap: wrap; margin-bottom: 14px;
+}
+.suivi-head h2 { font-size: 1.15rem; }
+.suivi-badge {
+    font-size: 0.82rem; font-weight: 700; padding: 6px 14px;
+    border: 2px solid var(--ink); border-radius: var(--radius-pill);
+}
+.suivi-badge--attente { background: #FEF3C7; }
+.suivi-badge--expediee { background: #DBEAFE; }
+.suivi-badge--livree { background: #D1FAE5; }
+.suivi-track {
+    background: #FFF7E6; border: 2px dashed var(--ink); border-radius: var(--radius);
+    padding: 16px; margin-bottom: 16px;
+}
+.suivi-track-row {
+    display: flex; justify-content: space-between; gap: 10px;
+    font-size: 0.92rem; margin-bottom: 8px; flex-wrap: wrap;
+}
+.suivi-track .btn { margin-top: 8px; display: inline-block; }
+.suivi-wait { font-size: 0.92rem; color: var(--text-soft); }
+.suivi-items h3 { font-size: 1rem; margin-bottom: 8px; }
+.suivi-item {
+    display: flex; justify-content: space-between; gap: 10px;
+    font-size: 0.9rem; padding: 6px 0; border-bottom: 1px dashed #ddd; flex-wrap: wrap;
+}
+.suivi-item--total { border-bottom: none; font-weight: 700; padding-top: 10px; }
+.suivi-note { margin-top: 14px; font-size: 0.85rem; color: var(--text-soft); }

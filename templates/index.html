@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% set is_home = true %}
 {% block title %}Accueil royal{% endblock %}
 
 {% block content %}
@@ -65,26 +66,21 @@
   <div class="reviews-grid">
     <figure class="review-card">
       <div class="review-head"><span class="review-avatar">🐕</span>
-        <div><cite>Julie &amp; Hachiko</cite><span class="stars">★★★★★</span></div></div>
-      <blockquote>« Le paillasson est un chef-d'œuvre. Hachiko l'a ignoré avec une élégance royale. »</blockquote>
+        <div><cite>Altesse 😼</cite><span class="stars">★★★★★</span></div></div>
+      <blockquote>« C'est tolérable. L'impression respecte enfin ma prestance et le papier est presque digne de mes coussins royaux. »</blockquote>
     </figure>
     <figure class="review-card">
       <div class="review-head"><span class="review-avatar">🐈</span>
-        <div><cite>Karim &amp; Pikachu</cite><span class="stars">★★★★★</span></div></div>
-      <blockquote>« Le mug arrive pile quand Altesse juge mon café du matin, c'est parfait. »</blockquote>
+        <div><cite>Barnabé 🐶</cite><span class="stars">★★★★★</span></div></div>
+      <blockquote>« WOUF ! J'ai essayé de croquer le carton mais l'humain m'a dit que l'attente de 7 à 10 jours valait carrément le coup ! »</blockquote>
     </figure>
     <figure class="review-card">
       <div class="review-head"><span class="review-avatar">🐩</span>
-        <div><cite>Sophie &amp; Bonbon</cite><span class="stars">★★★★★</span></div></div>
-      <blockquote>« Barnabé a bavé sur le colis d'origine. Le remplacement est arrivé en 2 jours, tout sourire ! »</blockquote>
-    </figure>
-    <figure class="review-card">
-      <div class="review-head"><span class="review-avatar">🐹</span>
-        <div><cite>Thomas &amp; Croquette</cite><span class="stars">★★★★★</span></div></div>
-      <blockquote>« La plaque "Palais de Croquette" sur sa cage c'est de l'art. Expédition en 3 jours ! »</blockquote>
+        <div><cite>L'Atelier du Poilu 👑</cite><span class="stars">★★★★★</span></div></div>
+      <blockquote>« Impression sur-mesure, emballage anti-bave et livraison suivie. Chaque colis est préparé avec soin pour votre animal. »</blockquote>
     </figure>
   </div>
 </section>
 
-{% with src="home" %}{% include "newsletter.html" %}{% endwith %}
+{% with src="home", with_image=true %}{% include "newsletter.html" %}{% endwith %}
 {% endblock %}

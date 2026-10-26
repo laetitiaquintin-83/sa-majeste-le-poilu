@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v=11) }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css', v=13) }}">
 </head>
 <body>
   <div class="annbar">{{ announcement or settings.announcement }}</div>
@@ -60,7 +60,11 @@
     </div>
   </section>
 
+  {# Sur l'accueil le bloc Club Privé est déjà en fin de page (avec l'image
+     des mascottes) : on ne l'affiche pas deux fois. #}
+  {% if not is_home %}
   {% with src="footer" %}{% include "newsletter.html" %}{% endwith %}
+  {% endif %}
 
   <footer class="ftr">
     <div class="container ftr-in">
@@ -68,7 +72,10 @@
       <p class="ftr-note">Sélectionné avec amour pour vos poilus. Altesse supervise et Barnabé veille au bon déroulement des opérations.</p>
       <ul class="ftr-links">
         <li><a href="/page/a-propos">L'histoire d'Altesse et Barnabé</a></li>
+        <li><a href="/suivi">Où est ma commande ?</a></li>
         <li><a href="/page/contact">Nous contacter</a></li>
+        <li><a href="/page/cgv">CGV</a></li>
+        <li><a href="/page/retractation">Droit de rétractation</a></li>
         <li><a href="/page/mentions">Mentions légales</a></li>
       </ul>
       <div class="payment-methods" aria-label="Moyens de paiement acceptés">
@@ -108,6 +115,9 @@
     </footer>
   </aside>
 
+  <!-- Chatbot Botpress -->
+  <script src="https://cdn.botpress.cloud/webchat/v5.0/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2026/10/23/12/20261023123449-K5X1BK3I.js" defer></script>
   <script src="{{ url_for('static', filename='app.js', v=10) }}" defer></script>
 </body>
 </html>

@@ -50,18 +50,20 @@
         </div>
       </div>
 
-      <div class="option-group pet-customization">
-        <p class="option-label">Personnalisez votre article</p>
-        <label for="pet-photo" class="pet-photo-label">📷 Télécharger la photo de votre poilu</label>
-        <input type="file" id="pet-photo" accept="image/*" class="hidden">
-        <div id="pet-photo-preview" class="pet-photo-preview" hidden>
-          <img src="" alt="Aperçu de la photo de votre animal">
+      {% if product.is_customizable %}
+        <div class="option-group pet-customization">
+          <p class="option-label">Personnalisez votre article</p>
+          <label for="pet-photo" class="pet-photo-label">📷 Télécharger la photo de votre poilu</label>
+          <input type="file" id="pet-photo" accept="image/*" class="hidden">
+          <div id="pet-photo-preview" class="pet-photo-preview" hidden>
+            <img src="" alt="Aperçu de la photo de votre animal">
+          </div>
+          <label class="field-inline pet-name-field" for="pet-name">
+            Prénom de votre animal
+            <input type="text" id="pet-name" maxlength="80" placeholder="Ex. Barnabé">
+          </label>
         </div>
-        <label class="field-inline pet-name-field" for="pet-name">
-          Prénom de votre animal
-          <input type="text" id="pet-name" maxlength="80" placeholder="Ex. Barnabé">
-        </label>
-      </div>
+      {% endif %}
 
       <button class="btn btn-primary btn-block add-to-cart-btn" id="pdp-add"
         data-id="{{ product.id }}"
@@ -74,7 +76,7 @@
 
       <ul class="reassure-list">
         <li>🚚 Livraison offerte dès {{ settings.free_shipping_threshold }}€ — sinon {{ "%.2f" | format(settings.shipping_fee) }}€</li>
-        <li>✂️ Imprimé spécialement pour vous (délai 3-5 j ouvrés)</li>
+        <li>✂️ {% if product.is_customizable %}Imprimé spécialement pour vous (préparation 3-5 j ouvrés){% else %}Préparation &amp; suivi de commande garantis{% endif %}</li>
         <li>🔁 Satisfait ou retiré : notre équipe vous accompagne en cas de problème</li>
         <li>👑 Validé par Altesse (un clignement = accord)</li>
       </ul>

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Où est ma commande ?{% endblock %}
+
+{% block content %}
+<section class="sect page-section">
+  <header class="page-header">
+    <h1 class="page-title">Où est <span class="accent">ma commande ?</span></h1>
+    <p class="page-date">Suivi royal en temps réel — livraison estimée sous 7 à 10 jours ouvrés.</p>
+  </header>
+
+  <div class="page-card suivi-search">
+    <form method="get" action="/suivi" class="suivi-form">
+      <label class="field-inline">Référence de commande<br>
+        <input type="text" name="ref" value="{{ ref_saisie }}" required
+          placeholder="SMP-1042" autocomplete="off"></label>
+      <label class="field-inline">E-mail utilisé lors de la commande<br>
+        <input type="email" name="email" value="{{ email_saisi }}" required
+          placeholder="votre@royaume.fr" autocomplete="email"></label>
+      <button type="submit" class="btn btn-primary">🔍 Suivre mon colis</button>
+    </form>
+    <p class="suivi-hint">Votre référence se trouve dans l'email de confirmation (objet : 👑 Commande #… confirmée !).</p>
+  </div>
+
+  {% if erreur %}
+  <div class="page-card suivi-error" role="alert">
+    <p>❌ {{ erreur }}</p>
+  </div>
+  {% endif %}
+
+  {% if commande %}
+  <div class="page-card suivi-result">
+    <div class="suivi-head">
+      <h2>Commande <strong>{{ commande.ref }}</strong></h2>
+      <span class="suivi-badge
+        {%- if commande.status == 'Livrée' %} suivi-badge--livree
+        {%- elif commande.status == 'Expédiée' %} suivi-badge--expediee
+        {%- else %} suivi-badge--attente{% endif %}">
+        {{- statut_fr.get(commande.cj_status, commande.status) -}}
+      </span>
+    </div>
+
+    <div class="suivi-track">
+      {% if commande.tracking_number %}
+      <div class="suivi-track-row">
+        <span>🚚 Transporteur</span><strong>{{ commande.tracking_provider or 'CJ Packet' }}</strong>
+      </div>
+      <div class="suivi-track-row">
+        <span>📦 Numéro de suivi</span><strong>{{ commande.tracking_number }}</strong>
+      </div>
+      <a class="btn btn-primary" target="_blank" rel="noopener"
+        href="{{ commande.tracking_url or 'https://www.17track.net/fr/track?nums=' ~ commande.tracking_number }}">
+        Suivre le colis 🛰️
+      </a>
+      {% else %}
+      <p class="suivi-wait">🕗 Le numéro de suivi n'est pas encore disponible — la commande est en cours de préparation.
+        Revenez sur cette page dans 24 à 48 h, le suivi s'activera automatiquement.</p>
+      {% endif %}
+    </div>
+
+    <div class="suivi-items">
+      <h3>Articles de la commande</h3>
+      {% for item in commande.items %}
+      <div class="suivi-item">
+        <span>{{ item.qty }} × {{ item.name }}</span>
+        <span>{{ item.size }} / {{ item.color }} — {{ "%.2f"|format(item.price * item.qty) }} €</span>
+      </div>
+      {% endfor %}
+      <div class="suivi-item suivi-item--total">
+        <span>Total payé</span><strong>{{ "%.2f"|format(commande.total) }} €</strong>
+      </div>
+    </div>
+
+    <p class="suivi-note">Une question ? <a href="/page/contact">Écrivez à Altesse &amp; Barnabé</a> en indiquant votre référence.</p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

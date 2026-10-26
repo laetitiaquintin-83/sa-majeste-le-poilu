@@ -117,18 +117,36 @@
       showMessage("Récupération des détails CJ et traduction en cours…", "info");
       try {
         const response = await fetch(`/api/cj/import-preview?cj_pid=${encodeURIComponent(cjPid)}`);
-        const data = await response.json();
+        const data = await response.json().catch(() => ({}));
+        console.log("[CJ import preview] Réponse API", {
+          status: response.status,
+          ok: response.ok,
+          data
+        });
         if (!response.ok || data.ok === false) throw new Error(data.error || "Aperçu impossible");
-        const preview = data.preview;
+        const preview = data.preview || {};
         setCjFormDefaults(fallbackName);
         document.querySelector("#cj-pid").value = preview.cj_pid || cjPid;
-        document.querySelector("#cj-name").value = preview.name || fallbackName;
+        document.querySelector("#cj-name").value = preview.title || preview.name || fallbackName;
         document.querySelector("#cj-cost").value = preview.cost ?? "";
-        document.querySelector("#cj-sizes").value = (preview.sizes || []).join(", ");
-        document.querySelector("#cj-colors").value = (preview.colors || []).join(", ");
+        document.querySelector("#cj-sizes").value = Array.isArray(preview.sizes)
+          ? preview.sizes.join(", ")
+          : (preview.sizes || "");
+        document.querySelector("#cj-colors").value = Array.isArray(preview.colors)
+          ? preview.colors.join(", ")
+          : (preview.colors || "");
         document.querySelector("#cj-description").value = preview.description || "";
+        console.log("[CJ import preview] Champs de la modale remplis", {
+          title: document.querySelector("#cj-name").value,
+          cost: document.querySelector("#cj-cost").value,
+          sizes: document.querySelector("#cj-sizes").value,
+          colors: document.querySelector("#cj-colors").value,
+          description: document.querySelector("#cj-description").value
+        });
         showMessage("Champs pré-remplis depuis CJ — vérifiez et ajustez si besoin.", "success");
       } catch (error) {
+        console.error("[CJ import preview] Échec", error);
+        window.alert(`Échec de récupération des données CJ : ${error.message}`);
         showMessage(`Pré-remplissage indisponible (${error.message}) — import possible quand même, données CJ recouvrées à l'import.`, "warning");
       } finally {
         fillables.forEach((sel) => document.querySelector(sel).classList.remove("opacity-50"));
