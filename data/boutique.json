@@ -1,0 +1,3239 @@
+{
+  "settings": {
+    "hero_title": "Articles officiels pour animaux ROIS & leurs serviteurs dévoués",
+    "hero_subtitle": "Altesse juge. Barnabé bave. Nous imprimons. Bienvenue dans le Royaume du Poilu.",
+    "announcement": "🐾 Livraison offerte dès 49€ — Sa Majesté approuve",
+    "shipping_fee": 4.9,
+    "free_shipping_threshold": 49.0,
+    "admin_password": "poilu2026",
+    "shipping_address": "Le Royaume est 100 % en ligne (aucun accueil du public).",
+    "contact_email": "samajestelepoilu@gmail.com"
+  },
+  "products": [
+    {
+      "id": 1,
+      "name": "Mug « Altesse méprise ton café »",
+      "price": 24.9,
+      "cost": 14.55,
+      "category": "Mugs",
+      "description": "Validé d'un regard distrait par Altesse Iᵉʳ. Ce mug en émail est spécialement conçu pour supporter la lourde charge de vos matins difficiles, tout en vous rappelant poliment qui règne réellement sur le foyer. Robuste, irrévérencieux et garanti 100 % haute condescendance royale.",
+      "sizes": [
+        "Conique",
+        "Classic"
+      ],
+      "colors": [
+        "Blanc"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/product_1_6fbeeeb83a75.jpeg",
+      "emoji": "👑",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-13T09:34:12.670168",
+      "_backup": null,
+      "fournisseur_id": "mug_product_msz_12-oz-enamel_mmat_metal-enamel-white_cl_4-0",
+      "fournisseur": "Gelato",
+      "url_fournisseur": "https://dashboard.gelato.com/catalogue/print-file-editor;productUid=mug_product_msz_12-oz-enamel_mmat_metal-enamel-white_cl_4-0;pageCount=;productCategoryName=enamel-mugs;productName=product-white-12oz-enamel-mug-title",
+      "supplier": "Gelato",
+      "is_customizable": true,
+      "gelato_print_type": "default"
+    },
+    {
+      "id": 2,
+      "name": "T-shirt « Serviteur certifié »",
+      "price": 24.9,
+      "cost": 10.5,
+      "category": "T-shirts",
+      "description": "L'uniforme officiel pour ouvrir les boîtes de pâtée et remplir les gamelles à 7h12 précis. T-shirt en coton doux, résistant aux griffes et certifié 100 % serviteur dévoué par la cour royale de Barnabé et Altesse.",
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3X"
+      ],
+      "colors": [
+        "Blanc",
+        "Noir",
+        "Gris"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/product_2_087d4c7d9e33.jpeg",
+      "emoji": "🐕",
+      "hue": "#ec4899",
+      "created_at": "2026-10-13T09:34:12.670197",
+      "fournisseur_id": "https://dashboard.gelato.com/catalogue/categories/top-embroidered/products/women-clothing-organic-unisex-crewneck-t-shir",
+      "fournisseur": "Gelato",
+      "url_fournisseur": "https://dashboard.gelato.com/catalogue/categories/top-embroidered/products/women-clothing-organic-unisex-crewneck-t-shirt",
+      "supplier": "Gelato",
+      "is_customizable": true
+    },
+    {
+      "id": 3,
+      "name": "Hoodie « Garde Royale »",
+      "price": 49.9,
+      "cost": 33.17,
+      "category": "Vêtements Animaux",
+      "description": "L'uniforme officiel de la garde rapprochée de Sa Majesté. Ce sweat à capuche ultra-confortable protège votre poilu du froid tout en affirmant son rang aristocratique lors des promenades. Validé par Barnabé en personne.",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        "Rose",
+        "Noir",
+        "Gris",
+        "Marine"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/product_3_aa9f4089e441.jpeg",
+      "emoji": "🚪",
+      "hue": "#3b82f6",
+      "created_at": "2026-10-13T09:34:12.670202",
+      "fournisseur_id": "https://dashboard.gelato.com/catalogue/categories/pet-products/products/dog-hoodie-portman-pooch-pp002",
+      "fournisseur": "Gelato",
+      "url_fournisseur": "https://dashboard.gelato.com/catalogue/categories/pet-products/products/dog-hoodie-portman-pooch-pp002",
+      "supplier": "Gelato",
+      "is_customizable": true
+    },
+    {
+      "id": 4,
+      "name": "Veste en Jean « Rock'n'Poilu »",
+      "price": 59.9,
+      "cost": 39.95,
+      "category": "Vêtements Animaux",
+      "description": "Le blouson parfait pour les poilus qui ont du caractère. Veste en denim brut à bords effilochés pour un style rock, ornée du blason officiel de Sa Majesté le Poilu. Préparez-vous à faire fureur au parc.  \r\nXS : dos 25 cm · cou 27–29 cm · poitrail 36–38 cm\r\n\r\nS : dos 30 cm · cou 31–33 cm · poitrail 43–45 cm\r\n\r\nM : dos 35 cm · cou 34–36 cm · poitrail 48–50 cm\r\n\r\nL : dos 40 cm · cou 37–39 cm · poitrail 54–56 cm\r\n\r\nXL : dos 45 cm · cou 40–41 cm · poitrail 58–60 cm\r\n\r\n2XL : dos 50 cm · cou 42–44 cm · poitrail 62–64 cm",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        "Jean brut",
+        "Jean noir"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/product_4_0b146fee97c4.jpeg",
+      "emoji": "🎖️",
+      "hue": "#f59e0b",
+      "created_at": "2026-10-13T09:34:12.670204",
+      "fournisseur_id": "https://dashboard.gelato.com/catalogue/categories/pet-products/products/dog-denim-jacket-portman-pooch-pp003",
+      "fournisseur": "Gelato",
+      "url_fournisseur": "https://dashboard.gelato.com/catalogue/categories/pet-products/products/dog-denim-jacket-portman-pooch-pp003",
+      "supplier": "Gelato",
+      "is_customizable": true
+    },
+    {
+      "id": 6,
+      "name": "Bandana « Altesse en Balade »",
+      "price": 19.9,
+      "cost": 7.73,
+      "category": "Accessoires",
+      "description": "L'accessoire indispensable pour afficher son rang lors des promenades. Ajustable, résistant et doté d'un clip rapide pour ne pas faire patienter Sa Majesté.",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Blanc"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/product_6_dadbd5d0757c.jpeg",
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-14T14:18:11.175916",
+      "fournisseur_id": "https://printify.com/app/products/search-catalog?searchKey=clip-on%20pet%20bandana",
+      "fournisseur": "Printify",
+      "url_fournisseur": "https://printify.com/app/products/search-catalog?searchKey=clip-on%20pet%20bandana",
+      "supplier": "Printify",
+      "is_customizable": true
+    },
+    {
+      "id": 7,
+      "name": "Halloween Chat Collier",
+      "price": 19.9,
+      "cost": 1.04,
+      "category": "Accessoires",
+      "description": "Sa Majesté mérite ce qu'il y a de plus élégant, même pour frissonner ! ce collier festif apporte la touche d'humour et de chic indispensable à la garde-robe de votre félin. Facile à attacher , il deviendra l'accessoire phare de vos soirées d'Halloween.",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Standard"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_b9f5a75dc8cf.jpg",
+      "emoji": "🐾",
+      "hue": "#FBBF24",
+      "created_at": "2026-10-15T16:42:10.587959",
+      "cj_product_id": "2407230635391622400",
+      "cj_stock": 39509,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 8,
+      "name": "Doudoune Royale à Pois Rétro « Polka »",
+      "price": 24.9,
+      "cost": 3.89,
+      "category": "Vêtements Animaux",
+      "description": "Matériau : Coton épais et matelassé ultra-doux Coupe : Couvrante à quatre pattes pour maintenir tout le corps au chaud Style : Motif à pois rétro « Polka » très élégant Fermeture : Facile à enfiler et à retirer pour les balades d'hiver Conseil taille : Si votre poilu se situe entre deux tailles, nous vous conseillons de choisir la taille supérieure pour un confort optimal.",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Standard"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_ca835925799b.jpg",
+      "emoji": "🐾",
+      "hue": "#FBBF24",
+      "created_at": "2026-10-16T10:32:22.562107",
+      "cj_product_id": "B901800C-2B7B-487C-97FE-CC4714CDA630",
+      "cj_variant_id": null,
+      "cj_stock": 300000,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 9,
+      "name": "Costume Citrouille Ensorcelant « Le Bal des Sorciers »",
+      "price": 19.9,
+      "cost": 1.0,
+      "category": "Vêtements Animaux",
+      "description": "Sa Majesté est convoquée au grand bal d'Halloween ! Ce costume complet transforme votre poilu en la plus mignonne des citrouilles de sorcière. Caractéristiques : Veste citrouille rembourrée et ultra-confortable Mini chapeau de sorcière assorti inclus Facile à enfiler (scratchs ajustables) Matériau : Coton doux et polyester de haute qualité Lavable en machine Parfait pour des photos royales et mémorables !",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Standard"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_c1c5b42e7fe9.jpg",
+      "emoji": "🐾",
+      "hue": "#FBBF24",
+      "created_at": "2026-10-16T10:36:38.728573",
+      "cj_product_id": "1709193321471549440",
+      "cj_variant_id": null,
+      "cj_stock": 115792,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 10,
+      "name": "Écuelle Royale Ergonomique « Le Banquet d'Altesse »",
+      "price": 19.9,
+      "cost": 2.75,
+      "category": "Accessoires",
+      "description": "Offrez à votre compagnon un repas digne de son rang tout en prenant soin de sa posture ! Cette écuelle surélevée protège les cervicales et la colonne vertébrale de Sa Majesté, tandis que son relief intérieur régule la prise alimentaire. Caractéristiques :\n- Design ergonomique surélevé pour préserver la colonne vertébrale\n- Relief intérieur anti-glouton pour une digestion apaisée\n- Céramique haute qualité, hygiénique et facile à nettoyer\n- Socle stable et anti-dérapant pour éviter les débordements Conseil d'entretien : Lavable à l'eau chaude et au savon doux pour maintenir la brillance royale.",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Standard"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_44addb1e5ccf.jpg",
+      "emoji": "🐾",
+      "hue": "#FBBF24",
+      "created_at": "2026-10-16T10:46:42.737432",
+      "cj_product_id": "1527210716162437120",
+      "cj_variant_id": null,
+      "cj_stock": 73436,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 11,
+      "name": "Pavillon de Vacances Dépliable « Le Palais d'Aventure »",
+      "price": 39.9,
+      "cost": 6.44,
+      "category": "Accessoires",
+      "description": "Offrez à Sa Majesté son propre domaine privé en intérieur comme en extérieur ! Ce parc d'exercice pliable en toile Oxford s'installe en un instant pour offrir un espace de jeu sécurisé, spacieux et parfaitement aéré. Caractéristiques :\n- Structure pop-up pliable et ultra-léger, facile à transporter\n- Toile Oxford ultra-résistante et filets de ventilation respirants\n- Ouverture zippée pratique pour laisser Sa Majesté entrer et sortir librement\n- Idéal pour les moments de jeu, le repos, les déplacements ou les vacances Conseil d'entretien : Nettoyage simple à l'aide d'un chiffon humide ou d'une éponge douce.",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Standard"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_15bf89e0f041.jpg",
+      "emoji": "🐾",
+      "hue": "#FBBF24",
+      "created_at": "2026-10-16T10:49:58.962856",
+      "cj_product_id": "1364571804076740608",
+      "cj_variant_id": null,
+      "cj_stock": 8000,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 12,
+      "name": "Fontaine & Buffet Royal « La Source d'Altesse »",
+      "price": 34.9,
+      "cost": 3.55,
+      "category": "Accessoires",
+      "description": "Assurez à Sa Majesté un accès continu à de l'eau fraîche et à son festin en un seul support élégant. Ce distributeur double intègre une réserve d'eau automatique par gravité et une écuelle de croquettes ergonomique. Caractéristiques :\r\n- Réservoir sphérique grande capacité à écoulement automatique par gravité\r\n- Gamelle de nourriture intégrée avec rebord anti-débordement\r\n- Conception hygiénique, entièrement démontable et facile à nettoyer\r\n- Matériaux de qualité alimentaire (sans BPA), stables et anti-dérapants Conseil d'entretien : Rincer le réservoir d'eau une fois par semaine pour garantir une fraîcheur optimale.",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Standard"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_63cd0d560f4d.png",
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-16T10:53:51.889926",
+      "cj_product_id": "0C02A02B-38B5-47B5-834D-3B75A69A14CB",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJJJCWGY01222-Green",
+      "fournisseur": "",
+      "url_fournisseur": null,
+      "cj_stock": 14050,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 13,
+      "name": "Sweat Capuche Tricot « Le Lapin Royal »",
+      "price": 29.9,
+      "cost": 4.64,
+      "category": "Vêtements Animaux",
+      "description": "Transformez votre poilu en le plus adorable des petits lapins d'hiver ! Ce sweat à capuche tricoté avec de mignonnes oreilles de lapin offre une chaleur douillette et un style irrésistible. Caractéristiques :\r\n- Tricot doux et chaud pour affronter les journées fraîches\r\n- Capuche originale avec oreilles de lapin intégrées\r\n- Coupe ajustée et confortable avec passage pour les pattes avant\r\n- Facile à enfiler et lavable en machine Conseil taille : Disponible en plusieurs tailles. N'hésitez pas à vérifier le guide des tailles ou à prendre une taille au-dessus pour un confort optimal.",
+      "sizes": [
+        "L",
+        "M",
+        "S",
+        "XL",
+        "XS",
+        "XXL"
+      ],
+      "colors": [
+        "gris",
+        "rose"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_86b7e94c30b0.jpeg",
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-16T11:06:44.825805",
+      "cj_product_id": "69C5E961-ABA1-453E-927E-D68B275A80CF",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJJJCWGD00351-Grey-L",
+      "fournisseur": "",
+      "url_fournisseur": null,
+      "cj_stock": 123528,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 14,
+      "name": "Le Collier de Perles Royale « Comtesse d'Altesse »",
+      "price": 22.9,
+      "cost": 1.75,
+      "category": "Accessoires",
+      "description": "« Parce qu'un simple collier en nylon est une insulte au teint de votre animal. Ajustable, perles d'imitation et pampilles dorées pour régner sur le salon. »",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Standard"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_678348fe9b23.jpg",
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-16T13:56:13.394722",
+      "cj_product_id": "1431152894350069760",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJMY126613211KP",
+      "fournisseur": "",
+      "url_fournisseur": null,
+      "cj_stock": 158483,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 15,
+      "name": "Bandana « Altesse en Vacances »",
+      "price": 19.9,
+      "cost": 0.63,
+      "category": "Accessoires",
+      "description": "ProPour que votre Poilu règne sur les beaux jours avec la distinction d’un roi en goguette.\r\nValidé par le Conseil Supérieur des Croquettes, cet accessoire léger transforme chaque sieste au soleil en événement de haute cour. Un indispensable pour snober les pigeons du parc avec élégance. Les Déclinaisons de la Cour : • 🍍 Modèle Ananas : Le grand classique des jardins royaux exotiques.\r\n• 🍉 Modèle Pastèque : Fraîcheur et peps pour les souverains gourmands.\r\n• 🍓 Modèle Fraise & Multi-fruits : Pour les Poilus au caractère doux mais affirmé. Points Forts : • Confort Souverain : Tissu léger et respirant qui n'entrave pas les mouvements de Sa Grandeur.\r\n• Ajustement Facile : Se noue en un tour de main pour s’adapter à toutes les morphologies de la cour. Article de la Cour, sélectionné avec soin pour votre compagnon.",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Standard"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_134d0e28f499.jpg",
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-16T14:31:41.287899",
+      "cj_product_id": "7B6CB1FF-4A90-4ACB-88BA-615A8CE73DCC",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJJJCWGY02112-Banana-M",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": null,
+      "cj_stock": 175720,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 16,
+      "name": "Chaîne « Bling-Bling Impérial » – Le Collier des Souverains",
+      "price": 19.9,
+      "cost": 0.63,
+      "category": "Accessoires",
+      "description": "Pour les Poilus qui ne marchent pas, mais qui paradent.\r\nCette chaîne dorée ultra-légère offre à Votre Altesse le look d'un roi de la street ou d'un empereur du canapé. Le summum du respect dans tout le quartier. Les Déclinaisons de la Cour : • 🪙 Or Impérial (Gold) : Pour un standing royal maximal et éblouissant.\r\n• 🥈 Argent Noble (Silver) : L'élégance discrète mais imposante des grands ducs.\r\n• 🌸 Or Rose Royal (Rose Gold) : Pour les divas de la cour qui aiment la subtilité. Points Forts : • Légèreté Souveraine : Conçue en plastique premium ultra-léger pour ne pas fatiguer le royal cou de Sa Majesté.\r\n• Ajustable : Équipée d'une chaînette d'extension pour s'adapter parfaitement au protocole (disponible en plusieurs tailles).",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "or",
+        "argent",
+        "or rose"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_7752b9131d84.jpeg",
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-16T14:36:35.731340",
+      "cj_product_id": "2412240904181608700",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJYD225249910JQ",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": null,
+      "cj_stock": 78793,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 17,
+      "name": "Robe « Reine du Bal » – Tenue de Gala Impériale",
+      "price": 34.9,
+      "cost": 4.0,
+      "category": "Vêtements Animaux",
+      "description": "Pour les Poilus qui ne tolèrent que l'excellence et les révérences.\r\nCette robe somptueuse avec son nœud papillon majestueux et ses froufrous délicats est la tenue officielle pour les grands banquets, les thés à la cour ou pour snober royalement les invités du salon. Les Déclinaisons de la Cour : • 🌸 Rose Poudré (Pink) : Pour les duchesses romantiques et les favorites du Roi.\r\n• 🧊 Bleu Souverain (Blue) : L'élégance noble et rafraîchissante des princesses de sang royal. Points Forts : • Détails Royaux : Un nœud papillon XXL intégré pour un effet \"Wow\" immédiat à la cour.\r\n• Tissu Confortable : Une coupe légère qui permet à Sa Majesté de parader sans entraver sa démarche impériale.",
+      "sizes": [
+        "L",
+        "M",
+        "S",
+        "XL",
+        "XS",
+        "XXL"
+      ],
+      "colors": [
+        "Beige",
+        "Bleu",
+        "Rose"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_ed72f6bd2f27.jpg",
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-16T14:43:01.246733",
+      "cj_product_id": "AC7C7D02-C773-4B7A-B4BF-E5A637363E3D",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJJJCWGD00349-Beige-L",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": null,
+      "cj_stock": 176794,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 18,
+      "name": "Pyjama « Couvre-Feu Royal » – Tenue de Nuit Impériale",
+      "price": 29.9,
+      "cost": 4.13,
+      "category": "Vêtements Animaux",
+      "description": "Parce que Sa Majesté a le droit de garder son standing, même pendant ses 18 heures de sieste quotidiennes.\r\nCe pyjama à carreaux ultra-chic est l'uniforme officiel pour réclamer des caresses nocturnes, bouder dans son panier ou inspecter les appartements royaux à pas de loup. Les Déclinaisons de la Cour : • 🟫 Beige Khaki Tartan : Le charme discret des châteaux écossais pour les ducs du canapé.\r\n• 🟦 Bleu Souverain Tartan : L'élégance intemporelle pour des nuits douillettes et impériales. Points Forts : • Élégance Nocturne : Un motif à carreaux raffiné avec un col chemise pour rester digne en toutes circonstances.\r\n• Douceur Absolue : Un tissu léger et stretch pour que Votre Altesse puisse s'étaler de tout son long sans aucune entrave.",
+      "sizes": [
+        "2XL",
+        "L",
+        "M",
+        "S",
+        "XL"
+      ],
+      "colors": [
+        "Beige Bleu"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_aabdbaa41291.jpg",
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-16T14:47:30.972437",
+      "cj_product_id": "1444937883965329408",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJGD130822605EV",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": null,
+      "cj_stock": 331532,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 19,
+      "name": "Peignoir « Requin de la Cour » – Sortie de Bain Impériale",
+      "price": 29.9,
+      "cost": 5.93,
+      "category": "Vêtements Animaux",
+      "description": "Pour que Sa Majesté reste digne et sèche après le redoutable protocole du bain.\nCe peignoir ultra-absorbant en forme de requin transforme votre Poilu trempé en un redoutable (mais adorable) prédateur de salon, prêt à être câliné plutôt que de s'essuyer sur vos tapis. Les Déclinaisons de la Cour : • 🦈 Bleu Requin (Shark Blue) : Le modèle original pour terrifier les gouttes d'eau avec noblesse.\n• 🌸 Violet Altesse (Purple) : Pour une touche de couleur royale et excentrique dès la sortie de la baignoire. Points Forts : • Séchage Souverain : Une matière éponge ultra-absorbante à séchage rapide pour éviter les frissons post-bain de Sa Grandeur.\n• Look Capuche Fun : Une capuche avec des petites dents et un aileron pour un style décalé qui fera fureur dans les appartements royaux.",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Violet",
+        "Bleu",
+        "Rose"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_281746766a37.jpg",
+      "emoji": "🐾",
+      "hue": "#FBBF24",
+      "created_at": "2026-10-16T14:52:39.945295",
+      "cj_product_id": "1580131625164353536",
+      "cj_variant_id": null,
+      "cj_stock": 41544,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 20,
+      "name": "Collier « Joyaux de la Couronne » – Chaîne Cubaine Diamantée",
+      "price": 29.9,
+      "cost": 1.39,
+      "category": "Accessoires",
+      "description": "Pour les Poilus qui ne se déplacent pas sans leur service de sécurité.\r\nIncrusté de mille feux, ce collier à maillons cubains offre à Votre Altesse l'éclat éblouissant des plus grands monarques. Une pièce d'exception pour briller en société et éclipser tous les autres quadrupèdes du quartier. Les Déclinaisons de la Cour : • ✨ Or Royal (Gold) : Le faste et le prestige des couronnes impériales.\r\n• 💎 Argent Noble (Silver) : L'éclat pur et givré des grands ducs.\r\n• 🌸 Or Rose Majesté (Rose Gold) : Le raffinement ultime pour les favorites du Roi. Points Forts : • Éclat Impérial : Des dizaines de strass scintillants minutieusement incrustés pour un effet diamant garanti sous les projecteurs (ou le soleil du parc).\r\n• Confort Souverain : Conçu pour offrir un maximum de prestance sans jamais alourdir le port de tête altier de Sa Grandeur.\r\n20cm\r\n25cm\r\n30cm\r\n35cm\r\n40cm\r\n45cm\r\n50cm\r\n55cm\r\n60cm\r\n65cm\r\n70cm",
+      "sizes": [
+        "20cm 25cm 30cm 35cm 40cm 45cm",
+        "50cm",
+        "55cm",
+        "60cm",
+        "65cm",
+        "70cm"
+      ],
+      "colors": [
+        "or",
+        "argent",
+        "or rose"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_0d5aaa98b124.jpeg",
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-16T14:59:05.315406",
+      "cj_product_id": "2503010638171626700",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJYD231243901AZ",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": null,
+      "cj_stock": 178936,
+      "supplier": "CJ",
+      "is_customizable": false
+    },
+    {
+      "id": 21,
+      "name": "\"Manteau Polaire Petit Fruit Royal\"",
+      "price": 19.9,
+      "cost": 1.25,
+      "category": "Vêtements Animaux",
+      "description": "Ce sweat en polaire ultra-douce transforme votre compagnon en le plus mignon des fruits du royaume. Conçu spécialement pour affronter le froid de l'hiver avec style et humour.",
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "colors": [
+        "Grenouille",
+        "Carotte",
+        "Banane",
+        "Pitaya",
+        "Avocat"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_574f8445ac97.jpg",
+      "images": [
+        "https://oss-cf.cjdropshipping.com/product/2025/11/10/07/d0b92208-3059-43a7-ae78-3454a47c66ef.jpg",
+        "https://cf.cjdropshipping.com/1623555230823.jpg",
+        "https://cf.cjdropshipping.com/d1cb327b-eac1-40ae-ad4c-6f23aa09ef94.jpg",
+        "https://oss-cf.cjdropshipping.com/product/2024/08/22/03/9fb68e6e-47d2-47c8-875f-f49b8fe541ea.jpg",
+        "https://cf.cjdropshipping.com/1623555242019.jpg",
+        "https://cf.cjdropshipping.com/1623555230822.jpg",
+        "https://cf.cjdropshipping.com/a74b9099-c6f9-452f-b92a-7cf040505af1.jpg",
+        "https://cf.cjdropshipping.com/408b74f8-2185-4273-87db-38ca0e48cf9f.jpg",
+        "https://cf.cjdropshipping.com/1623555230826.jpg",
+        "https://cf.cjdropshipping.com/1623555231135.jpg",
+        "https://cf.cjdropshipping.com/1623555242018.jpg",
+        "https://oss-cf.cjdropshipping.com/product/2025/11/10/07/5fbcfc49-546a-44c4-89f2-70526a4b8468.jpg",
+        "https://cf.cjdropshipping.com/9c9ab438-36cc-4605-9418-0f543f5e4309.jpg",
+        "https://cf.cjdropshipping.com/1623555230825.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-20T10:38:02.817094",
+      "cj_product_id": "1403920038016192512",
+      "cj_variants": [
+        {
+          "vid": "1403920039480004608",
+          "sku": "CJGD117239401AZ",
+          "color": "Style de tracé 1",
+          "size": "Xs",
+          "price": 1.57,
+          "image": "https://cf.cjdropshipping.com/1623555230825.jpg"
+        },
+        {
+          "vid": "1403920039488393216",
+          "sku": "CJGD117239402BY",
+          "color": "Style de tracé 1",
+          "size": "S",
+          "price": 1.57,
+          "image": "https://cf.cjdropshipping.com/1623555230825.jpg"
+        },
+        {
+          "vid": "1403920039496781824",
+          "sku": "CJGD117239403CX",
+          "color": "Style de tracé 1",
+          "size": "M",
+          "price": 1.57,
+          "image": "https://cf.cjdropshipping.com/1623555230825.jpg"
+        },
+        {
+          "vid": "1403920039505170432",
+          "sku": "CJGD117239404DW",
+          "color": "Style de tracé 1",
+          "size": "L",
+          "price": 1.57,
+          "image": "https://cf.cjdropshipping.com/1623555230825.jpg"
+        },
+        {
+          "vid": "1403920039517753344",
+          "sku": "CJGD117239405EV",
+          "color": "Style de tracé 1",
+          "size": "Xl",
+          "price": 1.57,
+          "image": "https://cf.cjdropshipping.com/1623555230825.jpg"
+        },
+        {
+          "vid": "1403920039526141952",
+          "sku": "CJGD117239406FU",
+          "color": "Style de tracé 1",
+          "size": "2xl",
+          "price": 1.57,
+          "image": "https://cf.cjdropshipping.com/1623555230825.jpg"
+        },
+        {
+          "vid": "1403920039534530560",
+          "sku": "CJGD117239407GT",
+          "color": "Il faut laisser le temps au temps - vol. 2",
+          "size": "Xs",
+          "price": 1.27,
+          "image": "https://cf.cjdropshipping.com/1623555230823.jpg"
+        },
+        {
+          "vid": "1403920039542919168",
+          "sku": "CJGD117239408HS",
+          "color": "Il faut laisser le temps au temps - vol. 2",
+          "size": "S",
+          "price": 1.27,
+          "image": "https://cf.cjdropshipping.com/1623555230823.jpg"
+        },
+        {
+          "vid": "1403920039551307776",
+          "sku": "CJGD117239409IR",
+          "color": "Il faut laisser le temps au temps - vol. 2",
+          "size": "M",
+          "price": 1.27,
+          "image": "https://cf.cjdropshipping.com/1623555230823.jpg"
+        },
+        {
+          "vid": "1403920039563890688",
+          "sku": "CJGD117239410JQ",
+          "color": "Il faut laisser le temps au temps - vol. 2",
+          "size": "L",
+          "price": 1.27,
+          "image": "https://cf.cjdropshipping.com/1623555230823.jpg"
+        },
+        {
+          "vid": "1403920039580667904",
+          "sku": "CJGD117239411KP",
+          "color": "Il faut laisser le temps au temps - vol. 2",
+          "size": "Xl",
+          "price": 1.27,
+          "image": "https://cf.cjdropshipping.com/1623555230823.jpg"
+        },
+        {
+          "vid": "1403920039589056512",
+          "sku": "CJGD117239412LO",
+          "color": "Il faut laisser le temps au temps - vol. 2",
+          "size": "2xl",
+          "price": 1.27,
+          "image": "https://cf.cjdropshipping.com/1623555230823.jpg"
+        },
+        {
+          "vid": "1403920039601639424",
+          "sku": "CJGD117239413MN",
+          "color": "3. le style",
+          "size": "Xs",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230826.jpg"
+        },
+        {
+          "vid": "1403920039610028032",
+          "sku": "CJGD117239414NM",
+          "color": "3. le style",
+          "size": "S",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230826.jpg"
+        },
+        {
+          "vid": "1403920039622610944",
+          "sku": "CJGD117239415OL",
+          "color": "3. le style",
+          "size": "M",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230826.jpg"
+        },
+        {
+          "vid": "1403920039630999552",
+          "sku": "CJGD117239416PK",
+          "color": "3. le style",
+          "size": "L",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230826.jpg"
+        },
+        {
+          "vid": "1403920039639388160",
+          "sku": "CJGD117239417QJ",
+          "color": "3. le style",
+          "size": "Xl",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230826.jpg"
+        },
+        {
+          "vid": "1403920039651971072",
+          "sku": "CJGD117239418RI",
+          "color": "3. le style",
+          "size": "2xl",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230826.jpg"
+        },
+        {
+          "vid": "1403920039660359680",
+          "sku": "CJGD117239419SH",
+          "color": "Style de grille 4",
+          "size": "Xs",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230822.jpg"
+        },
+        {
+          "vid": "1403920039672942592",
+          "sku": "CJGD117239420TG",
+          "color": "Style de grille 4",
+          "size": "S",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230822.jpg"
+        },
+        {
+          "vid": "1403920039681331200",
+          "sku": "CJGD117239421UF",
+          "color": "Style de grille 4",
+          "size": "M",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230822.jpg"
+        },
+        {
+          "vid": "1403920039689719808",
+          "sku": "CJGD117239422VE",
+          "color": "Style de grille 4",
+          "size": "L",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230822.jpg"
+        },
+        {
+          "vid": "1403920039698108416",
+          "sku": "CJGD117239423WD",
+          "color": "Style de grille 4",
+          "size": "Xl",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230822.jpg"
+        },
+        {
+          "vid": "1403920039710691328",
+          "sku": "CJGD117239424XC",
+          "color": "Style de grille 4",
+          "size": "2xl",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555230822.jpg"
+        },
+        {
+          "vid": "1403920039719079936",
+          "sku": "CJGD117239425YB",
+          "color": "5. style",
+          "size": "Xs",
+          "price": 1.25,
+          "image": "https://cf.cjdropshipping.com/1623555231135.jpg"
+        },
+        {
+          "vid": "1403920039727468544",
+          "sku": "CJGD117239426ZA",
+          "color": "5. style",
+          "size": "S",
+          "price": 1.25,
+          "image": "https://cf.cjdropshipping.com/1623555231135.jpg"
+        },
+        {
+          "vid": "1403920039735857152",
+          "sku": "CJGD117239427AZ",
+          "color": "5. style",
+          "size": "M",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555231135.jpg"
+        },
+        {
+          "vid": "1403920039744245760",
+          "sku": "CJGD117239428BY",
+          "color": "5. style",
+          "size": "L",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555231135.jpg"
+        },
+        {
+          "vid": "1403920039752634368",
+          "sku": "CJGD117239429CX",
+          "color": "5. style",
+          "size": "Xl",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555231135.jpg"
+        },
+        {
+          "vid": "1403920039761022976",
+          "sku": "CJGD117239430DW",
+          "color": "5. style",
+          "size": "2xl",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555231135.jpg"
+        },
+        {
+          "vid": "1403920039769411584",
+          "sku": "CJGD117239431EV",
+          "color": "6 style",
+          "size": "Xs",
+          "price": 1.87,
+          "image": "https://cf.cjdropshipping.com/1623555242019.jpg"
+        },
+        {
+          "vid": "1403920039781994496",
+          "sku": "CJGD117239432FU",
+          "color": "6 style",
+          "size": "S",
+          "price": 1.81,
+          "image": "https://cf.cjdropshipping.com/1623555242019.jpg"
+        },
+        {
+          "vid": "1403920039790383104",
+          "sku": "CJGD117239433GT",
+          "color": "6 style",
+          "size": "M",
+          "price": 1.81,
+          "image": "https://cf.cjdropshipping.com/1623555242019.jpg"
+        },
+        {
+          "vid": "1403920039798771712",
+          "sku": "CJGD117239434HS",
+          "color": "6 style",
+          "size": "L",
+          "price": 1.87,
+          "image": "https://cf.cjdropshipping.com/1623555242019.jpg"
+        },
+        {
+          "vid": "1403920039807160320",
+          "sku": "CJGD117239435IR",
+          "color": "6 style",
+          "size": "Xl",
+          "price": 1.81,
+          "image": "https://cf.cjdropshipping.com/1623555242019.jpg"
+        },
+        {
+          "vid": "1403920039815548928",
+          "sku": "CJGD117239436JQ",
+          "color": "6 style",
+          "size": "2xl",
+          "price": 1.47,
+          "image": "https://cf.cjdropshipping.com/1623555242019.jpg"
+        },
+        {
+          "vid": "1403920039823937536",
+          "sku": "CJGD117239437KP",
+          "color": "Lien vers l&rsquo;image originale",
+          "size": "Xs",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555242018.jpg"
+        },
+        {
+          "vid": "1403920039832326144",
+          "sku": "CJGD117239438LO",
+          "color": "Lien vers l&rsquo;image originale",
+          "size": "S",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555242018.jpg"
+        },
+        {
+          "vid": "1403920039840714752",
+          "sku": "CJGD117239439MN",
+          "color": "Lien vers l&rsquo;image originale",
+          "size": "M",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555242018.jpg"
+        },
+        {
+          "vid": "1403920039849103360",
+          "sku": "CJGD117239440NM",
+          "color": "Lien vers l&rsquo;image originale",
+          "size": "L",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555242018.jpg"
+        },
+        {
+          "vid": "1403920039857491968",
+          "sku": "CJGD117239441OL",
+          "color": "Lien vers l&rsquo;image originale",
+          "size": "Xl",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555242018.jpg"
+        },
+        {
+          "vid": "1403920039870074880",
+          "sku": "CJGD117239442PK",
+          "color": "Lien vers l&rsquo;image originale",
+          "size": "2xl",
+          "price": 1.38,
+          "image": "https://cf.cjdropshipping.com/1623555242018.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "libas"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Vêtements pour animaux de compagnie > Sweatshirts et sweats à capuche pour anima"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "20 × 10 × 2 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-20T10:38:02",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJGD117239406FU",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": null,
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_stock": 1147811
+    },
+    {
+      "id": 22,
+      "name": "Tableau sur Toile « Portrait Officiel de Sa Majesté »",
+      "price": 39.9,
+      "cost": 14.59,
+      "fournisseur_id": "https://dashboard.gelato.com/catalogue/categories/bestsellers/products/canvas-product",
+      "fournisseur": "Gelato",
+      "url_fournisseur": "https://dashboard.gelato.com/catalogue/categories/bestsellers/products/canvas-product",
+      "category": "Portraits Sur-Mesure",
+      "description": "Immortalisez votre compagnon dans une véritable œuvre d'art digne des plus grands palais !\r\n\r\nTransformez la photo de votre poilu en un portrait majestueux imprimé sur une toile de qualité galerie. Avec sa texture délicate et ses couleurs éclatantes, ce tableau apportera une touche d'élégance et beaucoup d'humour à votre intérieur.\r\n\r\nCaractéristiques royales :\r\n\r\nQualité Galerie : Toile premium en coton et polyester (300-350 g/m²), offrant un rendu fidèle et durable.\r\n\r\nChâssis Écoresponsable : Structure en bois certifié FSC issu de forêts gérées durablement.\r\n\r\nInstallation Facile : Kit de suspension inclus pour accrocher immédiatement le portrait sur le mur du royaume.\r\n\r\nPrêt à offrir : Expédié dans un emballage de protection renforcé.\r\n\r\nTéléchargez simplement la plus belle photo de votre animal, choisissez son prénom, et nos artisans s'occupent de créer son tableau officiel !",
+      "sizes": [
+        "20x2O"
+      ],
+      "colors": [
+        "Blanc"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/product_22_7facd1b52768.jpeg",
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-20T11:56:58.484947",
+      "supplier": "Gelato",
+      "is_customizable": true
+    },
+    {
+      "id": 23,
+      "name": "👑 Gamelle Royale Anti-Glouton « Le Festin Raisonnable »",
+      "price": 19.9,
+      "cost": 1.29,
+      "category": "Accessoires",
+      "description": "Pourquoi Sa Majesté va l'adorer (et vous aussi) :\r\n🐶 Digestion Royale & Santé Préservée : En ralentissant le rythme des bouchées jusqu'à 10 fois, elle évite les ballonnements, les vomissements et favorise une digestion douce.\r\n\r\n🧠 Stimulation Mentale : Transformer le repas en un jeu stimulant ! Les reliefs ludiques occupent l'esprit de votre animal et réduisent l'anxiété.\r\n\r\n🛡️ Matériau Ultra-Sain & Résistant : Conçue en matériau PP alimentaire haute qualité, garanti sans BPA, toxines ni odeurs.\r\n\r\n🧼 Nettoyage Express : Passe sous l'eau chaude en quelques secondes ou directement au lave-vaisselle.\r\n\r\n🐾 Antidérapante & Stable : Ne glisse pas sur le carrelage, même face aux gourmands les plus enthousiastes !\r\n\r\n📐 Fiche Technique :\r\nMatière : Polypropylène (PP) de qualité alimentaire (Sans BPA)\r\n\r\nUtilisation : Convient aux croquettes, pâtées et friandises (chiens et chats)\r\n\r\nEntretien : Compatible lave-vaisselle\r\n\r\nCouleurs disponibles : Jaune Safran, Vert Sauge, Rose Poudré, Bleu Royal",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Orange",
+        "Rose",
+        "Vert"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_b0ad825e53f9.jpg",
+      "images": [
+        "https://cf.cjdropshipping.com/3d15f29e-52f2-4d5f-bfd5-e5eedb851eec.jpg",
+        "https://cf.cjdropshipping.com/3f2fd331-bd46-4e91-939b-2fe10bc16685.jpeg",
+        "https://cf.cjdropshipping.com/9c15aae8-2d00-4b68-9264-b8f998457982.jpeg",
+        "https://cf.cjdropshipping.com/1dbcc4f1-e501-49d0-9e5c-87db96fe6ace.jpeg",
+        "https://cf.cjdropshipping.com/a4ade007-4239-47f0-a8fc-07676007843e.jpg",
+        "https://oss-cf.cjdropshipping.com/product/2026/10/01/11/3ae5cc65-ce4e-4883-91ac-de1f1e0dae39.jpg",
+        "https://cf.cjdropshipping.com/f49c878f-845e-4c98-a4e9-108c8406179e.jpeg",
+        "https://cf.cjdropshipping.com/3ba2f6bb-b793-4c12-b2bf-5d608f0a159f.jpeg",
+        "https://cf.cjdropshipping.com/d9f45be0-81b0-485c-a73e-3498828b065a.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2023/10/26/07/f0f25a94-d40c-4d77-880b-aca7d7d40eee.png",
+        "https://cf.cjdropshipping.com/874ab992-b94e-4ec8-b48d-9f100899cddf.jpg",
+        "https://oss-cf.cjdropshipping.com/product/2023/10/26/07/afbbfb2a-2ded-4970-b2bc-a204d1c3372c.png"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-20T16:29:21.540775",
+      "cj_product_id": "1653041912300969984",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "1653041912363884544",
+          "sku": "CJGY174846501AZ",
+          "color": "Vert",
+          "size": "Unique",
+          "price": 1.29,
+          "image": "https://cf.cjdropshipping.com/3f2fd331-bd46-4e91-939b-2fe10bc16685.jpeg"
+        },
+        {
+          "vid": "1653041912418410496",
+          "sku": "CJGY174846502BY",
+          "color": "Rose",
+          "size": "Unique",
+          "price": 1.29,
+          "image": "https://cf.cjdropshipping.com/d9f45be0-81b0-485c-a73e-3498828b065a.jpeg"
+        },
+        {
+          "vid": "1653041912468742144",
+          "sku": "CJGY174846503CX",
+          "color": "Orange",
+          "size": "Unique",
+          "price": 1.29,
+          "image": "https://cf.cjdropshipping.com/1dbcc4f1-e501-49d0-9e5c-87db96fe6ace.jpeg"
+        },
+        {
+          "vid": "1717449049042853888",
+          "sku": "CJGY174846504DW",
+          "color": "Ens",
+          "size": "Unique",
+          "price": 2.11,
+          "image": "https://oss-cf.cjdropshipping.com/product/2023/10/26/07/f0f25a94-d40c-4d77-880b-aca7d7d40eee.png"
+        },
+        {
+          "vid": "1717449049114157056",
+          "sku": "CJGY174846505EV",
+          "color": "Lot 1",
+          "size": "Unique",
+          "price": 2.11,
+          "image": "https://oss-cf.cjdropshipping.com/product/2023/10/26/07/afbbfb2a-2ded-4970-b2bc-a204d1c3372c.png"
+        },
+        {
+          "vid": "2610011133071603100",
+          "sku": "CJGY174846506FU",
+          "color": "Set2",
+          "size": "Unique",
+          "price": 5.83,
+          "image": "https://oss-cf.cjdropshipping.com/product/2026/10/01/11/3ae5cc65-ce4e-4883-91ac-de1f1e0dae39.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "Plastique"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Boissons et aliments pour animaux de compagnie > Bols pour animaux de compagnie"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "23 × 23 × 5 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-20T16:29:21",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJGY174846501AZ",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": null,
+      "cj_stock": 66386
+    },
+    {
+      "id": 24,
+      "name": "Maillot All-Star du Roy — Édition Terrain",
+      "price": 24.9,
+      "cost": 0.96,
+      "category": "Vêtements Animaux",
+      "description": "« Ce n'est pas parce qu'Altesse passe 18 heures par jour à dormir qu'elle ne domine pas le Game. »\r\n\r\nOffrez à votre souverain à quatre pattes le look athlétique ultime avec le maillot All-Star #11. Conçu dans une maille respirante haute performance, cet habit royal permet d'exercer son dédain avec une liberté de mouvement totale, que ce soit pour piquer un sprint à 3h du matin ou pour ignorer vos appels depuis le haut du canapé.\r\n\r\nStyle : Rouge Chicago / Noir NBA haut de gamme.\r\n\r\nConfort Royal : Tissu léger et aéré, idéal pour le printemps et l'été.\r\n\r\nCoupe : S'enfile en un clin d'œil sans contrarier Sa Majesté.",
+      "sizes": [
+        "L",
+        "M",
+        "S",
+        "Xl",
+        "Xxl"
+      ],
+      "colors": [
+        "Black",
+        "Red"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_18998426bd3b.jpg",
+      "images": [
+        "https://cf.cjdropshipping.com/15950880/4740291219754.jpg",
+        "https://cf.cjdropshipping.com/20200721/1583409020838.jpg",
+        "https://cf.cjdropshipping.com/20200721/244423431665.jpg",
+        "https://cf.cjdropshipping.com/20200721/12690759375037.jpg",
+        "https://cf.cjdropshipping.com/20200721/4540117023682.jpg",
+        "https://cf.cjdropshipping.com/20200721/1051498458963.jpg",
+        "https://cf.cjdropshipping.com/20200721/2621323813703.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T10:47:43.878381",
+      "cj_product_id": "CF1F5B6A-0BB3-4740-A3FA-803C6D67D6C2",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "36CF9CB6-5483-4F21-B531-31BF4BA57780",
+          "sku": "CJJJCWGD00413-Red-XL",
+          "color": "Red",
+          "size": "Xl",
+          "price": 0.96,
+          "image": "https://cf.cjdropshipping.com/20200721/4540117023682.jpg"
+        },
+        {
+          "vid": "3ABAC7A0-A645-40E0-A26F-E79D33C28C6D",
+          "sku": "CJJJCWGD00413-Red-L",
+          "color": "Red",
+          "size": "L",
+          "price": 0.96,
+          "image": "https://cf.cjdropshipping.com/20200721/4540117023682.jpg"
+        },
+        {
+          "vid": "3B18A24D-5948-42A7-AB51-039738B61283",
+          "sku": "CJJJCWGD00413-Black-XL",
+          "color": "Black",
+          "size": "Xl",
+          "price": 0.96,
+          "image": "https://cf.cjdropshipping.com/20200721/2621323813703.jpg"
+        },
+        {
+          "vid": "97B5991C-57C3-4AE2-8E46-EC34730748D4",
+          "sku": "CJJJCWGD00413-Black-XXL",
+          "color": "Black",
+          "size": "Xxl",
+          "price": 0.96,
+          "image": "https://cf.cjdropshipping.com/20200721/2621323813703.jpg"
+        },
+        {
+          "vid": "A962890C-4CFB-4F74-A06A-0D40C32BBA18",
+          "sku": "CJJJCWGD00413-Red-M",
+          "color": "Red",
+          "size": "M",
+          "price": 0.96,
+          "image": "https://cf.cjdropshipping.com/20200721/4540117023682.jpg"
+        },
+        {
+          "vid": "C27D91F8-067A-4229-8E21-81A86727CFFB",
+          "sku": "CJJJCWGD00413-Black-S",
+          "color": "Black",
+          "size": "S",
+          "price": 0.96,
+          "image": "https://cf.cjdropshipping.com/20200721/2621323813703.jpg"
+        },
+        {
+          "vid": "C4C34788-C905-4FD9-B372-D21A5FBB3A9C",
+          "sku": "CJJJCWGD00413-Red-S",
+          "color": "Red",
+          "size": "S",
+          "price": 0.96,
+          "image": "https://cf.cjdropshipping.com/20200721/4540117023682.jpg"
+        },
+        {
+          "vid": "D035EE4C-34D8-41B0-9391-614D4C328558",
+          "sku": "CJJJCWGD00413-Black-L",
+          "color": "Black",
+          "size": "L",
+          "price": 0.96,
+          "image": "https://cf.cjdropshipping.com/20200721/2621323813703.jpg"
+        },
+        {
+          "vid": "E1F5A6AF-17A7-4325-8128-5DD7F9A069F0",
+          "sku": "CJJJCWGD00413-Red-XXL",
+          "color": "Red",
+          "size": "Xxl",
+          "price": 0.96,
+          "image": "https://cf.cjdropshipping.com/20200721/4540117023682.jpg"
+        },
+        {
+          "vid": "EEBB95E7-4D07-4E3F-B03C-CF8A635DB09B",
+          "sku": "CJJJCWGD00413-Black-M",
+          "color": "Black",
+          "size": "M",
+          "price": 0.96,
+          "image": "https://cf.cjdropshipping.com/20200721/2621323813703.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "libas"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Vêtements pour animaux de compagnie > Hauts pour animaux de compagnie"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "25 × 25 × 5 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T10:47:43",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJJJCWGD00413-Black-L",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/hot-world-cup-ball-spring-and-summer-dog-vest-pet-supplies-p-CF1F5B6A-0BB3-4740-A3FA-803C6D67D6C2.html",
+      "cj_stock": 104814
+    },
+    {
+      "id": 25,
+      "name": "Éclaireur Royal — Distributeur Lumineux de Sacs",
+      "price": 14.9,
+      "cost": 0.64,
+      "category": "Accessoires",
+      "description": "« Parce qu'un Valet digne de ce nom ramasse les offrandes royales, même dans le noir absolu. »Ne tâtonnez plus jamais dans l'ombre pendant les balades nocturnes de Sa Majesté. Ce distributeur compact s'accroche directement à la laisse grâce à son mousqueton et intègre une lampe LED haute intensité. Vous pouvez désormais accomplir vos devoirs de serviteur avec précision et élégance, à n'importe quelle heure de la nuit.   Double Fonction : Éclairage LED puissant + réserve de sacs.   Fixation Rapide : Mousqueton inclus pour accrocher à la laisse ou au sac.   Pratique : Design compact et résistant.",
+      "sizes": [
+        "Sac poubelle",
+        "Y compris les sacs a ordures"
+      ],
+      "colors": [
+        "Bleu gris",
+        "Gris gris",
+        "Gris rose",
+        "Gris-noir",
+        "Vert / gris"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_db78fc7911c3.jpg",
+      "images": [
+        "https://oss-cf.cjdropshipping.com/product/2024/12/05/03/f7980637-1a74-4c33-8286-0240e7434078.jpg",
+        "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/405d7948-2a51-41d5-a99b-c7a89c5d1299_trans.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/43140638-19d3-4c73-952b-8034461fe4c8_trans.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/50da9360-f2fa-4642-8ada-254bd45b9a95_trans.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/ea33edae-699e-4589-a8f3-e3014b50d690_trans.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/82084cc2-1abb-4f09-8151-37233e1df9f8_trans.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/d34db868-0fb5-4608-bb08-a871f171ee66_trans.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/11e610ef-ca8c-43fb-a1f1-59e4b9efc240_trans.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/f48e967b-a6e2-40bb-9dc8-d37da787b96f_trans.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/2dd2dfbe-f6e0-4e80-b912-736882cd5284_trans.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/72a34f8b-d4b6-4b6c-9549-0878bc7e75ee_trans.jpeg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T10:54:04.544037",
+      "cj_product_id": "2411240930111626400",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "2411240930111626600",
+          "sku": "CJYD222274201AZ",
+          "color": "Gris rose",
+          "size": "Y compris les sacs à ordures",
+          "price": 0.66,
+          "image": "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/43140638-19d3-4c73-952b-8034461fe4c8_trans.jpeg"
+        },
+        {
+          "vid": "2411240930111626800",
+          "sku": "CJYD222274202BY",
+          "color": "Gris rose",
+          "size": "Sac poubelle",
+          "price": 0.64,
+          "image": "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/43140638-19d3-4c73-952b-8034461fe4c8_trans.jpeg"
+        },
+        {
+          "vid": "2411240930111626900",
+          "sku": "CJYD222274203CX",
+          "color": "Bleu gris",
+          "size": "Y compris les sacs à ordures",
+          "price": 0.66,
+          "image": "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/50da9360-f2fa-4642-8ada-254bd45b9a95_trans.jpeg"
+        },
+        {
+          "vid": "2411240930111627100",
+          "sku": "CJYD222274204DW",
+          "color": "Bleu gris",
+          "size": "Sac poubelle",
+          "price": 0.64,
+          "image": "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/50da9360-f2fa-4642-8ada-254bd45b9a95_trans.jpeg"
+        },
+        {
+          "vid": "2411240930111627300",
+          "sku": "CJYD222274205EV",
+          "color": "Gris gris",
+          "size": "Y compris les sacs à ordures",
+          "price": 0.66,
+          "image": "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/d34db868-0fb5-4608-bb08-a871f171ee66_trans.jpeg"
+        },
+        {
+          "vid": "2411240930111627400",
+          "sku": "CJYD222274206FU",
+          "color": "Gris gris",
+          "size": "Sac poubelle",
+          "price": 0.64,
+          "image": "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/d34db868-0fb5-4608-bb08-a871f171ee66_trans.jpeg"
+        },
+        {
+          "vid": "2411240930111627600",
+          "sku": "CJYD222274207GT",
+          "color": "Vert / gris",
+          "size": "Y compris les sacs à ordures",
+          "price": 0.66,
+          "image": "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/f48e967b-a6e2-40bb-9dc8-d37da787b96f_trans.jpeg"
+        },
+        {
+          "vid": "2411240930111627700",
+          "sku": "CJYD222274208HS",
+          "color": "Vert / gris",
+          "size": "Sac poubelle",
+          "price": 0.64,
+          "image": "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/f48e967b-a6e2-40bb-9dc8-d37da787b96f_trans.jpeg"
+        },
+        {
+          "vid": "2411240930111627900",
+          "sku": "CJYD222274209IR",
+          "color": "Gris-noir",
+          "size": "Y compris les sacs à ordures",
+          "price": 0.66,
+          "image": "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/11e610ef-ca8c-43fb-a1f1-59e4b9efc240_trans.jpeg"
+        },
+        {
+          "vid": "2411240930111628100",
+          "sku": "CJYD222274210JQ",
+          "color": "Gris-noir",
+          "size": "Sac poubelle",
+          "price": 0.64,
+          "image": "https://oss-cf.cjdropshipping.com/product/2024/11/24/09/11e610ef-ca8c-43fb-a1f1-59e4b9efc240_trans.jpeg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "Plastique"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Fournitures d'extérieur pour animaux de compagnie > Coussinets et couches pour c"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "15 × 8 × 8 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T10:54:04",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJYD222274203CX",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/led-light-pet-waste-bag-dispenser-for-dogs-cats-dog-poop-scooper-bags-waste-bags-holder-dispensers-pet-clean-accessories-p-2411240930111626400.html",
+      "cj_stock": 115826
+    },
+    {
+      "id": 26,
+      "name": "Nœud Papillon du Majordome — Collection Tartan",
+      "price": 12.9,
+      "cost": 0.47,
+      "category": "Accessoires",
+      "description": "« L'élégance britannique au service de Sa Majesté. »Que ce soit pour recevoir ses sujets le dimanche ou pour surveiller l'ouverture de sa boîte de pâtée avec distinction, le nœud papillon à motifs tartan est l'attribut vestimentaire incontournable des aristocrates à quatre pattes.   Ajustable & Confortable : S'adapte facilement au tour de cou sans déranger le pelage.Style Intemporel : Motifs carreaux classiques pour un look chic et décalé.   Prêt pour le shooting : L'accessoire n°1 pour illuminer vos comptes TikTok et Instagram.",
+      "sizes": [
+        "1 piece",
+        "2 pc"
+      ],
+      "colors": [
+        "Vn10611",
+        "Vn10612",
+        "Vn10614",
+        "Vn10616",
+        "Vn10617",
+        "Vn10619",
+        "Vn10620",
+        "Vn10622"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_7d73dc62f306.png",
+      "images": [
+        "https://cf.cjdropshipping.com/30f93205-d19c-49db-a4e5-a391efe9bd90.png",
+        "https://cf.cjdropshipping.com/885474ac-3c96-4eb2-9643-fdc9f3348cb7.jpg",
+        "https://cf.cjdropshipping.com/4653d193-dbc9-41b6-8771-ead4a03feb74.jpg",
+        "https://cf.cjdropshipping.com/54c24f07-fbda-472f-b2d2-6c03f8864cf3.png",
+        "https://cf.cjdropshipping.com/c366485c-a089-426c-b7de-2ed2d86b52fa.jpg",
+        "https://cf.cjdropshipping.com/2a4e7b6d-4faf-4c94-bd27-0969b0d41b84.png",
+        "https://cf.cjdropshipping.com/34ce6add-a782-41ac-905a-70005b699026.jpg",
+        "https://cf.cjdropshipping.com/ddb99476-cb4d-4216-8133-5371176b0442.png",
+        "https://cf.cjdropshipping.com/65057736-5068-4b0f-955d-e4a8653dab27.png",
+        "https://cf.cjdropshipping.com/e6b587bf-f788-461f-afd3-847ff596f67d.jpg",
+        "https://cf.cjdropshipping.com/quick/product/d3d41d66-c4eb-47b1-ba10-b6ceb31c7736.jpg",
+        "https://cf.cjdropshipping.com/6ccff6c5-de12-4156-86b4-475b92e2bd2b.jpg",
+        "https://cf.cjdropshipping.com/450734ab-3a37-4605-968d-5bf47b87f10a.jpg",
+        "https://cf.cjdropshipping.com/fb1811c8-72ad-4395-a6fe-080e5017598e.jpg",
+        "https://cf.cjdropshipping.com/2b24af91-1b65-46b0-b22b-b8d756a8d445.png",
+        "https://cf.cjdropshipping.com/3e1cbf7b-4fec-4d80-94e5-36ea603334ae.jpg",
+        "https://cf.cjdropshipping.com/f5f03a66-695e-4d1b-a0d8-8a8fd96d619e.png",
+        "https://cf.cjdropshipping.com/c8e9ebc2-956f-427a-8630-ad1a5426e8ef.jpg",
+        "https://cf.cjdropshipping.com/8805b134-fd3a-48e4-97ad-54e7f3c8b656.jpg",
+        "https://cf.cjdropshipping.com/8fe236be-c74a-4be5-93ad-2d85241b9a6a.png",
+        "https://cf.cjdropshipping.com/f522527f-5023-401e-bc1b-3b9f8e304093.jpg",
+        "https://cf.cjdropshipping.com/379442ab-c8dd-49bd-a8b5-10accfc8e366.png",
+        "https://cf.cjdropshipping.com/a2704969-ca5a-42bb-8b4e-37d819b4f5a9.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T11:00:08.194016",
+      "cj_product_id": "1605851344785649664",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "1605860313637859328",
+          "sku": "CJYD164589901AZ",
+          "color": "Vn10611",
+          "size": "1 pièce",
+          "price": 0.47,
+          "image": "https://cf.cjdropshipping.com/34ce6add-a782-41ac-905a-70005b699026.jpg"
+        },
+        {
+          "vid": "1605860313637859329",
+          "sku": "CJYD164589902BY",
+          "color": "Vn10611",
+          "size": "2 pc",
+          "price": 0.66,
+          "image": "https://cf.cjdropshipping.com/8fe236be-c74a-4be5-93ad-2d85241b9a6a.png"
+        },
+        {
+          "vid": "1605860313637859330",
+          "sku": "CJYD164589903CX",
+          "color": "Vn10619",
+          "size": "1 pièce",
+          "price": 0.47,
+          "image": "https://cf.cjdropshipping.com/6ccff6c5-de12-4156-86b4-475b92e2bd2b.jpg"
+        },
+        {
+          "vid": "1605860313642053632",
+          "sku": "CJYD164589904DW",
+          "color": "Vn10619",
+          "size": "2 pc",
+          "price": 0.66,
+          "image": "https://cf.cjdropshipping.com/ddb99476-cb4d-4216-8133-5371176b0442.png"
+        },
+        {
+          "vid": "1605860313642053633",
+          "sku": "CJYD164589905EV",
+          "color": "Vn10614",
+          "size": "1 pièce",
+          "price": 0.47,
+          "image": "https://cf.cjdropshipping.com/c8e9ebc2-956f-427a-8630-ad1a5426e8ef.jpg"
+        },
+        {
+          "vid": "1605860313642053634",
+          "sku": "CJYD164589906FU",
+          "color": "Vn10614",
+          "size": "2 pc",
+          "price": 0.66,
+          "image": "https://cf.cjdropshipping.com/54c24f07-fbda-472f-b2d2-6c03f8864cf3.png"
+        },
+        {
+          "vid": "1605860313646247936",
+          "sku": "CJYD164589907GT",
+          "color": "Vn10616",
+          "size": "1 pièce",
+          "price": 0.47,
+          "image": "https://cf.cjdropshipping.com/e6b587bf-f788-461f-afd3-847ff596f67d.jpg"
+        },
+        {
+          "vid": "1605860313646247937",
+          "sku": "CJYD164589908HS",
+          "color": "Vn10616",
+          "size": "2 pc",
+          "price": 0.66,
+          "image": "https://cf.cjdropshipping.com/65057736-5068-4b0f-955d-e4a8653dab27.png"
+        },
+        {
+          "vid": "1605860313646247938",
+          "sku": "CJYD164589909IR",
+          "color": "Vn10617",
+          "size": "1 pièce",
+          "price": 0.47,
+          "image": "https://cf.cjdropshipping.com/fb1811c8-72ad-4395-a6fe-080e5017598e.jpg"
+        },
+        {
+          "vid": "1605860313646247939",
+          "sku": "CJYD164589910JQ",
+          "color": "Vn10617",
+          "size": "2 pc",
+          "price": 0.66,
+          "image": "https://cf.cjdropshipping.com/379442ab-c8dd-49bd-a8b5-10accfc8e366.png"
+        },
+        {
+          "vid": "1605860313650442240",
+          "sku": "CJYD164589911KP",
+          "color": "Vn10612",
+          "size": "1 pièce",
+          "price": 0.47,
+          "image": "https://cf.cjdropshipping.com/8805b134-fd3a-48e4-97ad-54e7f3c8b656.jpg"
+        },
+        {
+          "vid": "1605860313650442241",
+          "sku": "CJYD164589912LO",
+          "color": "Vn10612",
+          "size": "2 pc",
+          "price": 0.66,
+          "image": "https://cf.cjdropshipping.com/2b24af91-1b65-46b0-b22b-b8d756a8d445.png"
+        },
+        {
+          "vid": "1605860313650442242",
+          "sku": "CJYD164589913MN",
+          "color": "Vn10620",
+          "size": "1 pièce",
+          "price": 0.47,
+          "image": "https://cf.cjdropshipping.com/4653d193-dbc9-41b6-8771-ead4a03feb74.jpg"
+        },
+        {
+          "vid": "1605860313654636544",
+          "sku": "CJYD164589914NM",
+          "color": "Vn10620",
+          "size": "2 pc",
+          "price": 0.66,
+          "image": "https://cf.cjdropshipping.com/f5f03a66-695e-4d1b-a0d8-8a8fd96d619e.png"
+        },
+        {
+          "vid": "1605860313654636545",
+          "sku": "CJYD164589915OL",
+          "color": "Vn10622",
+          "size": "1 pièce",
+          "price": 0.47,
+          "image": "https://cf.cjdropshipping.com/3e1cbf7b-4fec-4d80-94e5-36ea603334ae.jpg"
+        },
+        {
+          "vid": "1605860313654636546",
+          "sku": "CJYD164589916PK",
+          "color": "Vn10622",
+          "size": "2 pc",
+          "price": 0.66,
+          "image": "https://cf.cjdropshipping.com/2a4e7b6d-4faf-4c94-bd27-0969b0d41b84.png"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "libas"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Colliers, harnais et accessoires pour animaux de compagnie > Nœuds et attaches p"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "15 × 6 × 6 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T11:00:08",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJYD164589901AZ",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/plaid-pet-tie-cat-dog-scarf-accessories-pet-accessories-p-1605851344785649664.html",
+      "cj_stock": 148888
+    },
+    {
+      "id": 27,
+      "name": "Lunettes de Soleil Cœur « Star de la Riviera »",
+      "price": 22.9,
+      "cost": 2.14,
+      "category": "Accessoires",
+      "description": "« Pour préserver les yeux de Sa Majesté de la lumière des flashs et du soleil de la Côte d'Azur. »Indispensables pour les sorties en cabriolet ou les séances bronzage au bord de la piscine. Ces lunettes ajustables au design cœur protègent les yeux délicats des UV et du vent tout en affirmant un statut de star incontestée.   Protection & Confort : Sangle ajustable sous le menton et derrière la tête pour un maintien parfait.   Soin des yeux : Évite les irritations dues au vent lors des promenades.   Look 100 % VIP : L'accessoire star pour vos réseaux sociaux.",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Noir",
+        "Blanc",
+        "Bleu",
+        "Rouge",
+        "Rose",
+        "Jaune"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_950986b951dd.jpg",
+      "images": [
+        "https://cf.cjdropshipping.com/f9c3f77c-6c7f-485e-a0eb-0da577a6109b.jpg",
+        "https://cf.cjdropshipping.com/3c29cec0-f26e-427d-af53-277dbe9a276c.jpg",
+        "https://cf.cjdropshipping.com/93fef262-d456-4484-b7a3-0d1e8940bf23.jpg",
+        "https://cf.cjdropshipping.com/26a43453-3f40-4d15-a112-1d4a1ebd97d9.jpg",
+        "https://cf.cjdropshipping.com/c13e2301-5d9a-435e-acd9-b2a1c688ed31.jpg",
+        "https://cf.cjdropshipping.com/c84e4998-bc0e-4960-9aa6-64208daeab10.jpg",
+        "https://cf.cjdropshipping.com/87192dbb-846b-4d8b-85ef-d20af2df503d.jpg",
+        "https://cf.cjdropshipping.com/5351d76f-acf8-468c-bff6-13a3b8dbe33c.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T11:08:01.209342",
+      "cj_product_id": "1628220995620319232",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "1628220995687428096",
+          "sku": "CJMY168993901AZ",
+          "color": "Rose",
+          "size": "Unique",
+          "price": 2.14,
+          "image": "https://cf.cjdropshipping.com/26a43453-3f40-4d15-a112-1d4a1ebd97d9.jpg"
+        },
+        {
+          "vid": "1628220995741954048",
+          "sku": "CJMY168993902BY",
+          "color": "Bleu",
+          "size": "Unique",
+          "price": 2.14,
+          "image": "https://cf.cjdropshipping.com/3c29cec0-f26e-427d-af53-277dbe9a276c.jpg"
+        },
+        {
+          "vid": "1628220995796480000",
+          "sku": "CJMY168993903CX",
+          "color": "Black",
+          "size": "Unique",
+          "price": 2.14,
+          "image": "https://cf.cjdropshipping.com/87192dbb-846b-4d8b-85ef-d20af2df503d.jpg"
+        },
+        {
+          "vid": "1628220995851005952",
+          "sku": "CJMY168993904DW",
+          "color": "Red",
+          "size": "Unique",
+          "price": 2.14,
+          "image": "https://cf.cjdropshipping.com/5351d76f-acf8-468c-bff6-13a3b8dbe33c.jpg"
+        },
+        {
+          "vid": "1628220995901337600",
+          "sku": "CJMY168993905EV",
+          "color": "Yellow",
+          "size": "Unique",
+          "price": 2.14,
+          "image": "https://cf.cjdropshipping.com/c13e2301-5d9a-435e-acd9-b2a1c688ed31.jpg"
+        },
+        {
+          "vid": "1628220995955863552",
+          "sku": "CJMY168993906FU",
+          "color": "Blanc",
+          "size": "Unique",
+          "price": 2.14,
+          "image": "https://cf.cjdropshipping.com/93fef262-d456-4484-b7a3-0d1e8940bf23.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "Plastique"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Colliers, harnais et accessoires pour animaux de compagnie > Lunettes pour anima"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "15 × 6 × 5 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T11:08:01",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJMY168993903CX",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/pet-glasses-windproof-eye-protection-accessories-p-1628220995620319232.html",
+      "cj_stock": 49750
+    },
+    {
+      "id": 28,
+      "name": "Ciré Royal Imperméable — Collection Automne",
+      "price": 19.9,
+      "cost": 8.98,
+      "category": "Vêtements Animaux",
+      "description": "« Il ne pleut pas sur Sa Majesté, c'est le ciel qui s'incline. Cela dit, autant rester parfaitement au sec. »Ne laissez pas une simple averse gâcher la sortie de votre souverain. Ce ciré imperméable à capuche offre une protection optimale contre la pluie et le vent. Équipé d'une ouverture pour la laisse et de bandes réfléchissantes pour être vu de tous lors des balades sombres d'automne.   100 % Imper-respirant : Évite l'odeur de chien mouillé au retour à la maison.Sécurité Nocturne : Bandes réfléchissantes intégrées pour une visibilité accrue.   Pratique : Trou dédié pour passer la laisse et ajustement facile par cordon.",
+      "sizes": [
+        "L",
+        "M",
+        "S",
+        "Xl",
+        "Xxl"
+      ],
+      "colors": [
+        "Jaune"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_ff4d2817b04e.jpg",
+      "images": [
+        "https://cf.cjdropshipping.com/7fd2cc39-e2e7-44e4-8036-5d79d5e1774c.jpg",
+        "https://cf.cjdropshipping.com/9cfe70b2-8cb9-44f1-b869-6cbe20128a95.jpg",
+        "https://cf.cjdropshipping.com/cdf121e9-ef6e-4521-8834-bd9e6b9348e0.jpg",
+        "https://cf.cjdropshipping.com/291dd4f4-7515-4363-9f7e-e38f564b518b.jpg",
+        "https://cf.cjdropshipping.com/5cae3dbb-b1ed-4984-a0ba-d635642cbdcd.jpg",
+        "https://cf.cjdropshipping.com/9c3ddc62-c867-48ff-8db0-41e920b9948a.jpg",
+        "https://cf.cjdropshipping.com/bcb0d6fc-f96e-4e4b-a435-188bde86ac33.jpg",
+        "https://cf.cjdropshipping.com/00609a8f-8692-4a37-9ad3-e98ed6aa4f29.jpg",
+        "https://cf.cjdropshipping.com/e931cd74-f205-4484-a224-04414657c90f.jpg",
+        "https://cf.cjdropshipping.com/406bab42-762f-491e-b9c1-5de06ffe81be.jpg",
+        "https://cf.cjdropshipping.com/2c8e297d-21bf-484d-b228-ab20edb8f763.jpg",
+        "https://cf.cjdropshipping.com/91a115a1-9a64-436d-9320-def5e02b24b5.jpg",
+        "https://cf.cjdropshipping.com/3e93cb7f-131c-446f-a7ff-0e536dbd7d20.jpg",
+        "https://cf.cjdropshipping.com/4a06268b-abef-4861-9c60-4a53ef7db74a.jpg",
+        "https://cf.cjdropshipping.com/cf64ce97-ce5d-48eb-9c4a-d3f7d8e3a5e1.jpg",
+        "https://cf.cjdropshipping.com/91ad3d1b-6329-4032-9076-94884e591da2.jpg",
+        "https://cf.cjdropshipping.com/aad7e757-b0de-4286-92c7-144c3cbe0cde.jpg",
+        "https://cf.cjdropshipping.com/5581ef84-025e-4a89-9d23-1be577047636.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T11:28:05.007407",
+      "cj_product_id": "1741105030977441792",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "1741105031027773440",
+          "sku": "CJGY193515501AZ",
+          "color": "S",
+          "size": "Unique",
+          "price": 8.98,
+          "image": "https://cf.cjdropshipping.com/00609a8f-8692-4a37-9ad3-e98ed6aa4f29.jpg"
+        },
+        {
+          "vid": "1741105031027773441",
+          "sku": "CJGY193515502BY",
+          "color": "M",
+          "size": "Unique",
+          "price": 9.68,
+          "image": "https://cf.cjdropshipping.com/00609a8f-8692-4a37-9ad3-e98ed6aa4f29.jpg"
+        },
+        {
+          "vid": "1741105031027773442",
+          "sku": "CJGY193515503CX",
+          "color": "L",
+          "size": "Unique",
+          "price": 9.98,
+          "image": "https://cf.cjdropshipping.com/00609a8f-8692-4a37-9ad3-e98ed6aa4f29.jpg"
+        },
+        {
+          "vid": "1741105031027773443",
+          "sku": "CJGY193515504DW",
+          "color": "Xl",
+          "size": "Unique",
+          "price": 10.98,
+          "image": "https://cf.cjdropshipping.com/00609a8f-8692-4a37-9ad3-e98ed6aa4f29.jpg"
+        },
+        {
+          "vid": "1741105031027773444",
+          "sku": "CJGY193515505EV",
+          "color": "Xxl",
+          "size": "Unique",
+          "price": 12.98,
+          "image": "https://cf.cjdropshipping.com/00609a8f-8692-4a37-9ad3-e98ed6aa4f29.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "Autres"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie/Jouets pour animaux de compagnie/Ensemble de jouets pour animaux de compagnie"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "25,5 × 25,5 × 4 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T11:28:05",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJGY193515503CX",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/dog-raincoat-with-reflective-waterproof-dog-rain-jacket-with-hood-leash-hole-reflective-strap-for-small-medium-dogs-lightweight-puppy-clothes-p-1741105030977441792.html",
+      "cj_stock": 3638
+    },
+    {
+      "id": 29,
+      "name": "Manteau de Pluie Léger « Imper Royal »",
+      "price": 19.9,
+      "cost": 2.46,
+      "category": "Vêtements Animaux",
+      "description": "« Une protection impériale contre la bruine, sans alourdir la démarche de Sa Majesté. »Ne laissez plus les petites averses gâcher la promenade royale. Cet imperméable ultra-léger s'enfile en deux secondes grâce à ses bandes velcro ajustables. Sa doublure respirante assure un confort optimal pendant que son tissu étanche protège le pelage de Altesse.   Enfilage Éclair : Attaches rapides en velcro sur le poitrail.   Doublure Respirante : Filet intérieur doux qui évite la condensation.   Capuche & Passant : Équipé d'une capuche et d'un trou dédié pour la laisse.",
+      "sizes": [
+        "L",
+        "M",
+        "S",
+        "Xl"
+      ],
+      "colors": [
+        "Velcro bleu",
+        "Velcro orange",
+        "Velcro rose rouge",
+        "Velcro rouge",
+        "Velcro vert"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_5f49ac8bf121.jpg",
+      "images": [
+        "https://cf.cjdropshipping.com/quick/product/74996824-ad61-47ec-a531-d3b4a69752fd.jpg",
+        "https://cf.cjdropshipping.com/quick/product/8e7ce0be-54a6-43a6-b17d-4195c5c57eac.jpg",
+        "https://cf.cjdropshipping.com/quick/product/651dfd00-85e9-40eb-a21c-8d5b75df5565.jpg",
+        "https://cf.cjdropshipping.com/quick/product/46ebf6e9-8192-4478-8019-bb66344a177c.jpg",
+        "https://oss-cf.cjdropshipping.com/product/2024/06/12/03/dc2e56e1-e49c-4adb-82f4-7394733f2a5e_trans.jpeg",
+        "https://cf.cjdropshipping.com/quick/product/a08e366e-12c6-49fb-92e5-420ef6f7a11e.jpg",
+        "https://cf.cjdropshipping.com/quick/product/39ecaf0a-1881-4875-90ee-f4367ea573c1.jpg",
+        "https://cf.cjdropshipping.com/quick/product/26a471ce-4662-4acc-b2b5-2d34c54b9c55.jpg",
+        "https://cf.cjdropshipping.com/quick/product/407a246d-c68c-4c2a-97d0-b2d0d7841a4b.jpg",
+        "https://cf.cjdropshipping.com/quick/product/30e8f011-986f-42d6-8442-eceb93083183.jpg",
+        "https://cf.cjdropshipping.com/quick/product/bf6587a2-d3f9-4df7-8dcb-98073090abb4.jpg",
+        "https://cf.cjdropshipping.com/quick/product/de6a23e0-ab89-4e95-987c-3a85e1e5dcbd.jpg",
+        "https://cf.cjdropshipping.com/quick/product/c136c408-20be-47fa-91fb-c20341df0078.jpg",
+        "https://cf.cjdropshipping.com/quick/product/6ba0ef72-5bd5-43f1-a04b-2bbf47bffd9a.jpg",
+        "https://cf.cjdropshipping.com/quick/product/a68a9f0c-d0d4-4b42-b8da-88b29fb6e7a2.jpg",
+        "https://cf.cjdropshipping.com/quick/product/0329827b-5c90-419e-94da-9cb7c540fb38.jpg",
+        "https://cf.cjdropshipping.com/quick/product/bfbf29f0-63bc-4bd7-b56f-e9a4bd98095f.jpg",
+        "https://cf.cjdropshipping.com/quick/product/1e696908-2cc1-499c-98ff-87cc7226de9f.jpg",
+        "https://cf.cjdropshipping.com/quick/product/1fb1b7fc-47c3-415f-bbe9-34ebd73b8de2.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T11:36:28.163857",
+      "cj_product_id": "2406110906021625200",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "2406110906021625500",
+          "sku": "CJGD205806401AZ",
+          "color": "Velcro rose rouge",
+          "size": "S",
+          "price": 2.99,
+          "image": "https://cf.cjdropshipping.com/quick/product/46ebf6e9-8192-4478-8019-bb66344a177c.jpg"
+        },
+        {
+          "vid": "2406110906021625700",
+          "sku": "CJGD205806402BY",
+          "color": "Velcro rose rouge",
+          "size": "M",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/46ebf6e9-8192-4478-8019-bb66344a177c.jpg"
+        },
+        {
+          "vid": "2406110906021626100",
+          "sku": "CJGD205806403CX",
+          "color": "Velcro rose rouge",
+          "size": "L",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/46ebf6e9-8192-4478-8019-bb66344a177c.jpg"
+        },
+        {
+          "vid": "2406110906021626500",
+          "sku": "CJGD205806404DW",
+          "color": "Velcro rose rouge",
+          "size": "Xl",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/46ebf6e9-8192-4478-8019-bb66344a177c.jpg"
+        },
+        {
+          "vid": "2406110906021627000",
+          "sku": "CJGD205806405EV",
+          "color": "Velcro vert",
+          "size": "S",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/0329827b-5c90-419e-94da-9cb7c540fb38.jpg"
+        },
+        {
+          "vid": "2406110906021627400",
+          "sku": "CJGD205806406FU",
+          "color": "Velcro vert",
+          "size": "M",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/0329827b-5c90-419e-94da-9cb7c540fb38.jpg"
+        },
+        {
+          "vid": "2406110906021627600",
+          "sku": "CJGD205806407GT",
+          "color": "Velcro vert",
+          "size": "L",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/0329827b-5c90-419e-94da-9cb7c540fb38.jpg"
+        },
+        {
+          "vid": "2406110906021627800",
+          "sku": "CJGD205806408HS",
+          "color": "Velcro vert",
+          "size": "Xl",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/0329827b-5c90-419e-94da-9cb7c540fb38.jpg"
+        },
+        {
+          "vid": "2406110906021628000",
+          "sku": "CJGD205806409IR",
+          "color": "Velcro bleu",
+          "size": "S",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/a08e366e-12c6-49fb-92e5-420ef6f7a11e.jpg"
+        },
+        {
+          "vid": "2406110906021628300",
+          "sku": "CJGD205806410JQ",
+          "color": "Velcro bleu",
+          "size": "M",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/a08e366e-12c6-49fb-92e5-420ef6f7a11e.jpg"
+        },
+        {
+          "vid": "2406110906021628500",
+          "sku": "CJGD205806411KP",
+          "color": "Velcro bleu",
+          "size": "L",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/a08e366e-12c6-49fb-92e5-420ef6f7a11e.jpg"
+        },
+        {
+          "vid": "2406110906021628700",
+          "sku": "CJGD205806412LO",
+          "color": "Velcro bleu",
+          "size": "Xl",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/a08e366e-12c6-49fb-92e5-420ef6f7a11e.jpg"
+        },
+        {
+          "vid": "2406110906021628900",
+          "sku": "CJGD205806413MN",
+          "color": "Velcro rouge",
+          "size": "S",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/30e8f011-986f-42d6-8442-eceb93083183.jpg"
+        },
+        {
+          "vid": "2406110906021629200",
+          "sku": "CJGD205806414NM",
+          "color": "Velcro rouge",
+          "size": "M",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/30e8f011-986f-42d6-8442-eceb93083183.jpg"
+        },
+        {
+          "vid": "2406110906021629400",
+          "sku": "CJGD205806415OL",
+          "color": "Velcro rouge",
+          "size": "L",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/30e8f011-986f-42d6-8442-eceb93083183.jpg"
+        },
+        {
+          "vid": "2406110906021629500",
+          "sku": "CJGD205806416PK",
+          "color": "Velcro rouge",
+          "size": "Xl",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/30e8f011-986f-42d6-8442-eceb93083183.jpg"
+        },
+        {
+          "vid": "2406110906031620000",
+          "sku": "CJGD205806417QJ",
+          "color": "Velcro orange",
+          "size": "S",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/407a246d-c68c-4c2a-97d0-b2d0d7841a4b.jpg"
+        },
+        {
+          "vid": "2406110906031620300",
+          "sku": "CJGD205806418RI",
+          "color": "Velcro orange",
+          "size": "M",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/407a246d-c68c-4c2a-97d0-b2d0d7841a4b.jpg"
+        },
+        {
+          "vid": "2406110906031620800",
+          "sku": "CJGD205806419SH",
+          "color": "Velcro orange",
+          "size": "L",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/407a246d-c68c-4c2a-97d0-b2d0d7841a4b.jpg"
+        },
+        {
+          "vid": "2406110906031621000",
+          "sku": "CJGD205806420TG",
+          "color": "Velcro orange",
+          "size": "Xl",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/407a246d-c68c-4c2a-97d0-b2d0d7841a4b.jpg"
+        },
+        {
+          "vid": "2406110906031621300",
+          "sku": "CJGD205806421UF",
+          "color": "Bleu avec boucle",
+          "size": "S",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/de6a23e0-ab89-4e95-987c-3a85e1e5dcbd.jpg"
+        },
+        {
+          "vid": "2406110906031621500",
+          "sku": "CJGD205806422VE",
+          "color": "Bleu avec boucle",
+          "size": "M",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/de6a23e0-ab89-4e95-987c-3a85e1e5dcbd.jpg"
+        },
+        {
+          "vid": "2406110906031621800",
+          "sku": "CJGD205806423WD",
+          "color": "Bleu avec boucle",
+          "size": "L",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/de6a23e0-ab89-4e95-987c-3a85e1e5dcbd.jpg"
+        },
+        {
+          "vid": "2406110906031622300",
+          "sku": "CJGD205806424XC",
+          "color": "Bleu avec boucle",
+          "size": "Xl",
+          "price": 2.46,
+          "image": "https://cf.cjdropshipping.com/quick/product/de6a23e0-ab89-4e95-987c-3a85e1e5dcbd.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "libas"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Vêtements pour animaux de compagnie > Vêtements fonctionnels pour animaux de com"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "20 × 10 × 3 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T11:36:28",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJGD205806411KP",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/dog-raincoat-reflective-waterproof-snowproof-pet-coat-for-small-puppy-cats-raincoat-pets-supplies-p-2406110906021625200.html",
+      "cj_stock": 258928
+    },
+    {
+      "id": 30,
+      "name": "Pull en Maille « Chauve-Souris Royale »",
+      "price": 29.9,
+      "cost": 5.49,
+      "category": "Vêtements Animaux",
+      "description": "« Pour garder Sa Majesté bien au chaud pendant ses promenades automnales, tout en ajoutant une touche mystérieuse et distinguée. »\r\n\r\nTricoté dans une maille douce et extensible, ce pull protège efficacement votre compagnon des premiers frimas de l'hiver. Son motif chauve-souris chic apporte juste ce qu'il faut de fantaisie royale.\r\n\r\nConfort Thermique : Maille douillette et respirante.\r\n\r\nCoupe Ajustée : Passage facile des pattes et maintien parfait sur le corps.\r\n\r\nStyle Automnal : Idéal pour Halloween et tout au long de la saison froide.",
+      "sizes": [
+        "L",
+        "M",
+        "S",
+        "Xl"
+      ],
+      "colors": [
+        "Yellow"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_0fc8d9ed90ee.jpg",
+      "images": [
+        "https://cf.cjdropshipping.com/20200712/2092771951886.jpg",
+        "https://cf.cjdropshipping.com/20200712/2460132915518.jpg",
+        "https://cf.cjdropshipping.com/20200712/2174200661649.jpg",
+        "https://cf.cjdropshipping.com/20200712/4157907824292.jpg",
+        "https://cf.cjdropshipping.com/20200712/4286429828244.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T13:21:08.988097",
+      "cj_product_id": "A9973FF4-B034-41E4-9B71-8752289BBA2C",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "AB90B77A-606F-4E86-9AA3-73FE03785E18",
+          "sku": "CJJJCWGD00390-Yellow-XL",
+          "color": "Yellow",
+          "size": "Xl",
+          "price": 5.49,
+          "image": "https://cf.cjdropshipping.com/20200712/4157907824292.jpg"
+        },
+        {
+          "vid": "F87ED292-B016-4C93-889C-638377F79343",
+          "sku": "CJJJCWGD00390-Yellow-S",
+          "color": "Yellow",
+          "size": "S",
+          "price": 5.49,
+          "image": "https://cf.cjdropshipping.com/20200712/4157907824292.jpg"
+        },
+        {
+          "vid": "F9100DDE-C86F-40CD-A991-61A8FC1B9389",
+          "sku": "CJJJCWGD00390-Yellow-M",
+          "color": "Yellow",
+          "size": "M",
+          "price": 5.49,
+          "image": "https://cf.cjdropshipping.com/20200712/4157907824292.jpg"
+        },
+        {
+          "vid": "FF4D2811-73DF-4773-8153-0D99E6900338",
+          "sku": "CJJJCWGD00390-Yellow-L",
+          "color": "Yellow",
+          "size": "L",
+          "price": 5.49,
+          "image": "https://cf.cjdropshipping.com/20200712/4157907824292.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "libas"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Vêtements pour animaux de compagnie > Pulls pour animaux de compagnie"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "32 × 32 × 3 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T13:21:08",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJJJCWGD00390-Yellow-L",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/bat-warm-core-spun-yarn-pet-sweater-p-A9973FF4-B034-41E4-9B71-8752289BBA2C.html",
+      "cj_stock": 40703
+    },
+    {
+      "id": 31,
+      "name": "Harnais Royal « Joyau de la Couronne »",
+      "price": 24.9,
+      "cost": 2.18,
+      "category": "Accessoires",
+      "description": "« Parce qu'un simple harnais ne suffit pas pour accompagner la noblesse en promenade. »\r\n\r\nSublimez chaque sortie avec ce harnais d'exception serti de strass étincelants et agrémenté d'un nœud papillon élégant. Conçu pour allier style impérial et confort optimal lors des balades quotidiennes.\r\n\r\nDesign Éblouissant : Finitions strass et nœud en suédine assorti.\r\n\r\nConfort & Maintien : Répartition idéale de la pression sur le poitrail pour éviter toute traction sur la gorge.\r\n\r\nAttache Sécurisée : Anneau dorsal robuste pour fixer la laisse facilement.",
+      "sizes": [
+        "L",
+        "M",
+        "S"
+      ],
+      "colors": [
+        "Noir",
+        "Rose",
+        "Violet",
+        "Jaune"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_3994863c5a11.jpg",
+      "images": [
+        "https://cf.cjdropshipping.com/1612258696776.jpg",
+        "https://cf.cjdropshipping.com/1612258696791.jpg",
+        "https://cf.cjdropshipping.com/1612258696789.jpg",
+        "https://cf.cjdropshipping.com/1612258696787.jpg",
+        "https://cf.cjdropshipping.com/1612258696786.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T13:32:20.269557",
+      "cj_product_id": "1356538122283913216",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "1356538122317467648",
+          "sku": "CJGX100429501AZ",
+          "color": "Black",
+          "size": "S",
+          "price": 2.18,
+          "image": "https://cf.cjdropshipping.com/1612258696776.jpg"
+        },
+        {
+          "vid": "1356538122317467649",
+          "sku": "CJGX100429502BY",
+          "color": "Black",
+          "size": "M",
+          "price": 2.88,
+          "image": "https://cf.cjdropshipping.com/1612258696776.jpg"
+        },
+        {
+          "vid": "1356538122317467650",
+          "sku": "CJGX100429503CX",
+          "color": "Black",
+          "size": "L",
+          "price": 3.45,
+          "image": "https://cf.cjdropshipping.com/1612258696776.jpg"
+        },
+        {
+          "vid": "1356538122317467651",
+          "sku": "CJGX100429504DW",
+          "color": "Violet",
+          "size": "S",
+          "price": 2.18,
+          "image": "https://cf.cjdropshipping.com/1612258696787.jpg"
+        },
+        {
+          "vid": "1356538122317467652",
+          "sku": "CJGX100429505EV",
+          "color": "Violet",
+          "size": "M",
+          "price": 2.88,
+          "image": "https://cf.cjdropshipping.com/1612258696787.jpg"
+        },
+        {
+          "vid": "1356538122317467653",
+          "sku": "CJGX100429506FU",
+          "color": "Violet",
+          "size": "L",
+          "price": 3.45,
+          "image": "https://cf.cjdropshipping.com/1612258696787.jpg"
+        },
+        {
+          "vid": "1356538122317467654",
+          "sku": "CJGX100429507GT",
+          "color": "Yellow",
+          "size": "S",
+          "price": 2.18,
+          "image": "https://cf.cjdropshipping.com/1612258696786.jpg"
+        },
+        {
+          "vid": "1356538122317467655",
+          "sku": "CJGX100429508HS",
+          "color": "Yellow",
+          "size": "M",
+          "price": 2.88,
+          "image": "https://cf.cjdropshipping.com/1612258696786.jpg"
+        },
+        {
+          "vid": "1356538122317467656",
+          "sku": "CJGX100429509IR",
+          "color": "Yellow",
+          "size": "L",
+          "price": 3.45,
+          "image": "https://cf.cjdropshipping.com/1612258696786.jpg"
+        },
+        {
+          "vid": "1356538122317467657",
+          "sku": "CJGX100429510JQ",
+          "color": "Rose",
+          "size": "S",
+          "price": 2.25,
+          "image": "https://cf.cjdropshipping.com/1612258696791.jpg"
+        },
+        {
+          "vid": "1356538122317467658",
+          "sku": "CJGX100429511KP",
+          "color": "Rose",
+          "size": "M",
+          "price": 2.88,
+          "image": "https://cf.cjdropshipping.com/1612258696791.jpg"
+        },
+        {
+          "vid": "1356538122317467659",
+          "sku": "CJGX100429512LO",
+          "color": "Rose",
+          "size": "L",
+          "price": 3.45,
+          "image": "https://cf.cjdropshipping.com/1612258696791.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "libas"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Colliers, harnais et accessoires pour animaux de compagnie > Harnais pour animau"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "20 × 15 × 5 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T13:32:20",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJGX100429503CX",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/shiny-rhinestone-anti-strike-off-pet-chest-strap-leash-p-1356538122283913216.html",
+      "cj_stock": 330000
+    },
+    {
+      "id": 32,
+      "name": "Ensemble Béret & Collerette « Le Poilu Parisien »",
+      "price": 19.9,
+      "cost": 1.41,
+      "category": "Vêtements Animaux",
+      "description": "« Parce que la noblesse ne sort jamais sans son couvre-chef. Un brin poète, totalement aristocrate. »Offrez à votre compagnon l'élégance parisienne ultime avec cet ensemble béret en tweed et collerette assortie à nœud velours. L'accessoire idéal pour les séances photo royales et les grands jours.   Ensemble complet : Béret léger ajustable et collerette assortie à fermeture facile.   Tissu Tweed de Luxe : Doux, confortable et très chic.   Ajustement Doux : Maintien délicat sans gêner l'animal",
+      "sizes": [
+        "Unique"
+      ],
+      "colors": [
+        "Bavoir a nœud noir",
+        "Bavoir a nœud rose",
+        "Beret a fleurs noires",
+        "Beret a fleurs roses",
+        "Combinaison de fleurs noires en boite",
+        "Ensemble de fleurs roses en boite",
+        "Ensemble noir 1",
+        "Ensemble rose 1"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_a7b2178b5da2.jpg",
+      "images": [
+        "https://cf.cjdropshipping.com/quick/product/b531fef0-a8b5-442e-a639-6563216b4bfd.jpg",
+        "https://cf.cjdropshipping.com/quick/product/12ef43a4-361e-49f4-8da2-18134acc078d.jpg",
+        "https://cf.cjdropshipping.com/quick/product/a7b66c67-64d2-4fbf-ad7e-f278f8e677a9.jpg",
+        "https://oss-cf.cjdropshipping.com/product/2025/08/29/08/f4dddba2-ce83-4ca3-adb1-151c833ae68b.jpg",
+        "https://cf.cjdropshipping.com/quick/product/42175cbd-55dd-4179-944f-c0063dc11519.jpg",
+        "https://cf.cjdropshipping.com/quick/product/604aca99-5311-44b3-be97-2adfe8d40bb3.jpg",
+        "https://cf.cjdropshipping.com/quick/product/f4e6bb49-1d85-4d89-b81b-7abdfb8217d5.jpg",
+        "https://cf.cjdropshipping.com/quick/product/5ba3a134-7a05-4df7-9b74-498f121f2437.jpg",
+        "https://cf.cjdropshipping.com/quick/product/78678ae8-7605-46e2-b065-c4ed76809f9b.jpg",
+        "https://cf.cjdropshipping.com/quick/product/bcdec107-5f33-4402-9d22-4c440b293673.jpg",
+        "https://cf.cjdropshipping.com/quick/product/2bbf7c89-a192-43e5-81dc-c9b604d3d6ac.jpg",
+        "https://cf.cjdropshipping.com/quick/product/75105c9d-1e76-4f17-b914-2c6e33489ec1.jpg",
+        "https://oss-cf.cjdropshipping.com/product/2025/08/29/08/9dedb688-73aa-4f43-bcbc-689b2af40ea4.jpg",
+        "https://cf.cjdropshipping.com/quick/product/69a6720a-5bac-46e6-b46c-81b48a4418a3.jpg",
+        "https://cf.cjdropshipping.com/quick/product/3158608c-06bc-4870-a2dd-fd9b8438db9f.jpg",
+        "https://cf.cjdropshipping.com/quick/product/89a5c0b4-7416-4804-8eb4-ffd40082d782.jpg",
+        "https://cf.cjdropshipping.com/quick/product/03541fd0-a24a-4f00-8f2f-134d7383b021.jpg",
+        "https://cf.cjdropshipping.com/quick/product/6c3dacb9-deef-4864-810c-2ef4580134a0.jpg",
+        "https://cf.cjdropshipping.com/quick/product/73614956-4ec7-4e69-96a2-094138fc3489.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T13:39:55.536616",
+      "cj_product_id": "2407160319231628200",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "2407160319231628500",
+          "sku": "CJYD208495901AZ",
+          "color": "Béret à fleurs roses",
+          "size": "Unique",
+          "price": 1.43,
+          "image": "https://cf.cjdropshipping.com/quick/product/2bbf7c89-a192-43e5-81dc-c9b604d3d6ac.jpg"
+        },
+        {
+          "vid": "2407160319231628700",
+          "sku": "CJYD208495902BY",
+          "color": "Bavoir à nœud rose",
+          "size": "Unique",
+          "price": 1.41,
+          "image": "https://cf.cjdropshipping.com/quick/product/f4e6bb49-1d85-4d89-b81b-7abdfb8217d5.jpg"
+        },
+        {
+          "vid": "2407160319231628900",
+          "sku": "CJYD208495903CX",
+          "color": "Ensemble de fleurs roses en boîte",
+          "size": "Unique",
+          "price": 2.67,
+          "image": "https://cf.cjdropshipping.com/quick/product/42175cbd-55dd-4179-944f-c0063dc11519.jpg"
+        },
+        {
+          "vid": "2407160319231629100",
+          "sku": "CJYD208495904DW",
+          "color": "Béret à fleurs noires",
+          "size": "Unique",
+          "price": 1.43,
+          "image": "https://cf.cjdropshipping.com/quick/product/89a5c0b4-7416-4804-8eb4-ffd40082d782.jpg"
+        },
+        {
+          "vid": "2407160319231629200",
+          "sku": "CJYD208495905EV",
+          "color": "Bavoir à nœud noir",
+          "size": "Unique",
+          "price": 1.41,
+          "image": "https://cf.cjdropshipping.com/quick/product/73614956-4ec7-4e69-96a2-094138fc3489.jpg"
+        },
+        {
+          "vid": "2407160319231629400",
+          "sku": "CJYD208495906FU",
+          "color": "Combinaison de fleurs noires en boîte",
+          "size": "Unique",
+          "price": 2.67,
+          "image": "https://cf.cjdropshipping.com/quick/product/5ba3a134-7a05-4df7-9b74-498f121f2437.jpg"
+        },
+        {
+          "vid": "2508290840491618900",
+          "sku": "CJYD208495907GT",
+          "color": "Ensemble rose 1",
+          "size": "Unique",
+          "price": 2.67,
+          "image": "https://oss-cf.cjdropshipping.com/product/2025/08/29/08/f4dddba2-ce83-4ca3-adb1-151c833ae68b.jpg"
+        },
+        {
+          "vid": "2508290840491619100",
+          "sku": "CJYD208495908HS",
+          "color": "Ensemble noir 1",
+          "size": "Unique",
+          "price": 2.67,
+          "image": "https://oss-cf.cjdropshipping.com/product/2025/08/29/08/9dedb688-73aa-4f43-bcbc-689b2af40ea4.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "libas"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Colliers, harnais et accessoires pour animaux de compagnie > Porte-chefs pour an"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "20 × 12 × 3 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T13:39:55",
+      "cj_variant_id": null,
+      "fournisseur_id": "2407160319231628200",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/flower-beret-hat-bow-lace-bib-p-2407160319231628200.html",
+      "cj_stock": 82658
+    },
+    {
+      "id": 33,
+      "name": "Kit d'Anniversaire « Festivité Royale »",
+      "price": 17.9,
+      "cost": 0.64,
+      "category": "Vêtements Animaux",
+      "description": "« Parce qu'un anniversaire princier ne s'improvise pas. Un an de plus se fête en grande pompe ! »\r\n\r\nCélébrez le jour le plus important de l'année avec ce kit festif comprenant un chapeau de fête à pompon et une collerette assortie à dentelle et confettis colorés. Le combo parfait pour des photos de famille inoubliables.\r\n\r\nKit Complet : Chapeau conique à pompon et bavette festive en dentelle assortie.\r\n\r\nAjustable & Légère : Attaches douces pour ne pas déranger Altesse pendant la fête.\r\n\r\nPhotos Inoubliables : Accessoire n°1 pour immortaliser le jour J sur les réseaux.",
+      "sizes": [
+        "L",
+        "S"
+      ],
+      "colors": [
+        "multicolore"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_43132b5c41cf.jpg",
+      "images": [
+        "https://cf.cjdropshipping.com/quick/product/837a5e91-fed4-462d-b83d-d24eb0c44a8c.jpg",
+        "https://cf.cjdropshipping.com/quick/product/25a68d02-0723-4122-9de3-bd216e5634c7.jpg",
+        "https://cf.cjdropshipping.com/quick/product/211302e4-dd0a-4352-9a10-544d2c64ae8f.jpg",
+        "https://cf.cjdropshipping.com/quick/product/07a0f3d2-2686-4e87-b6fa-0ffb8c4d60c6.jpg",
+        "https://cf.cjdropshipping.com/quick/product/88d88fdc-254a-4030-b2d2-2b12945ca439.jpg",
+        "https://cf.cjdropshipping.com/quick/product/ab39c8d4-8ef6-4435-9f0b-7efe673265e6.jpg",
+        "https://cf.cjdropshipping.com/quick/product/a40ea0ca-4d2c-45f2-8df8-3c3d5921fe12.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T13:45:58.181892",
+      "cj_product_id": "2504080156321606400",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "2504080156321606600",
+          "sku": "CJYD234832401AZ",
+          "color": "Taille gratuite et colorée du chapeau",
+          "size": "S",
+          "price": 0.7,
+          "image": "https://cf.cjdropshipping.com/quick/product/07a0f3d2-2686-4e87-b6fa-0ffb8c4d60c6.jpg"
+        },
+        {
+          "vid": "2504080156321606800",
+          "sku": "CJYD234832402BY",
+          "color": "Taille gratuite et colorée du chapeau",
+          "size": "L",
+          "price": 0.7,
+          "image": "https://cf.cjdropshipping.com/quick/product/07a0f3d2-2686-4e87-b6fa-0ffb8c4d60c6.jpg"
+        },
+        {
+          "vid": "2504080156321607000",
+          "sku": "CJYD234832403CX",
+          "color": "Pois colorés de bavoir",
+          "size": "S",
+          "price": 0.64,
+          "image": "https://cf.cjdropshipping.com/quick/product/25a68d02-0723-4122-9de3-bd216e5634c7.jpg"
+        },
+        {
+          "vid": "2504080156321607100",
+          "sku": "CJYD234832404DW",
+          "color": "Pois colorés de bavoir",
+          "size": "L",
+          "price": 0.64,
+          "image": "https://cf.cjdropshipping.com/quick/product/25a68d02-0723-4122-9de3-bd216e5634c7.jpg"
+        },
+        {
+          "vid": "2504080156321607300",
+          "sku": "CJYD234832405EV",
+          "color": "Associez des points colorés",
+          "size": "S",
+          "price": 1.3,
+          "image": "https://cf.cjdropshipping.com/quick/product/a40ea0ca-4d2c-45f2-8df8-3c3d5921fe12.jpg"
+        },
+        {
+          "vid": "2504080156321607500",
+          "sku": "CJYD234832406FU",
+          "color": "Associez des points colorés",
+          "size": "L",
+          "price": 1.3,
+          "image": "https://cf.cjdropshipping.com/quick/product/a40ea0ca-4d2c-45f2-8df8-3c3d5921fe12.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "libas"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Colliers, harnais et accessoires pour animaux de compagnie > Porte-chefs pour an"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "20 × 18 × 3 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T13:45:58",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJYD234832404DW",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/pet-polka-dot-lace-bib-dog-birthday-suit-p-2504080156321606400.html",
+      "cj_stock": 41969
+    },
+    {
+      "id": 34,
+      "name": "Kit Anniversaire « Couronne du Couronnement »",
+      "price": 19.9,
+      "cost": 0.58,
+      "category": "Vêtements Animaux",
+      "description": "« Un an de plus pour le souverain de la maison ! À célébrer avec la couronne-gâteau officielle. »Marquez le coup pour le grand jour de votre compagnon. Ce kit festif comprend un chapeau douillet sculpté en gâteau d'anniversaire à bougies et son bandana assorti « It's My Birthday ».   Kit Festif 2-en-1 : Chapeau gâteau moelleux + bandana imprimé couleur pastel.   Ajustable & Poids Plume : Seulement 30 g pour un confort total pendant les festivités.   Effet Photo Garanti : L'accessoire indispensable pour la photo de famille annuelle.",
+      "sizes": [
+        "Taille moyenne"
+      ],
+      "colors": [
+        "Bleu",
+        "Rose"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_ed4f8de2c77f.jpg",
+      "images": [
+        "https://cf.cjdropshipping.com/quick/product/09cbc452-4c6a-4021-8177-060b7b4cac11.jpg",
+        "https://cf.cjdropshipping.com/quick/product/ea13cdb6-5198-4fa6-8747-59e3465ed357.jpg",
+        "https://cf.cjdropshipping.com/quick/product/53afd427-c239-4e93-ac31-3e80cd68161e.jpg",
+        "https://cf.cjdropshipping.com/quick/product/42a97339-827e-4380-84b4-d4dc75caf34e.jpg",
+        "https://cf.cjdropshipping.com/quick/product/0bc287ae-e5e0-4bb9-ad6c-91f6fca50ac0.jpg",
+        "https://cf.cjdropshipping.com/quick/product/f79f7596-7db4-40ba-af50-b3727cdfac88.jpg",
+        "https://cf.cjdropshipping.com/quick/product/37dec0d1-386a-4e5e-a5af-8168fa3bcb57.jpg",
+        "https://cf.cjdropshipping.com/quick/product/1528ab0a-3575-452a-ac40-4c80b72d8cb5.jpg",
+        "https://cf.cjdropshipping.com/quick/product/baa02aaa-31de-431b-b859-3242ad259738.jpg",
+        "https://cf.cjdropshipping.com/quick/product/c4b57083-1aba-48f8-a914-c373da279e6d.jpg",
+        "https://cf.cjdropshipping.com/quick/product/fc60093c-b876-4a7d-b3ff-29ce93aff777.jpg",
+        "https://cf.cjdropshipping.com/quick/product/09ed40de-6bb5-448d-b5a4-1b7c04a0b4a0.jpg",
+        "https://cf.cjdropshipping.com/quick/product/8ab1d0df-d839-4155-bd3c-8bb36f1307ff.jpg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T13:51:45.949411",
+      "cj_product_id": "2504080146321600900",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "2504080146321601100",
+          "sku": "CJYD234831001AZ",
+          "color": "Chapeau d’anniversaire",
+          "size": "Taille moyenne",
+          "price": 1.17,
+          "image": "https://cf.cjdropshipping.com/quick/product/ea13cdb6-5198-4fa6-8747-59e3465ed357.jpg"
+        },
+        {
+          "vid": "2504080146321601300",
+          "sku": "CJYD234831002BY",
+          "color": "Chapeau d’anniversaire",
+          "size": "Taille moyenne",
+          "price": 1.17,
+          "image": "https://cf.cjdropshipping.com/quick/product/09ed40de-6bb5-448d-b5a4-1b7c04a0b4a0.jpg"
+        },
+        {
+          "vid": "2504080146321601500",
+          "sku": "CJYD234831003CX",
+          "color": "Classeur triangulaire bleu",
+          "size": "Taille moyenne",
+          "price": 0.58,
+          "image": "https://cf.cjdropshipping.com/quick/product/8ab1d0df-d839-4155-bd3c-8bb36f1307ff.jpg"
+        },
+        {
+          "vid": "2504080146321601700",
+          "sku": "CJYD234831004DW",
+          "color": "Liant triangulaire rose",
+          "size": "Taille moyenne",
+          "price": 0.58,
+          "image": "https://cf.cjdropshipping.com/quick/product/0bc287ae-e5e0-4bb9-ad6c-91f6fca50ac0.jpg"
+        },
+        {
+          "vid": "2504080146321601900",
+          "sku": "CJYD234831005EV",
+          "color": "N ° 1 costume",
+          "size": "Taille moyenne",
+          "price": 1.32,
+          "image": "https://cf.cjdropshipping.com/quick/product/1528ab0a-3575-452a-ac40-4c80b72d8cb5.jpg"
+        },
+        {
+          "vid": "2504080146321602100",
+          "sku": "CJYD234831006FU",
+          "color": "N ° 2 costume",
+          "size": "Taille moyenne",
+          "price": 1.27,
+          "image": "https://cf.cjdropshipping.com/quick/product/37dec0d1-386a-4e5e-a5af-8168fa3bcb57.jpg"
+        },
+        {
+          "vid": "2504080146321602300",
+          "sku": "CJYD234831007GT",
+          "color": "N ° 3 costume en bleu",
+          "size": "Taille moyenne",
+          "price": 1.67,
+          "image": "https://cf.cjdropshipping.com/quick/product/baa02aaa-31de-431b-b859-3242ad259738.jpg"
+        },
+        {
+          "vid": "2504080146321602500",
+          "sku": "CJYD234831008HS",
+          "color": "Costume rose n ° 3",
+          "size": "Taille moyenne",
+          "price": 1.67,
+          "image": "https://cf.cjdropshipping.com/quick/product/fc60093c-b876-4a7d-b3ff-29ce93aff777.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "libas"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Colliers, harnais et accessoires pour animaux de compagnie > Porte-chefs pour an"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "20 × 18 × 3 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T13:51:45",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJYD234831001AZ",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/creative-printing-dog-triangular-binder-birthday-saliva-towel-accessories-p-2504080146321600900.html",
+      "cj_stock": 61809
+    },
+    {
+      "id": 35,
+      "name": "Casque Biker Royal « Casque d'Escorte »",
+      "price": 24.9,
+      "cost": 5.14,
+      "category": "Accessoires",
+      "description": "« Pour les virées à toute allure aux côtés de Sa Majesté. La sécurité n'exclut pas l'élégance ! »Que ce soit en panier de vélo, sur un scooter ou simplement pour un style Biker affirmé, ce casque rigide protège la tête de votre compagnon avec classe.   Protection & Style : Coque rigide légère avec ouvertures pour les oreilles et rembourrage intérieur.   Ajustement Sécurisé : Sangle jugulaire réglable à boucle rapide.   Accessoire Vidéo N°1 : L'équipement parfait pour des vidéos virales en balade.",
+      "sizes": [
+        "Espace libre"
+      ],
+      "colors": [
+        "Noir",
+        "Blanc",
+        "Rose"
+      ],
+      "status": "En stock",
+      "image": "/static/uploads/products/partenaire_7e3af95a6820.jpeg",
+      "images": [
+        "https://oss-cf.cjdropshipping.com/product/2024/09/05/01/4933b3df-89e0-41ce-9de5-ac90254bf21e_trans.jpeg",
+        "https://cf.cjdropshipping.com/quick/product/234f376a-187b-4fc0-89d8-067f22c4fb45.jpg",
+        "https://cf.cjdropshipping.com/quick/product/985a453b-68c4-4fb8-98fb-9e4eccc31f88.jpg",
+        "https://cf.cjdropshipping.com/quick/product/2dacc451-b9d3-449c-bc87-184e8503c15d.jpg",
+        "https://cf.cjdropshipping.com/quick/product/8f8e4fbc-b239-4158-9745-3e26eb3985ea.jpg",
+        "https://cf.cjdropshipping.com/quick/product/cb8c1c45-fcab-41ff-a4f8-34adc3672f8f.jpg",
+        "https://oss-cf.cjdropshipping.com/product/2024/09/05/01/6fcfc6d3-6818-44d9-b212-95163a3b56e4_trans.jpeg",
+        "https://oss-cf.cjdropshipping.com/product/2024/09/05/01/7f0636bf-0e6e-40eb-85af-d2569f57b15e_trans.jpeg"
+      ],
+      "emoji": "🐾",
+      "hue": "#fbbf24",
+      "created_at": "2026-10-21T14:03:24.053843",
+      "cj_product_id": "2409050153481626000",
+      "supplier": "CJ",
+      "is_customizable": false,
+      "cj_variants": [
+        {
+          "vid": "2409050153481626200",
+          "sku": "CJYD212853501AZ",
+          "color": "Black",
+          "size": "Espace libre",
+          "price": 5.14,
+          "image": "https://cf.cjdropshipping.com/quick/product/8f8e4fbc-b239-4158-9745-3e26eb3985ea.jpg"
+        },
+        {
+          "vid": "2409050153481626400",
+          "sku": "CJYD212853502BY",
+          "color": "Blanc",
+          "size": "Espace libre",
+          "price": 5.14,
+          "image": "https://cf.cjdropshipping.com/quick/product/985a453b-68c4-4fb8-98fb-9e4eccc31f88.jpg"
+        },
+        {
+          "vid": "2409050153481626600",
+          "sku": "CJYD212853503CX",
+          "color": "Rose",
+          "size": "Espace libre",
+          "price": 5.14,
+          "image": "https://cf.cjdropshipping.com/quick/product/cb8c1c45-fcab-41ff-a4f8-34adc3672f8f.jpg"
+        }
+      ],
+      "cj_specs": [
+        {
+          "label": "Matière",
+          "value": "Plastique"
+        },
+        {
+          "label": "Emballage",
+          "value": "Sacs en plastique"
+        },
+        {
+          "label": "Poids",
+          "value": "52 g"
+        },
+        {
+          "label": "Catégorie CJ",
+          "value": "Fournitures pour animaux de compagnie > Vêtements pour animaux de compagnie > Vêtements pour animaux de compagnie"
+        },
+        {
+          "label": "Dimensions type (L×l×H)",
+          "value": "13 × 14 × 9 cm"
+        }
+      ],
+      "size_guide_url": null,
+      "cj_synced_at": "2026-10-21T14:03:24",
+      "cj_variant_id": null,
+      "fournisseur_id": "CJYD212853501AZ",
+      "fournisseur": "Cj dropshipping",
+      "url_fournisseur": "https://cjdropshipping.com/product/pet-helmet-cycling-hat-for-small-and-medium-sized-dogs-p-2409050153481626000.html",
+      "cj_stock": 36500
+    }
+  ],
+  "orders": [
+    {
+      "id": 1001,
+      "ref": "SMP-1001",
+      "date": "2026-10-14T13:52:50.398879",
+      "status": "Nouvelle",
+      "customer": {
+        "name": "Test Serviteur E2E",
+        "email": "e2e@samajestelepoilu.fr",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 2,
+          "name": "T-shirt « Serviteur certifié »",
+          "size": "M",
+          "color": "Noir",
+          "qty": 1,
+          "price": 24.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 24.9,
+      "shipping": 4.9,
+      "total": 29.8
+    },
+    {
+      "id": 1002,
+      "ref": "SMP-1002",
+      "date": "2026-10-14T14:06:48.243965",
+      "status": "Payée",
+      "customer": {
+        "name": "Test Serviteur",
+        "email": "test@mailtrap.io",
+        "address": "1 rue du Test"
+      },
+      "items": [
+        {
+          "product_id": 2,
+          "name": "T-shirt « Serviteur certifié »",
+          "size": "M",
+          "color": "Noir",
+          "qty": 2,
+          "price": 24.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 49.8,
+      "shipping": 0.0,
+      "total": 49.8,
+      "dedupe": "stripe_session_cs_test_123",
+      "stripe_session_id": "cs_test_123"
+    },
+    {
+      "id": 1003,
+      "ref": "SMP-1003",
+      "date": "2026-10-14T15:43:09.674798",
+      "status": "Payée",
+      "customer": {
+        "name": "laetitia",
+        "email": "laetitia.quintin@laplateforme.io",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 6,
+          "name": "Bandana « Altesse en Balade »",
+          "size": "Unique",
+          "color": "Blanc",
+          "qty": 1,
+          "price": 19.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 19.9,
+      "shipping": 4.9,
+      "total": 24.8,
+      "dedupe": "stripe_session_cs_test_b18ZaWH5okZBs9ruXkWpmaWsnA4PpOZqJUcKinFtvbV2iz2r8NNhn6jCJN",
+      "stripe_session_id": "cs_test_b18ZaWH5okZBs9ruXkWpmaWsnA4PpOZqJUcKinFtvbV2iz2r8NNhn6jCJN"
+    },
+    {
+      "id": 1004,
+      "ref": "SMP-1004",
+      "date": "2026-10-14T15:44:43.384952",
+      "status": "Payée",
+      "customer": {
+        "name": "laetitia",
+        "email": "laetitia.quintin@laplateforme.io",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 6,
+          "name": "Bandana « Altesse en Balade »",
+          "size": "Unique",
+          "color": "Blanc",
+          "qty": 1,
+          "price": 19.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 19.9,
+      "shipping": 4.9,
+      "total": 24.8,
+      "dedupe": "stripe_session_cs_test_b1iU0N7cQFPj7IQlbVg1iGiuy77w8DgEin0LuMFaH04hEKJBfC5RcOrNMd",
+      "stripe_session_id": "cs_test_b1iU0N7cQFPj7IQlbVg1iGiuy77w8DgEin0LuMFaH04hEKJBfC5RcOrNMd"
+    },
+    {
+      "id": 1005,
+      "ref": "SMP-1005",
+      "date": "2026-10-14T15:52:53.630256",
+      "status": "Payée",
+      "customer": {
+        "name": "laetitia",
+        "email": "laetitia.quintin@laplateforme.io",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 6,
+          "name": "Bandana « Altesse en Balade »",
+          "size": "Unique",
+          "color": "Blanc",
+          "qty": 1,
+          "price": 19.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 19.9,
+      "shipping": 4.9,
+      "total": 24.8,
+      "dedupe": "stripe_session_cs_test_b12A2032vlrFBQmpD3iqfp6Ib1T1M7RhEI2yP5F5uIbOzhtLPCdoflJ6YK",
+      "stripe_session_id": "cs_test_b12A2032vlrFBQmpD3iqfp6Ib1T1M7RhEI2yP5F5uIbOzhtLPCdoflJ6YK"
+    },
+    {
+      "id": 1006,
+      "ref": "SMP-1006",
+      "date": "2026-10-14T15:55:37.437042",
+      "status": "Payée",
+      "customer": {
+        "name": "laetitia",
+        "email": "laetitia.quintin@laplateforme.io",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 6,
+          "name": "Bandana « Altesse en Balade »",
+          "size": "Unique",
+          "color": "Blanc",
+          "qty": 1,
+          "price": 19.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 19.9,
+      "shipping": 4.9,
+      "total": 24.8,
+      "dedupe": "stripe_session_cs_test_b1bfR6Byk7olRfyWxxqETq8ZYdo7K0apPQy5yF1KUWQubPtTSlbKu2meX0",
+      "stripe_session_id": "cs_test_b1bfR6Byk7olRfyWxxqETq8ZYdo7K0apPQy5yF1KUWQubPtTSlbKu2meX0"
+    },
+    {
+      "id": 1008,
+      "ref": "SMP-1008",
+      "date": "2026-10-15T09:47:25.612503",
+      "status": "Payée",
+      "customer": {
+        "name": "laetitia",
+        "email": "laetitia.quintin@laplateforme.io",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 6,
+          "name": "Bandana « Altesse en Balade »",
+          "size": "Unique",
+          "color": "Blanc",
+          "qty": 1,
+          "price": 19.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 19.9,
+      "shipping": 4.9,
+      "total": 24.8,
+      "dedupe": "stripe_session_cs_test_b1VYudyL8vVESKfHaX43Ip1kKZpxzBw3Po27n2uzNZ5R5989VQyroxRK0H",
+      "stripe_session_id": "cs_test_b1VYudyL8vVESKfHaX43Ip1kKZpxzBw3Po27n2uzNZ5R5989VQyroxRK0H"
+    },
+    {
+      "id": 1009,
+      "ref": "SMP-1009",
+      "date": "2026-10-15T11:30:13.903939",
+      "status": "Payée",
+      "customer": {
+        "name": "eldin ring",
+        "email": "admin@repaire.local",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 6,
+          "name": "Bandana « Altesse en Balade »",
+          "size": "Unique",
+          "color": "Blanc",
+          "qty": 1,
+          "price": 19.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 19.9,
+      "shipping": 4.9,
+      "total": 24.8,
+      "dedupe": "stripe_session_cs_test_b1fdu2BRiEiHBlnBojEKt08vqiK4Wu5ROm56MzVzxbuiHydpXwqJievwKs",
+      "stripe_session_id": "cs_test_b1fdu2BRiEiHBlnBojEKt08vqiK4Wu5ROm56MzVzxbuiHydpXwqJievwKs"
+    },
+    {
+      "id": 1013,
+      "ref": "SMP-1013",
+      "date": "2026-10-16T10:56:42.661493",
+      "status": "Payée",
+      "customer": {
+        "name": "laetitia",
+        "email": "laetitia.quintin@laplateforme.io",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 7,
+          "name": "Halloween Chat Collier",
+          "cj_pid": "2407230635391622400",
+          "cj_vid": "2407230635391622600",
+          "size": "Unique",
+          "color": "Standard",
+          "qty": 1,
+          "price": 19.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        },
+        {
+          "product_id": 11,
+          "name": "Pavillon de Vacances Dépliable « Le Palais d'Aventure »",
+          "cj_pid": "1364571804076740608",
+          "cj_vid": "1364571805540552704",
+          "size": "Unique",
+          "color": "Standard",
+          "qty": 1,
+          "price": 39.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 59.8,
+      "shipping": 0.0,
+      "total": 59.8,
+      "dedupe": "stripe_session_cs_test_b1it5CaNCa6k7qEHzHtjUVG5UGUjuxFEV3Gnj3y2f27iZXKmQ4nYbQxJNC",
+      "stripe_session_id": "cs_test_b1it5CaNCa6k7qEHzHtjUVG5UGUjuxFEV3Gnj3y2f27iZXKmQ4nYbQxJNC",
+      "cj_dispatch_status": "sent",
+      "cj_order_id": "SD2610191359020661300"
+    },
+    {
+      "id": 1014,
+      "ref": "SMP-1014",
+      "date": "2026-10-16T13:15:42.538297",
+      "status": "Payée",
+      "customer": {
+        "name": "laetitia",
+        "email": "laetitia.quintin@laplateforme.io",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 7,
+          "name": "Halloween Chat Collier",
+          "cj_pid": "2407230635391622400",
+          "cj_vid": "2407230635391622600",
+          "size": "Unique",
+          "color": "Standard",
+          "qty": 1,
+          "price": 19.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 19.9,
+      "shipping": 4.9,
+      "total": 24.8,
+      "dedupe": "stripe_session_cs_test_b1qMMzb0QgT8TeltXAEJ0SJudvEyw0hu8QnoNzSvTf0mjDqDmoHlWgDOLn",
+      "stripe_session_id": "cs_test_b1qMMzb0QgT8TeltXAEJ0SJudvEyw0hu8QnoNzSvTf0mjDqDmoHlWgDOLn",
+      "cj_dispatch_status": "sent",
+      "cj_order_id": "SD2610191356510666900"
+    },
+    {
+      "id": 1015,
+      "ref": "SMP-1015",
+      "date": "2026-10-21T13:09:50.003050",
+      "status": "Payée",
+      "customer": {
+        "name": "Test Acheteur",
+        "email": "samajestelepoilu@gmail.com",
+        "phone": "06 12 34 56 78",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 1,
+          "name": "Mug « Altesse méprise ton café »",
+          "cj_pid": "",
+          "cj_vid": "",
+          "size": "Conique",
+          "color": "Blanc",
+          "qty": 1,
+          "price": 24.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 24.9,
+      "shipping": 4.9,
+      "total": 29.8
+    },
+    {
+      "id": 1016,
+      "ref": "SMP-1016",
+      "date": "2026-10-21T13:12:03.792536",
+      "status": "Payée",
+      "customer": {
+        "name": "Test Acheteur",
+        "email": "samajestelepoilu@gmail.com",
+        "phone": "06 12 34 56 78",
+        "address": "15 rue des Lilas, 69001 Lyon"
+      },
+      "items": [
+        {
+          "product_id": 1,
+          "name": "Mug « Altesse méprise ton café »",
+          "cj_pid": "",
+          "cj_vid": "",
+          "size": "Conique",
+          "color": "Blanc",
+          "qty": 1,
+          "price": 24.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 24.9,
+      "shipping": 4.9,
+      "total": 29.8
+    },
+    {
+      "id": 1017,
+      "ref": "SMP-1017",
+      "date": "2026-10-27T11:21:10.382242",
+      "status": "Payée",
+      "customer": {
+        "name": "laetitia",
+        "email": "admin@repaire.local",
+        "phone": "0612345698",
+        "address": "12 RUE des lilas"
+      },
+      "items": [
+        {
+          "product_id": 2,
+          "name": "T-shirt « Serviteur certifié »",
+          "cj_pid": "",
+          "cj_vid": "",
+          "size": "S",
+          "color": "Blanc",
+          "qty": 1,
+          "price": 24.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 24.9,
+      "shipping": 4.9,
+      "total": 29.8,
+      "dedupe": "stripe_session_cs_test_b1p7zrgjArthLH9PHk6e3TnzJDf4weBDXh2E6HI46jpz3Kjd6q6LfavBwg",
+      "stripe_session_id": "cs_test_b1p7zrgjArthLH9PHk6e3TnzJDf4weBDXh2E6HI46jpz3Kjd6q6LfavBwg",
+      "gelato_dispatch_status": "error",
+      "gelato_error": "Aucun productUid Gelato pour : T-shirt « Serviteur certifié » — renseignez gelato_product_uid (Admin > Produits)."
+    },
+    {
+      "id": 1018,
+      "ref": "SMP-1018",
+      "date": "2026-10-27T13:12:24.951330",
+      "status": "Payée",
+      "customer": {
+        "name": "laetitia",
+        "email": "becassine@gmail.com",
+        "phone": "0612345698",
+        "address": "12 RUE des lilas"
+      },
+      "items": [
+        {
+          "product_id": 13,
+          "name": "Sweat Capuche Tricot « Le Lapin Royal »",
+          "cj_pid": "69C5E961-ABA1-453E-927E-D68B275A80CF",
+          "cj_vid": "0CE1CE3D-4FEF-4659-9940-30A0C9C2A036",
+          "size": "L",
+          "color": "gris",
+          "qty": 1,
+          "price": 29.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        },
+        {
+          "product_id": 13,
+          "name": "Sweat Capuche Tricot « Le Lapin Royal »",
+          "cj_pid": "69C5E961-ABA1-453E-927E-D68B275A80CF",
+          "cj_vid": "",
+          "size": "L",
+          "color": "rose",
+          "qty": 1,
+          "price": 29.9,
+          "custom_image_url": "",
+          "pet_name": ""
+        }
+      ],
+      "subtotal": 59.8,
+      "shipping": 0.0,
+      "total": 59.8,
+      "dedupe": "stripe_session_cs_test_b1bJM5s4TtKOx1qvdQgv04ffBNLScHz3kC41jvTwCab6DX97bdK7pLkYP0",
+      "stripe_session_id": "cs_test_b1bJM5s4TtKOx1qvdQgv04ffBNLScHz3kC41jvTwCab6DX97bdK7pLkYP0",
+      "cj_dispatch_status": "error",
+      "cj_error": "shippingCity must be not empty",
+      "gelato_dispatch_status": "not_applicable"
+    }
+  ],
+  "next_product_id": 36,
+  "next_order_id": 1019
+}

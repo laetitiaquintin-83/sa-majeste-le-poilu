@@ -1,0 +1,117 @@
+{
+  "items": [
+    {
+      "id": 2,
+      "title": "« Colosse & Confettis »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_e7954e5daf451d0a.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:01:33.067026"
+    },
+    {
+      "id": 3,
+      "title": "« Le Coup de Patte Royal »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_48f335b743c20e41.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:19:59.553760"
+    },
+    {
+      "id": 4,
+      "title": "« BOOOM ! Le King du Bubble-Gum »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_fb02714ce0ed3255.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:21:07.959187"
+    },
+    {
+      "id": 5,
+      "title": "« Petit Prince, Grand Pouvoir »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_f979aacd28c6384e.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:22:37.785519"
+    },
+    {
+      "id": 6,
+      "title": "« Picass'Chat : Session Peinture »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_05776395deb3f916.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:24:14.417553"
+    },
+    {
+      "id": 7,
+      "title": "« Miami Vice & Bandana »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_8cff7169de62478e.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:26:53.114398"
+    },
+    {
+      "id": 8,
+      "title": "« Sa Majesté Ier du Canapé »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_efaa0d8e65c8d679.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:28:17.638169"
+    },
+    {
+      "id": 9,
+      "title": "« Le Parrain du Royaume »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_8c44e4ed0dc93673.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:29:42.870701"
+    },
+    {
+      "id": 10,
+      "title": "« Sa Majesté le Chat-Parde »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_29a1482406a79933.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:31:58.693100"
+    },
+    {
+      "id": 11,
+      "title": "« Cigare, Bourbon & Pâtée De Luxe »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_fbadaf632e5c490c.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:33:32.131257"
+    },
+    {
+      "id": 12,
+      "title": "« Cyber-Dog 2077 »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_9906d88c772c0b99.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:37:18.984809"
+    },
+    {
+      "id": 13,
+      "title": "« Électro-Chihuahua 3000 »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_a37a0ab9e5769fd1.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:42:16.449605"
+    },
+    {
+      "id": 14,
+      "title": "« Le Maître du Jeu »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_7cc087c13a0341b3.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-14T10:46:36.895746"
+    },
+    {
+      "id": 15,
+      "title": "« Sa Majesté Lapin »",
+      "category": "",
+      "image": "/static/uploads/gallery/gallery_525426c7b30029a0.jpg",
+      "link": "/catalogue",
+      "created_at": "2026-10-22T14:13:16.097216"
+    }
+  ],
+  "next_id": 16
+}

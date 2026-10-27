@@ -53,18 +53,15 @@ tmp/
 *.swo
 
 # --- Données runtime de la boutique ---
-# Contient les commandes clients (emails, adresses) : données privées,
-# régénérées automatiquement par app.py si absentes (products + seed).
-data/boutique.json
-data/gallery.json
-data/admin_epoch.txt
+#data/boutique.json
+#data/gallery.json
+#data/admin_epoch.txt
 data/subscribers.json
 
 # --- Uploads utilisateurs (photos d'animaux, visuels) ---
-# Contenu généré à l'exécution, jamais versionné
-static/uploads/custom_pets/
-static/uploads/gallery/
-static/uploads/products/
+#static/uploads/custom_pets/
+#static/uploads/gallery/
+#static/uploads/products/
 
 # --- Outils / IDE ---
 .vscode/
