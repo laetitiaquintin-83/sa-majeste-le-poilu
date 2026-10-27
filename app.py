@@ -2037,6 +2037,7 @@ def commande_confirmee():
     )
 
 @app.post("/webhook-stripe")
+@app.post("/stripe-webhook")  # alias : certains tableaux Stripe pointent vers /stripe-webhook
 def webhook_stripe():
     if STRIPE_WEBHOOK_SECRET.startswith("whsec_") and "VOTRE_SECRET_ICI" not in STRIPE_WEBHOOK_SECRET:
         try:
@@ -2060,6 +2061,23 @@ def webhook_stripe():
     elif ev_type == "checkout.session.async_payment_failed":
         print(f"Paiement différé échoué pour la session {obj.get('id')} — laisser à l'utilisateur retenter.")
     return jsonify(ok=True)
+
+
+# --- Redirections post-paiement (alias de /commande-confirmee) --------------
+@app.get("/success")
+def success():
+    """Page de succès Stripe : reprend la confirmation existante.
+
+    Le paramètre (session_id) est transmis pour que la commande soit bien
+    vérifiée et l'e-mail de confirmation envoyé une seule fois.
+    """
+    qs = request.query_string.decode("utf-8", "replace")
+    return redirect("/commande-confirmee" + ("?" + qs if qs else ""))
+
+
+@app.get("/cancel")
+def cancel():
+    return redirect("/catalogue")
 
 @app.put("/api/orders/<int:oid>")
 @login_required
