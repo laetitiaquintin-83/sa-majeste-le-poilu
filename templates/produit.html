@@ -74,9 +74,11 @@
         🛒 Ajouter au panier
       </button>
 
+      {% set sup = (product.supplier or product.fournisseur or '')|lower %}
+      {% set pod = product.is_customizable or sup in ['gelato', 'printify'] %}
       <ul class="reassure-list">
         <li>🚚 Livraison offerte dès {{ settings.free_shipping_threshold }}€ — sinon {{ "%.2f" | format(settings.shipping_fee) }}€</li>
-        <li>✂️ {% if product.is_customizable %}Imprimé spécialement pour vous (préparation 3-5 j ouvrés){% else %}Préparation &amp; suivi de commande garantis{% endif %}</li>
+        <li>✂️ {% if pod %}Imprimé spécialement pour vous — livraison sous 3 à 5 jours ouvrés{% else %}Livraison sous 7 à 14 jours ouvrés — suivi de commande garanti{% endif %}</li>
         <li>🔁 Satisfait ou retiré : notre équipe vous accompagne en cas de problème</li>
         <li>👑 Validé par Altesse (un clignement = accord)</li>
       </ul>

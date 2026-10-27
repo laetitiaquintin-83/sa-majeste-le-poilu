@@ -48,6 +48,7 @@
       <button class="admin-tab" data-panel="produits">📦 Catalogue</button>
       <button class="admin-tab" data-panel="commandes">🧾 Commandes</button>
       <button class="admin-tab" data-panel="galerie">🖼️ Galerie</button>
+      <button class="admin-tab" data-panel="newsletter">📮 Abonnés</button>
       <button class="admin-tab" data-panel="reglages">⚙️ Réglages</button>
     </nav>
 
@@ -208,6 +209,30 @@
         </div>
       </section>
 
+      <!-- -------- ABONNÉS CLUB PRIVÉ -------- -->
+      <section class="admin-panel" id="panel-newsletter">
+        <div class="admin-card">
+          <h2>📮 Abonnés au Club Privé <small>(<span id="nl-count">0</span>)</small></h2>
+          <div class="filters-admin">
+            <a class="tbl-btn primary" href="/api/admin/newsletter/export.csv">⬇️ Exporter la liste en CSV</a>
+            <span class="badge blue" id="nl-brevo" hidden>🔄 Synchronisation Brevo active</span>
+          </div>
+          <div style="overflow-x:auto">
+          <table class="admin-table">
+            <thead><tr>
+              <th>#</th><th>E-mail</th><th>Inscrit le</th><th>Source</th>
+            </tr></thead>
+            <tbody id="newsletter-table-body"></tbody>
+          </table>
+          </div>
+          <p style="color:var(--text-soft);font-size:.85rem;margin-top:10px">
+            💡 Chaque nouvelle inscription est enregistrée sur le serveur <strong>et</strong> poussée
+            vers votre liste Brevo (clé configurée côté serveur, jamais dans le navigateur).
+            L'export CSV se télécharge ici — aucun accès aux fichiers du serveur nécessaire.
+          </p>
+        </div>
+      </section>
+
       <!-- -------- RÉGLAGES -------- -->
       <section class="admin-panel" id="panel-reglages">
         <div class="admin-card">
@@ -242,7 +267,7 @@
   <script>
     window.SMP_ADMIN_SETTINGS = {{ settings | tojson }};
   </script>
-  <script src="{{ url_for('static', filename='admin.js', v=3) }}" defer></script>
+  <script src="{{ url_for('static', filename='admin.js', v=4) }}" defer></script>
 </div>
 </body>
 </html>

@@ -7,6 +7,7 @@ Production (Render) : gunicorn app:app (voir gunicorn.conf.py) — le port
 provient de la variable d'environnement PORT, définie par la plateforme.
 """
 import json
+import csv
 import threading
 import os
 import secrets
@@ -17,7 +18,7 @@ from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from functools import wraps
-from io import BytesIO
+from io import BytesIO, StringIO
 
 from flask import (
     Flask, render_template, request, jsonify, session as flask_session,
@@ -99,7 +100,7 @@ ORDER_STATUSES = ["Nouvelle", "En préparation", "Expédiée", "Livrée", "Payé
 # ---------------------------------------------------------------- email
 # SMTP transactionnel générique : variables MAIL_* du .env (Gmail par défaut),
 # avec repli sur l'ancienne config Mailtrap pour compatibilité.
-EMAIL_EXPEDITEUR = "Sa Majesté le Poilu <contact@samajestelepoilu.fr>"
+EMAIL_EXPEDITEUR = "Sa Majesté le Poilu <samajestelepoilu@gmail.com>"
 
 
 def _smtp_params():
@@ -166,6 +167,21 @@ def envoyer_email_confirmation(email_client, nom_client, numero_commande, total)
     )
 
 
+def _transporteur_client(value):
+    """Nom de transporteur affiché au client, sans marque de prestataire.
+
+    Les transporteurs remontés par nos partenaires logistiques peuvent
+    porter leur nom (ex. « CJ Packet ») : la boutique communique uniquement
+    sous l'identité Sa Majesté le Poilu.
+    """
+    texte = str(value or "").strip()
+    if not texte:
+        return ""
+    if re.search(r"\bCJ\b|CJ ?Packet|CJ ?Dropshipping|Gelato|Printify|Brevo",
+                 texte, re.IGNORECASE):
+        return ""
+    return texte[:60]
+
 def envoyer_email_suivi(email_client, nom_client, numero_commande,
                         transporteur, numero_suivi, url_suivi):
     """Email « votre colis est expédié » envoyé dès qu'un n° de suivi apparaît."""
@@ -182,9 +198,9 @@ def envoyer_email_suivi(email_client, nom_client, numero_commande,
         <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
             <h2 style="color: #b45309;">Votre colis est en route, {nom_client} ! 🚚</h2>
             <p>La commande <strong>#{numero_commande}</strong> a quitté le royaume et est entre de bonnes mains.</p>
-            {f'<p>Transporteur : <strong>{transporteur or "CJ Packet"}</strong><br>Numéro de suivi : <strong>{numero_suivi}</strong></p>' if numero_suivi else '<p>Le numéro de suivi sera disponible très prochainement.</p>'}
+            {f'<p>Transporteur : <strong>{_transporteur_client(transporteur) or "Service de livraison"}</strong><br>Numéro de suivi : <strong>{numero_suivi}</strong></p>' if numero_suivi else '<p>Le numéro de suivi sera disponible très prochainement.</p>'}
             {bouton}
-            <p style="font-style: italic; color: #666;">Livraison estimée sous 7 à 10 jours ouvrés. Altesse guette le facteur. 🐾</p>
+            <p style="font-style: italic; color: #666;">Livraison estimée sous 3 à 5 jours ouvrés pour les articles imprimés, sous 7 à 14 jours ouvrés pour les autres. Altesse guette le facteur. 🐾</p>
         </div>
     """
     return envoyer_email(
@@ -202,8 +218,8 @@ DEFAULT_DATA = {
         "shipping_fee": 4.90,
         "free_shipping_threshold": 49.0,
         "admin_password": DEFAULT_ADMIN_PASSWORD,
-        "shipping_address": "Sa Majesté le Poilu, 12 allée des Croquettes, 75001 Paris",
-        "contact_email": "contact@samajestelepoilu.fr",
+        "shipping_address": "Le Royaume est 100 % en ligne (aucun accueil du public).",
+        "contact_email": "samajestelepoilu@gmail.com",
     },
     "products": [],
     "orders": [],
@@ -641,7 +657,7 @@ def api_cj_import():
         # Traduction réelle EN→FR ; texte source conservé si indisponible.
         description = (translate_to_french(description[:4000]) or description)
     else:
-        description = "Produit importé depuis CJ Dropshipping."
+        description = "Article de la Cour, sélectionné avec soin pour votre compagnon.",
     # En-tête résiduel du bloc « Product Image » de CJ (les images vont dans
     # la galerie dédiée) : on le retire de la description.
     description = description.split("Image du produit")[0].strip(" :-\n")
@@ -1048,9 +1064,61 @@ def save_subscribers(s):
         json.dump(s, f, ensure_ascii=False, indent=2)
 
 
+# ---------------------------------------------------------------- Brevo (optionnel)
+# Contact Brevo (ex-Sendinblue) créé à chaque inscription quand BREVO_API_KEY
+# est présent dans l'environnement (.env en local, Dashboard > Environment sur
+# Render). Sans clé : zéro appel réseau, la sauvegarde locale suffit.
+BREVO_CONTACTS_URL = "https://api.brevo.com/v3/contacts"
+
+
+def brevo_configure():
+    return bool(os.getenv("BREVO_API_KEY", "").strip())
+
+
+def brevo_ajouter_contact(email):
+    """Crée/met à jour le contact dans la liste Brevo (updateEnabled: true).
+
+    Toute erreur est loguée sans remonter : l'inscription locale est déjà
+    enregistrée, Brevo ne doit jamais faire échouer le formulaire.
+    """
+    api_key = os.getenv("BREVO_API_KEY", "").strip()
+    if not api_key:
+        return False
+    try:
+        list_id = int(os.getenv("BREVO_LIST_ID", "2") or 2)
+    except ValueError:
+        list_id = 2
+    try:
+        import requests
+        r = requests.post(
+            BREVO_CONTACTS_URL,
+            headers={
+                "accept": "application/json",
+                # Nom exact attendu par Brevo : « api-key » (doc officielle),
+                # et valeur de type xkeysib-… (les clés xsmtpsib- sont SMTP).
+                "api-key": api_key,
+                "Content-Type": "application/json",
+            },
+            json={"email": email, "listIds": [list_id], "updateEnabled": True},
+            timeout=15,
+        )
+        if r.status_code in (200, 201):
+            print(f"Brevo : contact enregistré (liste {list_id}) — {email}")
+            return True
+        print(f"Brevo : échec HTTP {r.status_code} — {r.text[:200]}")
+    except Exception as exc:  # noqa: BLE001
+        print(f"Brevo : erreur d'envoi — {exc}")
+    return False
+
+
 @app.post("/newsletter/subscribe")
 def newsletter_subscribe():
-    """Inscription Club Privé : email validé, dédoublonné, persisté."""
+    """Inscription Club Privé : email validé, dédoublonné, persisté.
+
+    La copie locale (data/subscribers.json) reste la source de vérité ; si une
+    clé BREVO_API_KEY est configurée, le contact est aussi poussé vers Brevo
+    en tâche de fond (l'inscription ne dépend jamais de Brevo).
+    """
     data = request.get_json(silent=True) or {}
     email = str(data.get("email") or "").strip().lower()
 
@@ -1074,17 +1142,68 @@ def newsletter_subscribe():
     subscribers["next_id"] += 1
     save_subscribers(subscribers)
     print(f"Newsletter : nouveau membre du Club Privé — {email}")
+    if brevo_configure():
+        threading.Thread(
+            target=brevo_ajouter_contact, args=(email,), daemon=True
+        ).start()
     return jsonify(
         ok=True,
         message="Bienvenue dans le Club Privé ! Altesse vous accorde sa bienveillance. 👑",
     ), 201
 
 
+# ------------------------------------------- abonnés : consultation & export
+@app.get("/api/admin/newsletter")
+@login_required
+def api_newsletter_list():
+    """Liste des abonnés Club Privé (dashboard admin, session requise)."""
+    subs = load_subscribers()["subscribers"]
+    subs = sorted(subs, key=lambda x: str(x.get("date") or ""), reverse=True)
+    return jsonify(ok=True, subscribers=subs, count=len(subs),
+                   brevo=brevo_configure())
+
+
+@app.get("/api/admin/newsletter/export.csv")
+@login_required
+def api_newsletter_export_csv():
+    """Export CSV des abonnés (BOM UTF-8 : ouvrable directement dans Excel)."""
+    subs = load_subscribers()["subscribers"]
+    subs = sorted(subs, key=lambda x: str(x.get("date") or ""), reverse=True)
+    buffer = StringIO()
+    writer = csv.writer(buffer)
+    writer.writerow(["id", "email", "date_inscription", "source"])
+    for s in subs:
+        writer.writerow([s.get("id", ""), s.get("email", ""),
+                         s.get("date", ""), s.get("source", "")])
+    data = buffer.getvalue().encode("utf-8-sig")  # \ufeff pour Excel
+    return send_file(
+        BytesIO(data),
+        mimetype="text/csv",
+        as_attachment=True,
+        download_name="abonnes-club-prive.csv",
+    )
+
+
 # ---------------------------------------------------------------- API produits
+def _produit_public(p):
+    """Copie d'un produit exposée aux visiteurs : champs utiles à la
+    boutique uniquement (aucun nom de prestataire, identifiant logistique,
+    ni marge).
+    """
+    champs = ("id", "name", "price", "category", "description",
+              "sizes", "colors", "status", "image", "emoji", "hue",
+              "is_customizable")
+    return {k: p.get(k) for k in champs}
+
 @app.get("/api/products")
 def api_products():
+    """Catalogue JSON. Public = version anonymisée ; admin = complet."""
     db = load_db()
     visible = [p for p in db["products"] if p["status"] != "Indisponible"]
+    est_admin = (flask_session.get("is_admin")
+                 and flask_session.get("epoch") == _session_epoch())
+    if not est_admin:
+        visible = [_produit_public(p) for p in visible]
     return jsonify(products=visible, categories=CATEGORIES)
 
 def _save_product_image(uploaded, product_id):
@@ -1155,6 +1274,9 @@ def api_create_product():
         "image": image_path,
         "emoji": (d.get("emoji") or "🐾").strip()[:8],
         "hue": (d.get("hue") or "#FBBF24").strip()[:7],
+        "gelato_product_uid": (d.get("gelato_product_uid") or "").strip()[:120],
+        "gelato_print_file_url": (d.get("gelato_print_file_url") or "").strip()[:500],
+        "gelato_print_type": (d.get("gelato_print_type") or "default").strip()[:16],
         "created_at": datetime.now().isoformat(),
     }
     db["products"].append(prod)
@@ -1187,6 +1309,15 @@ def api_update_product(pid):
     for key, limit in (("fournisseur_id", 120), ("fournisseur", 120)):
         if key in d:
             prod[key] = str(d.get(key) or "").strip()[:limit]
+    # Mappage Gelato (impression POD) : productUid obligatoire à l'envoi,
+    # fichier d'impression et zone d'impression optionnels.
+    for key, limit in (("gelato_product_uid", 120),
+                       ("gelato_print_file_url", 500),
+                       ("gelato_print_type", 16)):
+        if key in d:
+            prod[key] = str(d.get(key) or "").strip()[:limit]
+    if prod.get("gelato_print_type") not in ("default", "front", "back"):
+        prod["gelato_print_type"] = "default"
     if "supplier" in d:
         prod["supplier"] = str(d.get("supplier") or "").strip()[:120]
     elif "fournisseur" in d:
@@ -1339,6 +1470,19 @@ def _resolve_variant(db, item):
             variants = matched
     return str(variants[0].get("vid") or "") or None
 
+def _decouper_adresse(addr):
+    """« 15 rue des Lilas, 69001 Lyon » -> (rue, code postal, ville).
+
+    Dernier bloc qui ressemble à un code postal + nom de ville ; sinon la
+    rue intégrale et des villes/codes vides, que l'API rejettera avec un
+    message explicite sur la commande.
+    """
+    addr = str(addr or "").strip()
+    match = re.search(r"\b(\d{5})\s+([^,]+)$", addr)
+    if match:
+        return addr[:match.start()].strip().strip(","), match.group(1), match.group(2).strip()
+    return addr, "", ""
+
 def envoyer_commande_cj(db, order):
     """Transmet à CJ les lignes payées qui proviennent de CJ.
 
@@ -1360,14 +1504,7 @@ def envoyer_commande_cj(db, order):
     address = str(customer.get("address") or "").strip()
     # CJ exige city/ZIP séparés ; une adresse sans ville suceptible de
     # produire le blocage "shippingCity must be not empty" du dashboard CJ.
-    def _split_address(addr):
-        # Dernier bloc qui ressemble à un code postal + nom de ville, e.g.
-        # "… 83000 Toulon", "… 75001 Paris" ; sinon (vide, "Ville").
-        match = re.search(r"\b(\d{5})\s+([^,]+)$", addr)
-        if match:
-            return addr[:match.start()].strip().strip(","), match.group(1), match.group(2).strip()
-        return addr, "", ""
-    _street, shipping_zip, shipping_city = _split_address(address)
+    _street, shipping_zip, shipping_city = _decouper_adresse(address)
     payload = {
         "orderNumber": order["ref"],
         "shippingCustomerName": str(customer.get("name") or "Client").strip()[:50],
@@ -1431,12 +1568,174 @@ def envoyer_commande_cj(db, order):
     save_db(db)
 
 
+# ---------------------------------------------------------------- Gelato (impression à la demande)
+
+def _url_absolue(path):
+    """Convertit /static/uploads/… en URL publique que Gelato peut télécharger."""
+    path = str(path or "").strip()
+    if not path:
+        return ""
+    if path.startswith(("http://", "https://")):
+        return path
+    try:
+        base = request.host_url.rstrip("/")  # hôte de la requête en cours
+    except RuntimeError:  # hors contexte HTTP (script, webhook interne)
+        base = str(os.getenv("SITE_URL", "") or "").strip().rstrip("/")
+    return base + path if base else path
+
+
+def _destinataire_gelato(customer):
+    """shippingAddress attendu par l'API Gelato v4 (nom scindé prénom / nom)."""
+    name = str(customer.get("name") or "Serviteur anonyme").strip()[:80]
+    parties = name.split()
+    prenom = parties[0] if parties else "Serviteur"
+    nom = " ".join(parties[1:]) or prenom
+    rue, code_postal, ville = _decouper_adresse(customer.get("address"))
+    if not code_postal or not ville:
+        raise ValueError(
+            "Adresse de livraison incomplète (code postal / ville introuvables) : "
+            + str(customer.get("address") or "(vide)")[:120]
+        )
+    return {
+        "firstName": prenom[:50],
+        "lastName": nom[:50],
+        "addressLine1": rue[:500],
+        "city": ville[:100],
+        "postCode": code_postal[:20],
+        "country": "FR",
+        "email": str(customer.get("email") or "").strip()[:120],
+        "phone": str(customer.get("phone") or "").strip()[:20],
+    }
+
+
+def envoyer_commande_gelato(db, order):
+    """Transmet à Gelato les lignes POD payées (impression à la demande).
+
+    Appelée dès la validation du paiement Stripe (voir _confirmer_via_stripe),
+    aux côtés de envoyer_commande_cj. Même contrat : l'état est conservé sur la
+    commande locale (gelato_dispatch_status / gelato_order_id / gelato_error)
+    pour permettre un nouvel essai sans perdre la commande déjà payée. Sans
+    GELATO_API_KEY, rien n'est envoyé — l'envoi reste tentable plus tard.
+    """
+    import gelato_service
+
+    if (order.get("gelato_order_id")
+            or order.get("gelato_dispatch_status") in ("sent", "not_applicable")):
+        return
+    if not gelato_service.configure():
+        return
+
+    # Lignes POD : article personnalisé ou fournisseur Gelato / Printify.
+    pod_items = []
+    for item in order.get("items", []):
+        produit = next(
+            (x for x in db["products"] if x["id"] == item.get("product_id")), None
+        )
+        if not produit:
+            continue
+        if (produit.get("is_customizable")
+                or _canonical_supplier(produit) in ("Gelato", "Printify")):
+            pod_items.append((item, produit))
+    if not pod_items:
+        order["gelato_dispatch_status"] = "not_applicable"
+        save_db(db)
+        return
+
+    sans_uid = sorted({
+        str(p.get("name") or "").strip()
+        for _, p in pod_items if not str(p.get("gelato_product_uid") or "").strip()
+    })
+    if sans_uid:
+        order["gelato_dispatch_status"] = "error"
+        order["gelato_error"] = (
+            "Aucun productUid Gelato pour : " + ", ".join(sans_uid) +
+            " — renseignez gelato_product_uid (Admin > Produits)."
+        )
+        save_db(db)
+        print(f"Commande {order['ref']} payée, envoi Gelato bloqué : {order['gelato_error']}")
+        return
+
+    lignes, sans_fichier = [], []
+    for index, (item, produit) in enumerate(pod_items, start=1):
+        type_zone = str(produit.get("gelato_print_type") or "default").strip()
+        if type_zone not in gelato_service.PRINT_AREAS:
+            type_zone = "default"
+        fichier = _url_absolue(item.get("custom_image_url"))  # photo du client
+        if not fichier:
+            fichier = str(produit.get("gelato_print_file_url") or "").strip()
+        if not fichier:
+            sans_fichier.append(str(produit.get("name") or "").strip())
+            continue
+        try:
+            qty = max(1, min(99, int(item.get("qty") or 1)))
+        except (TypeError, ValueError):
+            qty = 1
+        lignes.append({
+            "itemReferenceId": f"{order['ref']}-{index}",
+            "productUid": str(produit.get("gelato_product_uid") or "").strip(),
+            "files": [{"type": type_zone, "url": fichier}],
+            "quantity": qty,
+        })
+    if not lignes:
+        order["gelato_dispatch_status"] = "error"
+        order["gelato_error"] = (
+            "Aucun fichier d'impression pour : "
+            + ", ".join(sorted(set(sans_fichier)))
+            + " (photo client ou gelato_print_file_url manquant)."
+        )
+        save_db(db)
+        print(f"Commande {order['ref']} payée, envoi Gelato bloqué : {order['gelato_error']}")
+        return
+
+    customer = order.get("customer") or {}
+    try:
+        shipping_address = _destinataire_gelato(customer)
+    except ValueError as exc:
+        order["gelato_dispatch_status"] = "error"
+        order["gelato_error"] = str(exc)
+        save_db(db)
+        print(f"Commande {order['ref']} payée, envoi Gelato bloqué : {exc}")
+        return
+
+    payload = {
+        "orderType": "order",
+        "orderReferenceId": str(order["ref"]),
+        "customerReferenceId": str(customer.get("email") or order["ref"])[:120],
+        "currency": "EUR",
+        "items": lignes,
+        "shippingAddress": shipping_address,
+    }
+    mode_livraison = str(os.getenv("GELATO_SHIPMENT_METHOD", "") or "").strip()
+    if mode_livraison:
+        payload["shipmentMethodUid"] = mode_livraison
+
+    try:
+        result = gelato_service.create_order(payload) or {}
+    except (gelato_service.GelatoAPIError, ValueError) as exc:
+        order["gelato_dispatch_status"] = "error"
+        order["gelato_error"] = str(exc)
+        save_db(db)
+        print(f"Commande {order['ref']} payée, envoi Gelato échoué : {exc}")
+        return
+
+    gelato_id = result.get("id") if isinstance(result, dict) else result
+    if not gelato_id:
+        order["gelato_dispatch_status"] = "error"
+        order["gelato_error"] = "Gelato n'a pas renvoyé d'identifiant de commande."
+        save_db(db)
+        return
+    order["gelato_order_id"] = str(gelato_id)
+    order["gelato_dispatch_status"] = "sent"
+    order.pop("gelato_error", None)
+    save_db(db)
+    print(f"Commande {order['ref']} transmise à Gelato (commande {gelato_id}).")
+
 # ---------------------------------------------------------------- suivi de commande
 # Statuts CJ (orderStatus texte) → libellé client.
 CJ_STATUS_FR = {
-    "CREATED": "Commande enregistrée chez CJ",
+    "CREATED": "Commande enregistrée",
     "IN_CART": "En attente de validation",
-    "UNPAID": "En attente de règlement fournisseur",
+    "UNPAID": "En attente de règlement",
     "PENDING": "En préparation",
     "PROCESSING": "En préparation",
     "UNSHIPPED": "En préparation — pas encore expédiée",
@@ -1536,6 +1835,7 @@ def suivi_commande():
     ref = (request.args.get("ref") or "").strip()
     email = (request.args.get("email") or "").strip()
     commande = erreur = None
+    transporteur = ""
 
     if ref or email:
         if not ref or not email:
@@ -1551,10 +1851,13 @@ def suivi_commande():
                 # Interrogation CJ à la volée (limitée à 1 req/s côté CJ,
                 # un seul appel par visite suffit).
                 commande = synchroniser_suivi_cj(db, commande)
+                transporteur = _transporteur_client(
+                    commande.get("tracking_provider"))
 
     return render_template(
         "suivi.html",
         commande=commande,
+        transporteur=transporteur,
         erreur=erreur,
         ref_saisie=ref,
         email_saisi=email,
@@ -1716,6 +2019,7 @@ def _confirmer_via_stripe(session_id):
     order["stripe_session_id"] = cs_id
     save_db(db)
     envoyer_commande_cj(db, order)
+    envoyer_commande_gelato(db, order)
     confirmer_et_notifier(db, order)
     return order
 

@@ -5,7 +5,7 @@
 <section class="sect page-section">
   <header class="page-header">
     <h1 class="page-title">Où est <span class="accent">ma commande ?</span></h1>
-    <p class="page-date">Suivi royal en temps réel — livraison estimée sous 7 à 10 jours ouvrés.</p>
+    <p class="page-date">Suivi royal en temps réel — livraison estimée sous 3 à 5 jours ouvrés pour les articles imprimés et sous 7 à 14 jours ouvrés pour les autres articles.</p>
   </header>
 
   <div class="page-card suivi-search">
@@ -42,7 +42,7 @@
     <div class="suivi-track">
       {% if commande.tracking_number %}
       <div class="suivi-track-row">
-        <span>🚚 Transporteur</span><strong>{{ commande.tracking_provider or 'CJ Packet' }}</strong>
+        <span>🚚 Transporteur</span><strong>{{ transporteur or 'Service de livraison' }}</strong>
       </div>
       <div class="suivi-track-row">
         <span>📦 Numéro de suivi</span><strong>{{ commande.tracking_number }}</strong>
@@ -59,7 +59,7 @@
 
     <div class="suivi-items">
       <h3>Articles de la commande</h3>
-      {% for item in commande.items %}
+      {% for item in commande['items'] %}
       <div class="suivi-item">
         <span>{{ item.qty }} × {{ item.name }}</span>
         <span>{{ item.size }} / {{ item.color }} — {{ "%.2f"|format(item.price * item.qty) }} €</span>

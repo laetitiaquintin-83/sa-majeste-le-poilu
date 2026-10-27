@@ -56,7 +56,7 @@
       btn.classList.add("is-active");
       $$(".admin-panel").forEach((p) => p.classList.remove("is-active"));
       $(`#panel-${btn.dataset.panel}`).classList.add("is-active");
-      const labels = { stats: "Tableau de bord", produits: "Catalogue", commandes: "Commandes", galerie: "Galerie / Lookbook", reglages: "Réglages" };
+      const labels = { stats: "Tableau de bord", produits: "Catalogue", commandes: "Commandes", galerie: "Galerie / Lookbook", newsletter: "Abonnés Club Privé", reglages: "Réglages" };
       $("#tab-label").textContent = labels[btn.dataset.panel] || "";
     });
   });
@@ -346,6 +346,40 @@
     }
   });
 
+  /* ---------------- Abonnés Club Privé ---------------- */
+  let subscribers = [];
+
+  function renderNewsletter() {
+    const wrap = $("#newsletter-table-body");
+    if (!wrap) return;
+    $("#nl-count").textContent = subscribers.length;
+    wrap.innerHTML = "";
+    if (!subscribers.length) {
+      wrap.innerHTML = `<tr><td colspan="4">Aucun abonné pour l'instant — le pigeonnier attend. 🐦</td></tr>`;
+      return;
+    }
+    for (const s of subscribers) {
+      const d = new Date(s.date);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${s.id}</td>
+        <td><strong>${s.email}</strong></td>
+        <td>${d.toLocaleDateString("fr-FR")} ${d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}</td>
+        <td>${s.source ? `<span class="badge blue">${s.source}</span>` : "—"}</td>`;
+      wrap.appendChild(tr);
+    }
+  }
+
+  async function loadNewsletter() {
+    try {
+      const d = await api("/api/admin/newsletter");
+      subscribers = d.subscribers || [];
+      const brevoBadge = $("#nl-brevo");
+      if (brevoBadge) brevoBadge.hidden = !d.brevo;
+      renderNewsletter();
+    } catch (err) { toast("Abonnés : " + err.message, true); }
+  }
+
   /* ---------------- Réglages ---------------- */
   async function loadSettings() {
     try {
@@ -383,7 +417,7 @@
     $("#admin-login").hidden = true;
     $("#admin-board").hidden = false;
     ensureAdminProducts();
-    loadOrders(); loadStats(); loadSettings(); loadGallery();
+    loadOrders(); loadStats(); loadSettings(); loadGallery(); loadNewsletter();
   }
 
   $("#login-form").addEventListener("submit", async (e) => {
