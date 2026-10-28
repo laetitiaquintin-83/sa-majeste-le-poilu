@@ -446,6 +446,33 @@ def _cj_borne(fn, *args, limite=None, **kwargs):
         pool.shutdown(wait=False, cancel_futures=True)
 
 
+def _borne_appel(fn, *args, limite=15.0, message="", **kwargs):
+    """Exécute un appel réseau externe avec une limite murale en secondes.
+
+    Le timeout posé sur le client HTTP ne couvre pas tout (résolution DNS,
+    demi-connexion TCP laissée à l'OS) : en production un appel à
+    api.stripe.com a dépassé 130 s alors que le client était borné à 10 s,
+    et chaque appel gelé immobilise l'un des rares threads du worker.
+    Comme pour _cj_borne, la requête HTTP est libérée à échéance : le client
+    reçoit une réponse au lieu d'attendre indéfiniment.
+    """
+    from concurrent.futures import ThreadPoolExecutor
+    from concurrent.futures import TimeoutError as FuturesTimeout
+
+    borne = float(limite)
+    pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="ext-call")
+    try:
+        futur = pool.submit(fn, *args, **kwargs)
+        try:
+            return futur.result(timeout=borne)
+        except FuturesTimeout:
+            raise TimeoutError(
+                message or f"Appel externe interrompu après {int(borne)} s."
+            ) from None
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
+
+
 @app.get("/api/cj/products")
 @login_required
 def api_cj_products():
@@ -1991,17 +2018,20 @@ def create_checkout_session():
         })
 
     cust = d.get("customer") or {}
+    # Capturé ici : la barrière exécute l'appel dans un autre thread, où le
+    # proxy `request` n'est plus résolu (« Working outside of request context »).
+    host_base = request.host_url.rstrip("/")
     try:
-        checkout_session = stripe.checkout.Session.create(
+        checkout_session = _borne_appel(lambda: stripe.checkout.Session.create(
             mode="payment",
             # NB : payment_method_types n'est plus supporté par l'API Checkout
             # (dynamic payment methods gérés dans le Dashboard Stripe). Les moyens
             # différés (Klarna/Bancontact) basculent en "unpaid" -> webhook
             # async_payment_succeeded + garde payment_status ci-dessous.
             line_items=line_items,
-            success_url=request.host_url.rstrip("/") +
+            success_url=host_base +
                 "/commande-confirmee?session_id={CHECKOUT_SESSION_ID}",
-            cancel_url=request.host_url.rstrip("/") + "/checkout?annule=1",
+            cancel_url=host_base + "/checkout?annule=1",
             customer_email=(str(cust.get("email") or "").strip() or None),
             metadata={
                 "objet": "smp_commande",
@@ -2020,8 +2050,11 @@ def create_checkout_session():
                     },
                 }, ensure_ascii=False),
             },
-        )
-    except (stripe.error.StripeError, ValueError) as e:
+        ),
+            limite=20,
+            message="Le service de paiement n'a pas répondu en 20 s. "
+                    "Réessayez dans un instant.")
+    except (stripe.error.StripeError, ValueError, TimeoutError) as e:
         print(f"Erreur création session Stripe : {e}")
         return jsonify(ok=False, error="Erreur Stripe : " + str(e)), 502
 
@@ -2031,7 +2064,15 @@ def _confirmer_via_stripe(session_id):
     if not stripe_actif():
         return None
     try:
-        cs = stripe.checkout.Session.retrieve(session_id)
+        # Barrière murale : le timeout du client Stripe (10 s) ne borne pas la
+        # résolution DNS — en prod, un id invalide a bloqué la page >130 s.
+        cs = _borne_appel(
+            stripe.checkout.Session.retrieve,
+            session_id,
+            limite=15,
+            message="Le service de paiement n'a pas répondu en 15 s. "
+                    "Réessayez dans un instant.",
+        )
     except Exception as e:
         print(f"Erreur retrieve session Stripe : {e}")
         return None
