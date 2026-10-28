@@ -225,6 +225,10 @@ _TR_URL = "https://api.mymemory.translated.net/get"
 _TR_SESSION = requests.Session()
 _TR_MIN_DELAY = 0.3  # politesse : espace entre deux requêtes
 _TR_LOCK = threading.Lock()
+# Budget TOTAL de traduction par texte : chaque fragment est borné à 15 s,
+# mais un texte long (9 fragments) pouvait donc totaliser plus de 2 minutes
+# de blocage dans la requête d'import — on arrête proprement au-delà.
+_TR_BUDGET = float(os.getenv("TR_BUDGET_SECONDS", "25"))
 _TR_CACHE: dict[str, str] = {}  # clé normalisée -> trad. ("" indisponible)
 _TR_LAST = 0.0
 
@@ -257,8 +261,11 @@ def translate_to_french(text: Any) -> str | None:
         if cached is not None:
             return cached or None
         translated_parts: list[str] = []
+        deadline = time.monotonic() + _TR_BUDGET
         try:
             for chunk in _chunk_text(source)[:40]:
+                if time.monotonic() >= deadline:
+                    break  # budget de traduction épuisé : on garde ce qui est déjà traduit
                 wait = _TR_MIN_DELAY - (time.monotonic() - _TR_LAST)
                 if wait > 0:
                     time.sleep(wait)

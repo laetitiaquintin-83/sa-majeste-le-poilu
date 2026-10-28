@@ -413,16 +413,52 @@ def catalogue():
         settings=db["settings"],
     )
 
+# Durée MAXIMALE d'un appel CJ au sein d'une requête HTTP.
+# requests ne borne que le connect/read, PAS la durée totale : en production
+# le même appel CJ qui prendait 2 s en local restait bloqué plus de 100 s sur
+# Render, immobilisant un thread gunicorn et l'interface d'import entière.
+CJ_ROUTE_TIMEOUT = float(os.getenv("CJ_ROUTE_TIMEOUT", "30"))
+
+
+def _cj_borne(fn, *args, limite=None, **kwargs):
+    """Exécute un appel CJ en interrompant l'attente au-delà de `limite` s.
+
+    Le thread de fond peut rester bloqué jusqu'au bout de l'appel réseau, mais
+    la requête HTTP est libérée : le client reçoit une erreur explicite au lieu
+    d'attendre indéfiniment, et les threads du worker ne sont pas gelés.
+    """
+    from concurrent.futures import ThreadPoolExecutor
+    from concurrent.futures import TimeoutError as FuturesTimeout
+    from cj_service import CJAPIError
+
+    borne = float(limite or CJ_ROUTE_TIMEOUT)
+    pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="cj-route")
+    try:
+        futur = pool.submit(fn, *args, **kwargs)
+        try:
+            return futur.result(timeout=borne)
+        except FuturesTimeout:
+            raise CJAPIError(
+                f"L'API CJ n'a pas répondu en {int(borne)} s. "
+                "Réessayez dans un instant."
+            ) from None
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
+
+
 @app.get("/api/cj/products")
+@login_required
 def api_cj_products():
-    """Route de test interne : recherche de produits CJ en JSON."""
+    """Recherche de produits CJ en JSON (réservée à l'admin : elle consomme
+    le quota CJ et, sans authentification, était déclenchable par n'importe qui."""
     from cj_service import CJAPIError, search_products
 
     keyword = request.args.get("keyword", "").strip()
     if not keyword:
         return jsonify(ok=False, error="Le paramètre keyword est obligatoire."), 400
     try:
-        data = search_products(
+        data = _cj_borne(
+            search_products,
             keyword,
             page_num=request.args.get("page_num", default=1, type=int),
             page_size=request.args.get("page_size", default=20, type=int),
@@ -445,6 +481,7 @@ def admin_cj_search():
 def api_cj_sync_run():
     """Lance manuellement une passe de synchronisation stocks/prix CJ."""
     from cj_sync import sync_products
+    from cj_service import CJAPIError  # sinon NameError dans ce except
     try:
         report = sync_products()
     except CJAPIError as exc:
@@ -484,7 +521,7 @@ def api_cj_import_preview():
     if not cj_id:
         return jsonify(ok=False, error="cj_pid est obligatoire"), 400
     try:
-        product = get_product_details(cj_id)
+        product = _cj_borne(get_product_details, cj_id, limite=20)
     except ValueError as exc:
         return jsonify(ok=False, error=str(exc)), 400
     except CJAPIError as exc:
@@ -530,7 +567,7 @@ def api_cj_import_preview():
 
     variant_entries = []
     try:
-        variants_cj = get_variant_list(cj_id)
+        variants_cj = _cj_borne(get_variant_list, cj_id, limite=20)
     except (CJAPIError, ValueError) as exc:
         print(f"Variantes CJ indisponibles pour {cj_id} : {exc}")
         variants_cj = []
@@ -620,7 +657,7 @@ def api_cj_import():
         return jsonify(ok=False, error="Ce produit CJ est déjà importé"), 409
 
     try:
-        product = get_product_details(cj_id)
+        product = _cj_borne(get_product_details, cj_id, limite=20)
     except ValueError as exc:
         return jsonify(ok=False, error=str(exc)), 400
     except CJAPIError as exc:
@@ -665,7 +702,7 @@ def api_cj_import():
 
     # ---- Variantes CJ : couleurs/motifs + tailles, traduits en français ----
     try:
-        variants_cj = get_variant_list(cj_id)
+        variants_cj = _cj_borne(get_variant_list, cj_id, limite=20)
     except (CJAPIError, ValueError) as exc:
         print(f"Variantes CJ indisponibles pour {cj_id} : {exc}")
         variants_cj = []
@@ -913,7 +950,13 @@ def page_contenu(nom):
 # ---------------------------------------------------------------- admin
 def admin_board():
     db = load_db()
-    return render_template("admin.html", settings=db["settings"])
+    # L'indice de mot de passe n'apparaît qu'en local : sur Render la variable
+    # RENDER existe, la page de connexion reste muette (sécurité).
+    return render_template(
+        "admin.html",
+        settings=db["settings"],
+        show_hint="RENDER" not in os.environ,
+    )
 
 app.add_url_rule("/admin", "admin_board", admin_board)
 
@@ -1889,9 +1932,25 @@ STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "").strip()
 
 stripe.api_key = STRIPE_SECRET_KEY
 
+# stripe-python part avec un timeout de 80 s et 2 nouvelles tentatives : une
+# connexion figée vers api.stripe.com bloquait alors le worker ~4 min
+# (page /commande-confirmee sans aucune réponse en production, alors que
+# l'appel aboutissait parfois quand la connexion était bonne).
+# 10 s par tentative, 2 retries maximum => 30 s pire des cas, page rendue.
+try:
+    stripe.default_http_client = stripe.new_default_http_client(timeout=10)
+except Exception as e:  # jamais bloquant : on garde le client par défaut
+    print(f"[warn] client Stripe personnalisé impossible ({e}) — timeout 80 s")
+
 def stripe_actif():
-    return (
-        STRIPE_SECRET_KEY.startswith("sk_test_") or STRIPE_SECRET_KEY.startswith("rk_test_")
+    """True si une clé Stripe valide est configurée (test OU live).
+
+    On accepte sk_live_/rk_live_ : refuser la clé live bloquait le paiement
+    au moment de basculer en production (erreur « Stripe non configuré »
+    sur /create-checkout-session).
+    """
+    return STRIPE_SECRET_KEY.startswith(
+        ("sk_test_", "sk_live_", "rk_test_", "rk_live_")
     ) and "VOTRE_CLE_ICI" not in STRIPE_SECRET_KEY
 
 @app.post("/create-checkout-session")
@@ -2187,6 +2246,23 @@ def _demarrer_scheduler_cj():
         cj_sync.start_scheduler()
     except Exception as _sync_exc:  # noqa: BLE001 — l'app doit démarrer quoi qu'il arrive
         print(f"Scheduler CJ non démarré : {_sync_exc}")
+
+
+def _alerter_mdp_admin_defaut():
+    """Journalise un avertissement si le mot de passe admin est encore celui d'usine.
+
+    Le dashboard est public : un mot de passe par défaut laisse le catalogue
+    ouvert à tout le monde (ajout/suppression de produits).
+    """
+    try:
+        if load_db()["settings"].get("admin_password") == DEFAULT_ADMIN_PASSWORD:
+            print("⚠️  Mot de passe admin encore celui par défaut (poilu2026) : "
+                  "changez-le dans Dashboard > Réglages.")
+    except Exception as e:
+        print(f"[warn] contrôle du mot de passe admin impossible : {e}")
+
+
+_alerter_mdp_admin_defaut()
 
 
 # Sous gunicorn (Render), `__main__` n'est jamais exécuté : on démarre le
