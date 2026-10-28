@@ -221,7 +221,7 @@
       "created_at": "2026-10-16T10:36:38.728573",
       "cj_product_id": "1709193321471549440",
       "cj_variant_id": null,
-      "cj_stock": 115792,
+      "cj_stock": 130038,
       "supplier": "CJ",
       "is_customizable": false
     },
@@ -269,7 +269,7 @@
       "created_at": "2026-10-16T10:49:58.962856",
       "cj_product_id": "1364571804076740608",
       "cj_variant_id": null,
-      "cj_stock": 8000,
+      "cj_stock": 12000,
       "supplier": "CJ",
       "is_customizable": false
     },
@@ -296,7 +296,7 @@
       "fournisseur_id": "CJJJCWGY01222-Green",
       "fournisseur": "",
       "url_fournisseur": null,
-      "cj_stock": 14050,
+      "cj_stock": 24214,
       "supplier": "CJ",
       "is_customizable": false
     },
@@ -329,7 +329,7 @@
       "fournisseur_id": "CJJJCWGD00351-Grey-L",
       "fournisseur": "",
       "url_fournisseur": null,
-      "cj_stock": 123528,
+      "cj_stock": 151143,
       "supplier": "CJ",
       "is_customizable": false
     },
@@ -356,7 +356,7 @@
       "fournisseur_id": "CJMY126613211KP",
       "fournisseur": "",
       "url_fournisseur": null,
-      "cj_stock": 158483,
+      "cj_stock": 183719,
       "supplier": "CJ",
       "is_customizable": false
     },
@@ -383,7 +383,7 @@
       "fournisseur_id": "CJJJCWGY02112-Banana-M",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": null,
-      "cj_stock": 175720,
+      "cj_stock": 214176,
       "supplier": "CJ",
       "is_customizable": false
     },
@@ -412,7 +412,7 @@
       "fournisseur_id": "CJYD225249910JQ",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": null,
-      "cj_stock": 78793,
+      "cj_stock": 95042,
       "supplier": "CJ",
       "is_customizable": false
     },
@@ -446,7 +446,7 @@
       "fournisseur_id": "CJJJCWGD00349-Beige-L",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": null,
-      "cj_stock": 176794,
+      "cj_stock": 189821,
       "supplier": "CJ",
       "is_customizable": false
     },
@@ -477,7 +477,7 @@
       "fournisseur_id": "CJGD130822605EV",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": null,
-      "cj_stock": 331532,
+      "cj_stock": 366400,
       "supplier": "CJ",
       "is_customizable": false
     },
@@ -537,7 +537,7 @@
       "fournisseur_id": "CJYD231243901AZ",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": null,
-      "cj_stock": 178936,
+      "cj_stock": 323775,
       "supplier": "CJ",
       "is_customizable": false
     },
@@ -949,7 +949,7 @@
       "url_fournisseur": null,
       "supplier": "CJ",
       "is_customizable": false,
-      "cj_stock": 1147811
+      "cj_stock": 1236104
     },
     {
       "id": 22,
@@ -1229,7 +1229,7 @@
       "fournisseur_id": "CJJJCWGD00413-Black-L",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": "https://cjdropshipping.com/product/hot-world-cup-ball-spring-and-summer-dog-vest-pet-supplies-p-CF1F5B6A-0BB3-4740-A3FA-803C6D67D6C2.html",
-      "cj_stock": 104814
+      "cj_stock": 118969
     },
     {
       "id": 25,
@@ -1376,7 +1376,7 @@
       "fournisseur_id": "CJYD222274203CX",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": "https://cjdropshipping.com/product/led-light-pet-waste-bag-dispenser-for-dogs-cats-dog-poop-scooper-bags-waste-bags-holder-dispensers-pet-clean-accessories-p-2411240930111626400.html",
-      "cj_stock": 115826
+      "cj_stock": 128551
     },
     {
       "id": 26,
@@ -1586,7 +1586,7 @@
       "fournisseur_id": "CJYD164589901AZ",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": "https://cjdropshipping.com/product/plaid-pet-tie-cat-dog-scarf-accessories-pet-accessories-p-1605851344785649664.html",
-      "cj_stock": 148888
+      "cj_stock": 188414
     },
     {
       "id": 27,
@@ -1698,7 +1698,7 @@
       "fournisseur_id": "CJMY168993903CX",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": "https://cjdropshipping.com/product/pet-glasses-windproof-eye-protection-accessories-p-1628220995620319232.html",
-      "cj_stock": 49750
+      "cj_stock": 73928
     },
     {
       "id": 28,
@@ -1811,7 +1811,7 @@
       "fournisseur_id": "CJGY193515503CX",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": "https://cjdropshipping.com/product/dog-raincoat-with-reflective-waterproof-dog-rain-jacket-with-hood-leash-hole-reflective-strap-for-small-medium-dogs-lightweight-puppy-clothes-p-1741105030977441792.html",
-      "cj_stock": 3638
+      "cj_stock": 6029
     },
     {
       "id": 29,
@@ -2080,7 +2080,7 @@
       "fournisseur_id": "CJGD205806411KP",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": "https://cjdropshipping.com/product/dog-raincoat-reflective-waterproof-snowproof-pet-coat-for-small-puppy-cats-raincoat-pets-supplies-p-2406110906021625200.html",
-      "cj_stock": 258928
+      "cj_stock": 293738
     },
     {
       "id": 30,
@@ -2171,7 +2171,7 @@
       "fournisseur_id": "CJJJCWGD00390-Yellow-L",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": "https://cjdropshipping.com/product/bat-warm-core-spun-yarn-pet-sweater-p-A9973FF4-B034-41E4-9B71-8752289BBA2C.html",
-      "cj_stock": 40703
+      "cj_stock": 53587
     },
     {
       "id": 31,
@@ -2328,7 +2328,7 @@
       "fournisseur_id": "CJGX100429503CX",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": "https://cjdropshipping.com/product/shiny-rhinestone-anti-strike-off-pet-chest-strap-leash-p-1356538122283913216.html",
-      "cj_stock": 330000
+      "cj_stock": 360000
     },
     {
       "id": 32,
@@ -2469,7 +2469,7 @@
       "fournisseur_id": "2407160319231628200",
       "fournisseur": "Cj dropshipping",
       "url_fournisseur": "https://cjdropshipping.com/product/flower-beret-hat-bow-lace-bib-p-2407160319231628200.html",
-      "cj_stock": 82658
+      "cj_stock": 96732
     },
     {
       "id": 33,
